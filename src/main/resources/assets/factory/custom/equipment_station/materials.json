@@ -1,0 +1,25 @@
+{
+  "item_materials":
+  [
+    {
+      "item": "minecraft:iron_block",
+      "base_durability": 250,
+      "base_speed": 6
+    },
+    {
+      "item": "minecraft:gold_block",
+      "base_durability": 50,
+      "base_speed": 12
+    },
+    {
+      "item": "minecraft:diamond_block",
+      "base_durability": 1500,
+      "base_speed": 8
+    },
+    {
+      "item": "minecraft:netherite_block",
+      "base_durability": 3000,
+      "base_speed": 9
+    }
+  ]
+}

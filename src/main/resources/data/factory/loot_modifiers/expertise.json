@@ -1,0 +1,5 @@
+{
+  "type": "factory:add_item",
+  "conditions": [],
+  "item": "factory:expertise"
+}

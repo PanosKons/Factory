@@ -1,0 +1,23 @@
+{
+    "type": "factory:assembling",
+    "pattern": [
+        "LLL",
+        "LfL",
+        "LLL"
+    ],
+    "key": {
+        "f": {
+            "item": "minecraft:stone_axe"
+        },
+        "L": {
+            "item": "minecraft:gold_nugget"
+        }
+    },
+    "speed": 20,
+    "required_recipe": "none",
+    "result": {
+        "item": "factory:axe_mold",
+        "nbt": {"Size": 2},
+        "count": 1
+    }
+}

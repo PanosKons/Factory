@@ -1,0 +1,6 @@
+{
+  "parent": "factory:item/profound_bundle",
+  "textures": {
+    "layer0": "minecraft:item/bundle_filled"
+  }
+}

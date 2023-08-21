@@ -1,0 +1,26 @@
+{
+    "type": "factory:assembling",
+    "pattern": [
+        "fff",
+        " L ",
+        "WWW"
+    ],
+    "key": {
+        "f": {
+            "item": "factory:steel_ingot"
+        },
+        "L": {
+            "tag": "minecraft:logs"
+        },
+        "W": {
+            "item": "minecraft:heavy_weighted_pressure_plate"
+        }
+    },
+    "speed": 2,
+    "required_recipe": "none",
+    "result": {
+        "item": "factory:discovery_station",
+        "nbt": {"re": 1},
+        "count": 1
+    }
+}

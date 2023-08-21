@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "minecraft:block/blast_furnace_top",
+    "side": "factory:block/discovery_station_side",
+    "top": "factory:block/discovery_station_top"
+  }
+}

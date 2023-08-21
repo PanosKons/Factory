@@ -1,0 +1,6 @@
+{
+  "parent": "factory:item/reinforced_bundle",
+  "textures": {
+    "layer0": "minecraft:item/bundle_filled"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "item.factory.chocolate": "Chocolate",
+  "item.factory.blank_card": "Blank card",
+  "item.factory.steel_ingot": "Steel Ingot",
+  "item.factory.undiscovered_recipe": "Undiscovered Recipe",
+  "item.factory.discovered_recipe": "Discovered Recipe",
+  "item.factory.pickaxe_mold": "Pickaxe Mold",
+  "item.factory.axe_mold": "Axe Mold",
+  "item.factory.sword_mold": "Sword Mold",
+  "item.factory.hoe_mold": "Hoe Mold",
+  "item.factory.shovel_mold": "Shovel Mold",
+  "item.factory.hammer_mold": "Hammer Mold",
+  "item.factory.expertise": "Expertise",
+  "item.factory.improved_bundle": "Improved Bundle",
+  "item.factory.profound_bundle": "Profound Bundle",
+  "item.factory.reinforced_bundle": "Reinforced Bundle",
+  "item.factory.guard_spawn_egg": "Guard Spawn Egg",
+  "item.factory.artifact": "Artifact",
+
+  "block.factory.assembler": "Assembler",
+  "block.factory.equipment_station": "Equipment Station",
+  "block.factory.discovery_station": "Discovery Station",
+  "block.factory.crusher": "Crusher",
+  "block.factory.generator": "Generator",
+  "block.factory.quarry": "Quarry",
+
+  "tab.factory.factory_tab": "Factory",
+
+  "block.factory.improved_barrel": "Improved Barrel",
+  "block.factory.profound_barrel": "Profound Barrel",
+  "block.factory.reinforced_barrel": "Reinforced Barrel",
+
+  "container.factory.improved_barrel": "Improved Barrel",
+  "container.factory.profound_barrel": "Profound Barrel",
+  "container.factory.reinforced_barrel": "Reinforced Barrel",
+
+  "container.factory.quarry": "Quarry",
+  "container.factory.crusher": "Crusher",
+  "container.factory.equipment_station": "Equipment Station",
+  "container.factory.assembler": "Assembler",
+  "container.factory.discovery_station": "Discovery Station",
+  "container.factory.generator": "Generator",
+
+  "entity.minecraft.villager.factory.discovery_station_profession": "Explorer"
+}

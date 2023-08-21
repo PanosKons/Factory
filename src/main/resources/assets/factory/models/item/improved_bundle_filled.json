@@ -1,0 +1,6 @@
+{
+  "parent": "factory:item/improved_bundle",
+  "textures": {
+    "layer0": "minecraft:item/bundle_filled"
+  }
+}

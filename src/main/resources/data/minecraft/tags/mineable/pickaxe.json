@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+        "factory:hardened_barrel",
+        "factory:assembler"
+  ]
+}

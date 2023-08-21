@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": {"model": "factory:block/assembler"},
+    "facing=east": {"model": "factory:block/assembler", "y":  90},
+    "facing=south": {"model": "factory:block/assembler", "y": 180},
+    "facing=west": {"model": "factory:block/assembler", "y": 270}
+  }
+}
