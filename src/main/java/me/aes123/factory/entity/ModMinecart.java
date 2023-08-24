@@ -48,6 +48,11 @@ public class ModMinecart extends Minecart {
     }
 
     @Override
+    public float getMaxCartSpeedOnRail() {
+        return 100.0f;
+    }
+
+    @Override
     public void readAdditionalSaveData(CompoundTag compoundTag) {
         super.readAdditionalSaveData(compoundTag);
         this.speedModifier = compoundTag.getFloat("MaxSpeedModifier");

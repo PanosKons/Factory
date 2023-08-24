@@ -15,14 +15,18 @@ import java.util.EnumMap;
 import java.util.function.Supplier;
 
 public enum ModArmorMaterials implements StringRepresentable, ArmorMaterial {
-    WEAK_LEATHER("weak_leather", 0.01f, Util.make(new EnumMap<>(ArmorItem.Type.class), (p_266652_) -> {
+    WEAK_LEATHER("weak_leather", 1, Util.make(new EnumMap<>(ArmorItem.Type.class), (p_266652_) -> {
         p_266652_.put(ArmorItem.Type.BOOTS, 1);
         p_266652_.put(ArmorItem.Type.LEGGINGS, 2);
         p_266652_.put(ArmorItem.Type.CHESTPLATE, 3);
         p_266652_.put(ArmorItem.Type.HELMET, 1);
-    }), 15, SoundEvents.ARMOR_EQUIP_LEATHER, 0.0F, 0.0F, () -> {
-        return Ingredient.of(Items.LEATHER);
-    });
+    }), 15, SoundEvents.ARMOR_EQUIP_LEATHER, 0.0F, 0.0F, () -> null),
+    WEAK_CHAINMAIL("weak_chainmail", 2, Util.make(new EnumMap<>(ArmorItem.Type.class), (p_266652_) -> {
+        p_266652_.put(ArmorItem.Type.BOOTS, 1);
+        p_266652_.put(ArmorItem.Type.LEGGINGS, 2);
+        p_266652_.put(ArmorItem.Type.CHESTPLATE, 3);
+        p_266652_.put(ArmorItem.Type.HELMET, 1);
+    }), 15, SoundEvents.ARMOR_EQUIP_CHAIN, 0.0F, 0.0F, () -> null);
 
     public static final StringRepresentable.EnumCodec<ArmorMaterials> CODEC = StringRepresentable.fromEnum(ArmorMaterials::values);
     private static final EnumMap<ArmorItem.Type, Integer> HEALTH_FUNCTION_FOR_TYPE = Util.make(new EnumMap<>(ArmorItem.Type.class), (p_266653_) -> {

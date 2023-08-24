@@ -18,7 +18,7 @@
     "required_recipe": "none",
     "result": {
         "item": "factory:pickaxe_mold",
-        "nbt": {"size": 2},
+        "nbt": {"capacity": 2},
         "count": 1
     }
 }

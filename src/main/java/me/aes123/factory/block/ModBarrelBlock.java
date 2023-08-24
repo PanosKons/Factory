@@ -27,6 +27,8 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
 
@@ -118,5 +120,13 @@ public class ModBarrelBlock extends BaseEntityBlock {
 
     public BlockState getStateForPlacement(BlockPlaceContext p_49048_) {
         return this.defaultBlockState().setValue(FACING, p_49048_.getNearestLookingDirection().getOpposite());
+    }
+
+    @Override
+    public void attack(BlockState blockState, Level level, BlockPos blockPos, Player player) {
+        BlockEntity blockEntity = level.getBlockEntity(blockPos);
+        if(blockEntity == null) return;
+        if(blockEntity instanceof ModBarrelBlockEntity barrelBlockEntity)
+            barrelBlockEntity.addPlayerItems(level,blockPos,blockState,player);
     }
 }

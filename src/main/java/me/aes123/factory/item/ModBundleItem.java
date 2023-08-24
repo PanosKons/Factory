@@ -1,6 +1,9 @@
 package me.aes123.factory.item;
 
+import me.aes123.factory.Main;
 import net.minecraft.ChatFormatting;
+import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -8,9 +11,11 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.SlotAccess;
@@ -21,7 +26,12 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.inventory.tooltip.BundleTooltip;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,7 +43,7 @@ public class ModBundleItem extends Item {
     public int size;
 
     public ModBundleItem(Item.Properties properties, int bundleSize) {
-        super(properties);
+        super(properties.stacksTo(1));
         this.size = bundleSize;
     }
 
@@ -85,16 +95,57 @@ public class ModBundleItem extends Item {
         }
     }
 
-    public InteractionResultHolder<ItemStack> use(Level p_150760_, Player p_150761_, InteractionHand p_150762_) {
-        ItemStack itemstack = p_150761_.getItemInHand(p_150762_);
-        if (dropContents(itemstack, p_150761_)) {
-            this.playDropContentsSound(p_150761_);
-            p_150761_.awardStat(Stats.ITEM_USED.get(this));
-            return InteractionResultHolder.sidedSuccess(itemstack, p_150760_.isClientSide());
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+        ItemStack itemstack = player.getItemInHand(hand);
+        if(player.isCrouching() == false) return InteractionResultHolder.fail(itemstack);
+        if (dropContents(itemstack, player)) {
+            this.playDropContentsSound(player);
+            player.awardStat(Stats.ITEM_USED.get(this));
+            return InteractionResultHolder.sidedSuccess(itemstack, level.isClientSide());
         } else {
             return InteractionResultHolder.fail(itemstack);
         }
     }
+
+    @Override
+    public InteractionResult useOn(UseOnContext useOnContext) {
+        Level level = useOnContext.getLevel();
+        Player player = useOnContext.getPlayer();
+        ItemStack bundle = player.getItemInHand(useOnContext.getHand());
+        CompoundTag compoundtag = bundle.getOrCreateTag();
+        if (!compoundtag.contains("Items")) return super.useOn(useOnContext);
+
+        ListTag listtag = compoundtag.getList("Items", 10);
+        //if(listtag.size() < 0) return super.useOn(useOnContext);
+
+        int i = Main.rnd.nextInt(listtag.size());
+        ItemStack stack = ItemStack.of(listtag.getCompound(i));
+
+        if(stack.getItem() instanceof BlockItem blockItem)
+        {
+            if(blockItem.useOn(useOnContext) == InteractionResult.CONSUME)
+            {
+                stack.shrink(1);
+            }
+        }
+
+        if(stack.isEmpty())
+        {
+            listtag.remove(i);
+        }
+        else
+        {
+            CompoundTag compoundtag2 = new CompoundTag();
+            stack.save(compoundtag2);
+            listtag.set(i, compoundtag2);
+        }
+        if(listtag.isEmpty())
+        {
+            bundle.removeTagKey("Items");
+        }
+        return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
 
     public boolean isBarVisible(ItemStack p_150769_) {
         return getContentWeight(p_150769_) > 0;
@@ -108,36 +159,48 @@ public class ModBundleItem extends Item {
         return BAR_COLOR;
     }
 
-    private static int add(ItemStack p_150764_, ItemStack p_150765_) {
-        if (!p_150765_.isEmpty() && p_150765_.getItem().canFitInsideContainerItems()) {
-            CompoundTag compoundtag = p_150764_.getOrCreateTag();
+    public static int add(ItemStack bundle, ItemStack stack) {
+        if (!stack.isEmpty() && stack.getItem().canFitInsideContainerItems()) {
+            CompoundTag compoundtag = bundle.getOrCreateTag();
             if (!compoundtag.contains("Items")) {
                 compoundtag.put("Items", new ListTag());
             }
 
-            int i = getContentWeight(p_150764_);
-            int j = getWeight(p_150765_);
-            int k = Math.min(p_150765_.getCount(), (((ModBundleItem)(p_150764_.getItem())).size - i) / j);
-            if (k == 0) {
+            int i = getContentWeight(bundle);
+            int j = getWeight(stack);
+            int insertCount = Math.min(stack.getCount(), (((ModBundleItem)(bundle.getItem())).size - i) / j);
+            if (insertCount == 0) {
                 return 0;
             } else {
                 ListTag listtag = compoundtag.getList("Items", 10);
-                Optional<CompoundTag> optional = getMatchingItem(p_150765_, listtag);
+                Optional<CompoundTag> optional = getMatchingItem(stack, listtag);
                 if (optional.isPresent()) {
                     CompoundTag compoundtag1 = optional.get();
                     ItemStack itemstack = ItemStack.of(compoundtag1);
-                    itemstack.grow(k);
+
+                    int specificInsertCount = Math.min(itemstack.getMaxStackSize() - itemstack.getCount(), stack.getCount());
+
+                    itemstack.grow(specificInsertCount);
                     itemstack.save(compoundtag1);
                     listtag.remove(compoundtag1);
                     listtag.add(0, (Tag)compoundtag1);
+
+                    if(specificInsertCount < insertCount)
+                    {
+                        int remainder = insertCount - specificInsertCount;
+                        ItemStack itemstack1 = stack.copyWithCount(remainder);
+                        CompoundTag compoundtag2 = new CompoundTag();
+                        itemstack1.save(compoundtag2);
+                        listtag.add(0, (Tag)compoundtag2);
+                    }
                 } else {
-                    ItemStack itemstack1 = p_150765_.copyWithCount(k);
+                    ItemStack itemstack1 = stack.copyWithCount(insertCount);
                     CompoundTag compoundtag2 = new CompoundTag();
                     itemstack1.save(compoundtag2);
                     listtag.add(0, (Tag)compoundtag2);
                 }
 
-                return k;
+                return insertCount;
             }
         } else {
             return 0;
@@ -145,9 +208,7 @@ public class ModBundleItem extends Item {
     }
 
     private static Optional<CompoundTag> getMatchingItem(ItemStack p_150757_, ListTag p_150758_) {
-        return p_150757_.is(Items.BUNDLE) ? Optional.empty() : p_150758_.stream().filter(CompoundTag.class::isInstance).map(CompoundTag.class::cast).filter((p_186350_) -> {
-            return ItemStack.isSameItemSameTags(ItemStack.of(p_186350_), p_150757_);
-        }).findFirst();
+        return p_150757_.is(Items.BUNDLE) ? Optional.empty() : p_150758_.stream().filter(CompoundTag.class::isInstance).map(CompoundTag.class::cast).filter((p_186350_) -> ItemStack.isSameItemSameTags(ItemStack.of(p_186350_), p_150757_)).findFirst();
     }
 
     private static int getWeight(ItemStack p_150777_) {
@@ -157,11 +218,11 @@ public class ModBundleItem extends Item {
             if ((p_150777_.is(Items.BEEHIVE) || p_150777_.is(Items.BEE_NEST)) && p_150777_.hasTag()) {
                 CompoundTag compoundtag = BlockItem.getBlockEntityData(p_150777_);
                 if (compoundtag != null && !compoundtag.getList("Bees", 10).isEmpty()) {
-                    return 16;
+                    return 64;
                 }
             }
 
-            return Math.min(16, 64 / p_150777_.getMaxStackSize());
+            return 64 / p_150777_.getMaxStackSize();
         }
     }
 

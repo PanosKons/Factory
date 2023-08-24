@@ -17,10 +17,11 @@ public class DiscoveredRecipeItem extends Item {
     }
     @Override
     public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> components, TooltipFlag flag) {
-        if(itemStack.hasTag()) {
-            String recipe = itemStack.getTag().getString("recipe");
-            components.add(Component.literal("Recipe: " + recipe).withStyle(ChatFormatting.RED));
+        if(!itemStack.hasTag()) {
+            itemStack.getOrCreateTag().putString("recipe","null");
         }
+        String recipe = itemStack.getTag().getString("recipe");
+        components.add(Component.literal("Recipe: " + recipe).withStyle(ChatFormatting.RED));
         super.appendHoverText(itemStack, level, components, flag);
     }
 }

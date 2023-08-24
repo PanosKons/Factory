@@ -10,19 +10,46 @@
   "item.factory.hoe_mold": "Hoe Mold",
   "item.factory.shovel_mold": "Shovel Mold",
   "item.factory.hammer_mold": "Hammer Mold",
+  "item.factory.helmet_mold": "Helmet Mold",
+  "item.factory.chestplate_mold": "Chestplate Mold",
+  "item.factory.leggings_mold": "Leggings Mold",
+  "item.factory.boots_mold": "Boots Mold",
+  "item.factory.pistol_mold": "Pistol Mold",
   "item.factory.expertise": "Expertise",
   "item.factory.improved_bundle": "Improved Bundle",
   "item.factory.profound_bundle": "Profound Bundle",
   "item.factory.reinforced_bundle": "Reinforced Bundle",
   "item.factory.guard_spawn_egg": "Guard Spawn Egg",
-  "item.factory.artifact": "Artifact",
+  "item.factory.weak_booster": "Weak Booster",
+  "item.factory.strong_booster": "Strong Booster",
+  "item.factory.reinforced_booster": "Reinforced Booster",
+  "item.factory.bullet": "Bullet",
+  "item.factory.iron_hammer": "Iron Hammer",
+  "item.factory.golden_hammer": "Golden Hammer",
+  "item.factory.diamond_hammer": "Diamond Hammer",
+  "item.factory.netherite_hammer": "Netherite Hammer",
+  "item.factory.iron_pistol": "Iron Pistol",
+  "item.factory.golden_pistol": "Golden Pistol",
+  "item.factory.diamond_pistol": "Diamond Pistol",
+  "item.factory.netherite_pistol": "Netherite Pistol",
+  "item.factory.ruby_shard": "Ruby Shard",
+  "item.factory.ruby": "Ruby",
+
+  "item.minecraft.totem_of_undying": "Totem",
+
+  "generator.factory.small":"Normal",
+
 
   "block.factory.assembler": "Assembler",
   "block.factory.equipment_station": "Equipment Station",
   "block.factory.discovery_station": "Discovery Station",
   "block.factory.crusher": "Crusher",
   "block.factory.generator": "Generator",
-  "block.factory.quarry": "Quarry",
+  "block.factory.electric_furnace": "Electric Furnace",
+  "block.factory.improved_hopper": "Improved Hopper",
+  "block.factory.profound_hopper": "Profound Hopper",
+  "block.factory.reinforced_hopper": "Reinforced Hopper",
+  "block.factory.ruby_ore": "Ruby Ore",
 
   "tab.factory.factory_tab": "Factory",
 
@@ -34,12 +61,13 @@
   "container.factory.profound_barrel": "Profound Barrel",
   "container.factory.reinforced_barrel": "Reinforced Barrel",
 
-  "container.factory.quarry": "Quarry",
+  "container.factory.electric_furnace": "Electric Furnace",
   "container.factory.crusher": "Crusher",
   "container.factory.equipment_station": "Equipment Station",
   "container.factory.assembler": "Assembler",
   "container.factory.discovery_station": "Discovery Station",
   "container.factory.generator": "Generator",
+  "container.factory.enchanting_table": "Enchant",
 
   "entity.minecraft.villager.factory.discovery_station_profession": "Explorer"
 }

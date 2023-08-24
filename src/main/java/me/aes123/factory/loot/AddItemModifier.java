@@ -34,7 +34,7 @@ public class AddItemModifier extends LootModifier {
 
         for (ItemStack stack : generatedLoot)
         {
-            if(!ModTags.FORBIDDEN_ITEMS.contains(stack.getItem()))
+            if(!stack.is(ModTags.Items.FORBIDDEN_ITEMS))
             {
                 modifiedLoot.add(stack);
             }

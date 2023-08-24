@@ -4,8 +4,8 @@ import me.aes123.factory.block.EquipmentStationBlock;
 import me.aes123.factory.init.ModBlockEntityType;
 import me.aes123.factory.init.ModItems;
 import me.aes123.factory.screen.EquipmentStationMenu;
-import me.aes123.factory.util.EquipmentStationMaterial;
-import me.aes123.factory.util.EquipmentStationModifier;
+import me.aes123.factory.data.EquipmentMaterial;
+import me.aes123.factory.data.EquipmentModifier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -33,11 +33,26 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.AbstractMap;
 import java.util.Map;
 
 public class EquipmentStationBlockEntity extends BlockEntity implements MenuProvider {
     public static final Map<Item, String> ACCEPTED_MATERIALS = Map.of(Items.IRON_BLOCK, "iron_", Items.GOLD_BLOCK, "golden_", Items.DIAMOND_BLOCK, "diamond_", Items.NETHERITE_BLOCK, "netherite_");
-    public static final Map<Item, String> ACCEPTED_MOLDS = Map.of(ModItems.PICKAXE_MOLD.get(), "pickaxe", ModItems.AXE_MOLD.get(), "axe", ModItems.SWORD_MOLD.get(), "sword", ModItems.SHOVEL_MOLD.get(), "shovel", ModItems.HOE_MOLD.get(), "hoe");
+    public static final Map<Item, String> ITEM_MATERIAL = Map.of(Items.IRON_BLOCK, "iron", Items.GOLD_BLOCK, "gold", Items.DIAMOND_BLOCK, "diamond", Items.NETHERITE_BLOCK, "netherite");
+    public static final Map<Item, String> ACCEPTED_MOLDS = Map.ofEntries(
+            new AbstractMap.SimpleEntry<>(ModItems.PICKAXE_MOLD.get(), "pickaxe"),
+            new AbstractMap.SimpleEntry<>(ModItems.HAMMER_MOLD.get(), "hammer"),
+            new AbstractMap.SimpleEntry<>(ModItems.AXE_MOLD.get(), "axe"),
+            new AbstractMap.SimpleEntry<>(ModItems.SWORD_MOLD.get(), "sword"),
+            new AbstractMap.SimpleEntry<>(ModItems.SHOVEL_MOLD.get(), "shovel"),
+            new AbstractMap.SimpleEntry<>(ModItems.HOE_MOLD.get(), "hoe"),
+            new AbstractMap.SimpleEntry<>(ModItems.PISTOL_MOLD.get(), "pistol"),
+            new AbstractMap.SimpleEntry<>(ModItems.HELMET_MOLD.get(), "helmet"),
+            new AbstractMap.SimpleEntry<>(ModItems.CHESTPLATE_MOLD.get(), "chestplate"),
+            new AbstractMap.SimpleEntry<>(ModItems.LEGGINGS_MOLD.get(), "leggings"),
+            new AbstractMap.SimpleEntry<>(ModItems.BOOTS_MOLD.get(), "boots"));
     private final ItemStackHandler itemHandler = new ItemStackHandler(13)
     {
         @Override
@@ -186,7 +201,7 @@ public class EquipmentStationBlockEntity extends BlockEntity implements MenuProv
         }
     }
     public static void tick(Level level, BlockPos pos, BlockState state, EquipmentStationBlockEntity entity) {
-        if(level.isClientSide()) {
+        if (level.isClientSide()) {
             return;
         }
         SimpleContainer inventory = new SimpleContainer(entity.itemHandler.getSlots());
@@ -194,39 +209,46 @@ public class EquipmentStationBlockEntity extends BlockEntity implements MenuProv
             inventory.setItem(i, entity.itemHandler.getStackInSlot(i));
         }
         if (hasRecipe(inventory)) {
-            ItemStack stack = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation("minecraft:" + ACCEPTED_MATERIALS.get(inventory.getItem(10).getItem()) + ACCEPTED_MOLDS.get(inventory.getItem(11).getItem()))));
+
+            String toolName = ACCEPTED_MOLDS.get(inventory.getItem(11).getItem());
+            String namespace = inventory.getItem(11).getItem() == ModItems.HAMMER_MOLD.get() || inventory.getItem(11).getItem() == ModItems.PISTOL_MOLD.get() ? "factory:" : "minecraft:";
+            ItemStack stack = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(namespace + ACCEPTED_MATERIALS.get(inventory.getItem(10).getItem()) + toolName)));
+
             CompoundTag nbt = new CompoundTag();
-            var materialMap = EquipmentStationMaterial.EQUIPMENT_STATION_MATERIALS;
-            nbt.putInt("speed", materialMap.get(inventory.getItem(10).getItem()).baseSpeed);
-            nbt.putInt("durability", materialMap.get(inventory.getItem(10).getItem()).baseDurability);
+            EquipmentMaterial.EQUIPMENT_MATERIALS.get(ITEM_MATERIAL.get(inventory.getItem(10).getItem())).addBaseMaterial(nbt, toolName, true);
 
-            var map = EquipmentStationModifier.EQUIPMENT_STATION_MODIFIERS;
-            for(int i = 0; i < 10; i++)
-            {
-                if(!map.containsKey(inventory.getItem(i).getItem())) continue;
-                String modifierType = map.get(inventory.getItem(i).getItem()).modifierType;
-                int modifierValue;
-                if(!nbt.contains(modifierType))
-                {
-                    modifierValue = 0;
-                }
-                else
-                {
-                    modifierValue = nbt.getInt(modifierType);
-                }
-                modifierValue += map.get(inventory.getItem(i).getItem()).value;
+            List<EquipmentModifier> modifiersToAdd = new ArrayList<>();
 
-                nbt.putInt(map.get(inventory.getItem(i).getItem()).modifierType, modifierValue);
+            for (int i = 0; i < 10; i++) {
+                Item item = inventory.getItem(i).getItem();
+                if (!EquipmentModifier.EQUIPMENT_MODIFIERS.containsKey(item)) continue;
+
+                List<EquipmentModifier> itemModifiers = EquipmentModifier.EQUIPMENT_MODIFIERS.get(item);
+
+                for (var modifier : itemModifiers) {
+                    if (modifier.modifierType != null && !modifier.modifierType.applicableTools.contains(toolName)) continue;
+                    var optional = modifiersToAdd.stream().filter((m) -> m.modifierType == modifier.modifierType).findFirst();
+                    if (optional.isPresent()) {
+                        int oldLevel = optional.get().level;
+                        modifiersToAdd.remove(optional.get());
+                        modifiersToAdd.add(new EquipmentModifier(modifier.modifierType,Math.min(oldLevel + modifier.level, modifier.modifierType.maxLevel)));
+                    } else {
+                        modifiersToAdd.add(modifier);
+                    }
+                }
             }
-            nbt.putInt("max_durability", nbt.getInt("durability"));
+            for (var modifier : modifiersToAdd) {
+                modifier.add(nbt);
+            }
+            nbt.putInt("durability", nbt.getInt("max_durability"));
             stack.setTag(nbt);
             entity.itemHandler.setStackInSlot(12, stack);
         }
-        else
-        {
-            entity.itemHandler.setStackInSlot(12, new ItemStack(Items.AIR));
-        }
+         else{
+             entity.itemHandler.setStackInSlot(12, new ItemStack(Items.AIR));
+         }
     }
+
     public static boolean hasRecipe(SimpleContainer inventory)
     {
         int count = 0;
@@ -235,7 +257,7 @@ public class EquipmentStationBlockEntity extends BlockEntity implements MenuProv
             if(!inventory.getItem(i).isEmpty()) count++;
         }
         if(!inventory.getItem(11).hasTag()) return false;
-        int size = inventory.getItem(11).getTag().getInt("size");
-        return ACCEPTED_MATERIALS.containsKey(inventory.getItem(10).getItem()) && ACCEPTED_MOLDS.containsKey(inventory.getItem(11).getItem()) && count <= size;
+        int capacity = inventory.getItem(11).getTag().getInt("capacity");
+        return ACCEPTED_MATERIALS.containsKey(inventory.getItem(10).getItem()) && ACCEPTED_MOLDS.containsKey(inventory.getItem(11).getItem()) && count <= capacity;
     }
 }

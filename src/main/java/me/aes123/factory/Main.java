@@ -1,23 +1,38 @@
 package me.aes123.factory;
 
+import com.mojang.logging.LogUtils;
+import me.aes123.factory.client.ModEnchantTableRenderer;
 import me.aes123.factory.entity.client.GuardRenderer;
 import me.aes123.factory.init.*;
+import me.aes123.factory.item.ModBundleItem;
 import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
+import net.minecraft.client.renderer.blockentity.EnchantTableRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.entity.MinecartRenderer;
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.BundleItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.entity.EnchantmentTableBlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.slf4j.Logger;
 import software.bernie.geckolib.GeckoLib;
+
+import java.util.Random;
 
 @Mod(Main.MODID)
 public class Main
 {
     public static final String MODID = "factory";
+    public static final Logger LOGGER = LogUtils.getLogger();
+    public static final Random rnd = new Random();
 
     public Main()
     {
@@ -38,12 +53,29 @@ public class Main
 
         GeckoLib.initialize();
     }
+
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
     @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {
+
+        static void bundleProperty(Item item)
+        {
+            ItemProperties.register(item,
+                    new ResourceLocation("minecraft", "filled"), (stack, level, living, id) -> ModBundleItem.getFullnessDisplay(stack));
+        }
+
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
+
+            event.enqueueWork(() ->
+            {
+                bundleProperty(ModItems.IMPROVED_BUNDLE.get());
+                bundleProperty(ModItems.PROFOUND_BUNDLE.get());
+                bundleProperty(ModItems.REINFORCED_BUNDLE.get());
+            });
+
             EntityRenderers.register(ModEntityTypes.GUARD.get(), GuardRenderer::new);
+            BlockEntityRenderers.register(ModBlockEntityType.ENCHANTMENT_TABLE_BLOCK_ENTITY.get(), ModEnchantTableRenderer::new);
             EntityRenderers.register(ModEntityTypes.MINECART.get(), (p_174070_) -> new MinecartRenderer<>(p_174070_, ModelLayers.MINECART));
         }
     }

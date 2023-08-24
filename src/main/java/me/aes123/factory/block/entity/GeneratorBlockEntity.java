@@ -93,10 +93,7 @@ public class GeneratorBlockEntity extends PoweredMachineBlockEntity {
     }
 
     @Override
-    protected void tick(Level level, BlockPos pos, BlockState state) {
-        if(level.isClientSide()) {
-            return;
-        }
+    protected void serverTick(Level level, BlockPos pos, BlockState state) {
         SimpleContainer inventory = new SimpleContainer(itemHandler.getSlots());
         for (int i = 0; i < itemHandler.getSlots(); i++) {
             inventory.setItem(i, itemHandler.getStackInSlot(i));

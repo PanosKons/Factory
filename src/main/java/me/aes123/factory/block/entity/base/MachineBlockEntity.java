@@ -147,11 +147,15 @@ public abstract class MachineBlockEntity extends AbstractModBlockEntity {
         return factory.newObject(id,inventory, this, this.data);
     }
 
-    protected abstract void tick(Level level, BlockPos pos, BlockState state);
+    protected void clientTick(Level level, BlockPos pos, BlockState state) {}
+    protected void serverTick(Level level, BlockPos pos, BlockState state) {}
 
-    public static void tick(Level level, BlockPos pos, BlockState state, MachineBlockEntity entity)
+    public static void clientTick(Level level, BlockPos pos, BlockState state, MachineBlockEntity entity)
     {
-        entity.tick(level, pos, state);
+        entity.clientTick(level, pos, state);
     }
-
+    public static void serverTick(Level level, BlockPos pos, BlockState state, MachineBlockEntity entity)
+    {
+        entity.serverTick(level, pos, state);
+    }
 }

@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "me.aes123.factory.mixin",
+  "mixins": [
+    "BlockItemMixin",
+    "HopperBlockEntityMixin",
+    "BlockEntityMixin"
+  ],
+  "client": [
+    "LevelRendererMixin"
+  ],
+  "server": []
+}

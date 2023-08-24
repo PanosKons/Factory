@@ -3,11 +3,8 @@ package me.aes123.factory.init;
 import me.aes123.factory.Main;
 import me.aes123.factory.block.*;
 import me.aes123.factory.util.ModRarity;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.RailBlock;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
@@ -35,10 +32,17 @@ public class ModBlocks {
     public static final  RegistryObject<ModBarrelBlock> PROFOUND_BARREL = BLOCKS.register("profound_barrel", () -> new ModBarrelBlock(BlockBehaviour.Properties.of().mapColor(MapColor.RAW_IRON).instrument(NoteBlockInstrument.BASS).requiresCorrectToolForDrops().strength(5.0F).sound(SoundType.METAL), ModRarity.PROFOUND));
     public static final  RegistryObject<ModBarrelBlock> REINFORCED_BARREL = BLOCKS.register("reinforced_barrel", () -> new ModBarrelBlock(BlockBehaviour.Properties.of().mapColor(MapColor.RAW_IRON).instrument(NoteBlockInstrument.BASS).requiresCorrectToolForDrops().strength(5.0F).sound(SoundType.METAL), ModRarity.REINFORCED));
 
-    public static final RegistryObject<QuarryBlock> QUARRY = BLOCKS.register("quarry", () -> new QuarryBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
+    public static final RegistryObject<ElectricFurnaceBlock> ELECTRIC_FURNACE = BLOCKS.register("electric_furnace", () -> new ElectricFurnaceBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
     public static final RegistryObject<CrusherBlock> CRUSHER = BLOCKS.register("crusher", () -> new CrusherBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
+    public static final RegistryObject<DropExperienceBlock> RUBY_ORE = BLOCKS.register("ruby_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of().mapColor(MapColor.SAND).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(10.0F, 10.0F), UniformInt.of(20, 30)));
+    public static final RegistryObject<ModHopperBlock> IMPROVED_HOPPER = BLOCKS.register("improved_hopper", () -> new ModHopperBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).requiresCorrectToolForDrops().strength(3.0F, 4.8F).sound(SoundType.METAL).noOcclusion(), ModBlockEntityType.IMPROVED_HOPPER_BLOCK_ENTITY, 5));
+    public static final RegistryObject<ModHopperBlock> PROFOUND_HOPPER = BLOCKS.register("profound_hopper", () -> new ModHopperBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).requiresCorrectToolForDrops().strength(3.0F, 4.8F).sound(SoundType.METAL).noOcclusion(),ModBlockEntityType.PROFOUND_HOPPER_BLOCK_ENTITY,3));
+    public static final RegistryObject<ModHopperBlock> REINFORCED_HOPPER = BLOCKS.register("reinforced_hopper", () -> new ModHopperBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).requiresCorrectToolForDrops().strength(3.0F, 4.8F).sound(SoundType.METAL).noOcclusion(),ModBlockEntityType.REINFORCED_HOPPER_BLOCK_ENTITY,1));
+
+    //VANILLA
     public static final RegistryObject<ModRailBlock> RAIL = VANILLA_BLOCKS.register("rail", () -> new ModRailBlock(BlockBehaviour.Properties.of().noCollission().strength(0.7F).sound(SoundType.METAL)));
+    public static final RegistryObject<ModPoweredRailBlock> POWERED_RAIL = VANILLA_BLOCKS.register("powered_rail", () -> new ModPoweredRailBlock(BlockBehaviour.Properties.of().noCollission().strength(0.7F).sound(SoundType.METAL),true));
 
     //public static final RegistryObject<Block> ANVIL = VANILLA_BLOCKS.register("anvil", () -> new Block(BlockBehaviour.Properties.copy(Blocks.OBSIDIAN)));
-    //public static final RegistryObject<Block> ENCHANTING_TABLE = VANILLA_BLOCKS.register("enchanting_table", () -> new Block(BlockBehaviour.Properties.copy(Blocks.OBSIDIAN)));
+    public static final RegistryObject<ModEnchantmentTableBlock> ENCHANTING_TABLE = VANILLA_BLOCKS.register("enchanting_table", () -> new ModEnchantmentTableBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_RED).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().lightLevel((p_187437_) -> 7).strength(5.0F, 1200.0F)));
 }

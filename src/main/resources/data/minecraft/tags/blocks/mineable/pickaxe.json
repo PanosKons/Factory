@@ -1,0 +1,18 @@
+{
+  "replace": false,
+  "values": [
+    "factory:improved_barrel",
+    "factory:reinforced_barrel",
+    "factory:profound_barrel",
+    "factory:improved_hopper",
+    "factory:reinforced_hopper",
+    "factory:profound_hopper",
+    "factory:generator",
+    "factory:discovery_station",
+    "factory:equipment_station",
+    "factory:electric_furnace",
+    "factory:crusher",
+    "factory:ruby_ore",
+    "factory:assembler"
+  ]
+}

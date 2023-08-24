@@ -2,6 +2,7 @@ package me.aes123.factory.item.recipe;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -33,16 +34,14 @@ public class UndiscoveredRecipeItem extends Item {
         super.inventoryTick(p_41404_, p_41405_, p_41406_, p_41407_, p_41408_);
     }
 
-    @Override
-    public void onInventoryTick(ItemStack stack, Level level, Player player, int slotIndex, int selectedIndex) {
-        updateBar(stack);
-        super.onInventoryTick(stack, level, player, slotIndex, selectedIndex);
-    }
 
     @Override
     public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> components, TooltipFlag flag) {
-        if(itemStack.hasTag()) {
-
+        if(!itemStack.hasTag()) {
+            itemStack.getOrCreateTag().putString("recipe","null");
+            itemStack.getTag().putInt("progress",0);
+            itemStack.getTag().putInt("max_progress",10);
+        }
             int progress = itemStack.getTag().getInt("progress");
             int max_progress = itemStack.getTag().getInt("max_progress");
             String recipe = itemStack.getTag().getString("recipe");
@@ -55,7 +54,6 @@ public class UndiscoveredRecipeItem extends Item {
             {
                 components.add(Component.literal("<Hold SHIFT for info>").withStyle(ChatFormatting.YELLOW));
             }
-        }
         super.appendHoverText(itemStack, level, components, flag);
     }
 }

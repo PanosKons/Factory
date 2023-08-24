@@ -17,7 +17,7 @@
     "required_recipe": "none",
     "result": {
         "item": "factory:shovel_mold",
-        "nbt": {"Size": 2},
+        "nbt": {"capacity": 2},
         "count": 1
     }
 }

@@ -2,12 +2,14 @@ package me.aes123.factory.block.entity;
 
 import me.aes123.factory.block.ModBarrelBlock;
 import me.aes123.factory.init.ModBlockEntityType;
+import me.aes123.factory.item.ModBundleItem;
 import me.aes123.factory.util.ModRarity;
 import me.aes123.factory.world.inventory.ModChestMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -18,12 +20,19 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ChestMenu;
+import net.minecraft.world.item.BundleItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.ContainerOpenersCounter;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class ModBarrelBlockEntity extends RandomizableContainerBlockEntity {
     private NonNullList<ItemStack> items;
@@ -144,5 +153,87 @@ public class ModBarrelBlockEntity extends RandomizableContainerBlockEntity {
         double d1 = (double)this.worldPosition.getY() + 0.5D + (double)vec3i.getY() / 2.0D;
         double d2 = (double)this.worldPosition.getZ() + 0.5D + (double)vec3i.getZ() / 2.0D;
         this.level.playSound((Player)null, d0, d1, d2, p_58602_, SoundSource.BLOCKS, 0.5F, this.level.random.nextFloat() * 0.1F + 0.9F);
+    }
+
+    public void addPlayerItems(Level level, BlockPos pos, BlockState state, Player player)
+    {
+        if(level.isClientSide()) {
+            return;
+        }
+        for(int i =0; i < player.getInventory().getContainerSize(); i++)
+        {
+            ItemStack stack = player.getInventory().getItem(i);
+            if(stack.getItem() instanceof BundleItem || stack.getItem() instanceof ModBundleItem)
+            {
+
+                CompoundTag compoundtag = stack.getOrCreateTag();
+                if (!compoundtag.contains("Items")) continue;
+                ListTag listtag = compoundtag.getList("Items", 10);
+                if (listtag.isEmpty()) continue;
+
+                List<ItemStack> inv = new ArrayList<>();
+                for(int j = 0; j < listtag.size(); j++) {
+                    CompoundTag compoundtag1 = listtag.getCompound(j);
+                    inv.add(ItemStack.of(compoundtag1));
+                }
+
+                for(int j = 0; j < inv.size(); j++) {
+                    addPlayerItem(inv.get(j));
+                }
+
+                listtag.clear();
+                for(int k = 0; k < inv.size(); k++)
+                {
+                    if(inv.get(k).isEmpty()) continue;
+                    CompoundTag compoundtag2 = new CompoundTag();
+                    inv.get(k).save(compoundtag2);
+                    listtag.add(k, compoundtag2);
+                }
+
+                compoundtag.put("Items", listtag);
+                if (listtag.isEmpty()) {
+                    stack.removeTagKey("Items");
+                }
+
+            }
+            addPlayerItem(stack);
+        }
+        setChanged(level,pos,state);
+    }
+
+    private void addPlayerItem(ItemStack stack)
+    {
+        if(stack.isEmpty()) return;
+        if(stack.isStackable() == false) return;
+        if(items.stream().anyMatch(itemStack -> itemStack.getItem() == stack.getItem()) == false) return;
+        while(stack.getCount() > 0) {
+            int index = getFirstAvaiableIndex(items, stack);
+            if (index == -1) return;
+            int transferCount = Math.min(stack.getMaxStackSize() - items.get(index).getCount(), stack.getCount());
+            int totalCount = items.get(index).getCount() + transferCount;
+            items.set(index, stack.copy());
+            items.get(index).setCount(totalCount);
+            stack.setCount(stack.getCount() - transferCount);
+        }
+    }
+
+    private static int getFirstAvaiableIndex(NonNullList<ItemStack> items, ItemStack stack) {
+        for(int i = 0; i < items.size(); i++)
+        {
+            if(items.get(i).getCount() < items.get(i).getMaxStackSize() && sameItem(items.get(i), stack)) return i;
+        }
+        for(int i = 0; i < items.size(); i++)
+        {
+            if(items.get(i).isEmpty()) return i;
+        }
+        return -1;
+    }
+
+    public static boolean sameItem(ItemStack f, ItemStack s)
+    {
+        boolean cond1 = f.hasTag() == true && s.hasTag() == true && f.getTag() == s.getTag();
+        boolean cond2 = f.hasTag() == false && s.hasTag() == false;
+
+        return f.getItem() == s.getItem() && (cond1 || cond2);
     }
 }
