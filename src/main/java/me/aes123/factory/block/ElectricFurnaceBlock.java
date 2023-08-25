@@ -1,6 +1,6 @@
 package me.aes123.factory.block;
 
-import me.aes123.factory.block.entity.ElectricBlockEntity;
+import me.aes123.factory.blockentity.ElectricFurnaceBlockEntity;
 import me.aes123.factory.init.ModBlockEntityType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -72,8 +72,8 @@ public class ElectricFurnaceBlock extends BaseEntityBlock {
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
         if (pState.getBlock() != pNewState.getBlock()) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof ElectricBlockEntity) {
-                ((ElectricBlockEntity) blockEntity).drops();
+            if (blockEntity instanceof ElectricFurnaceBlockEntity) {
+                ((ElectricFurnaceBlockEntity) blockEntity).drops();
             }
         }
         super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
@@ -84,8 +84,8 @@ public class ElectricFurnaceBlock extends BaseEntityBlock {
                                  Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (!pLevel.isClientSide()) {
             BlockEntity entity = pLevel.getBlockEntity(pPos);
-            if(entity instanceof ElectricBlockEntity) {
-                NetworkHooks.openScreen(((ServerPlayer)pPlayer), (ElectricBlockEntity)entity, pPos);
+            if(entity instanceof ElectricFurnaceBlockEntity) {
+                NetworkHooks.openScreen(((ServerPlayer)pPlayer), (ElectricFurnaceBlockEntity)entity, pPos);
             } else {
                 throw new IllegalStateException("Our Container provider is missing!");
             }
@@ -97,7 +97,7 @@ public class ElectricFurnaceBlock extends BaseEntityBlock {
     @javax.annotation.Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new ElectricBlockEntity(pos, state);
+        return new ElectricFurnaceBlockEntity(pos, state);
     }
 
     @Nullable
@@ -105,6 +105,6 @@ public class ElectricFurnaceBlock extends BaseEntityBlock {
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state,
                                                                   BlockEntityType<T> type) {
         return createTickerHelper(type, ModBlockEntityType.ELECTRIC_FURNACE_BLOCK_ENTITY.get(),
-                ElectricBlockEntity::tick);
+                ElectricFurnaceBlockEntity::tick);
     }
 }

@@ -6,7 +6,7 @@ import com.mojang.blaze3d.vertex.SheetedDecalTextureGenerator;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import me.aes123.factory.Main;
-import me.aes123.factory.block.entity.ModBarrelBlockEntity;
+import me.aes123.factory.blockentity.ModBarrelBlockEntity;
 import me.aes123.factory.item.ModBundleItem;
 import me.aes123.factory.item.equipment.ModHammer;
 import me.aes123.factory.util.ILevelRenderer;

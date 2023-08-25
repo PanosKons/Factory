@@ -1,6 +1,6 @@
 package me.aes123.factory.screen;
 
-import me.aes123.factory.block.entity.EquipmentStationBlockEntity;
+import me.aes123.factory.blockentity.EquipmentStationBlockEntity;
 import me.aes123.factory.init.ModBlocks;
 import me.aes123.factory.init.ModMenuTypes;
 import net.minecraft.network.FriendlyByteBuf;

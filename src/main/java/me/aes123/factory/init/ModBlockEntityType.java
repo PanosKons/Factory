@@ -1,7 +1,7 @@
 package me.aes123.factory.init;
 
 import me.aes123.factory.Main;
-import me.aes123.factory.block.entity.*;
+import me.aes123.factory.blockentity.*;
 import me.aes123.factory.util.IBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -36,7 +36,7 @@ public class ModBlockEntityType {
     public static final RegistryObject<BlockEntityType<AssemblerBlockEntity>> ASSEMBLER_BLOCK_ENTITY = BLOCK_ENTITIES.register("assembler_block_entity", ()-> BlockEntityType.Builder.of(AssemblerBlockEntity::new, ModBlocks.ASSEMBLER.get()).build(null));
     public static final RegistryObject<BlockEntityType<GeneratorBlockEntity>> GENERATOR_BLOCK_ENTITY = BLOCK_ENTITIES.register("generator_block_entity", ()-> BlockEntityType.Builder.of(GeneratorBlockEntity::new, ModBlocks.GENERATOR.get()).build(null));
     public static final RegistryObject<BlockEntityType<CrusherBlockEntity>> CRUSHER_BLOCK_ENTITY = BLOCK_ENTITIES.register("crusher_block_entity", ()-> BlockEntityType.Builder.of(CrusherBlockEntity::new, ModBlocks.CRUSHER.get()).build(null));
-    public static final RegistryObject<BlockEntityType<ElectricBlockEntity>> ELECTRIC_FURNACE_BLOCK_ENTITY = BLOCK_ENTITIES.register("electric_furnace_block_entity", ()-> BlockEntityType.Builder.of(ElectricBlockEntity::new, ModBlocks.ELECTRIC_FURNACE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<ElectricFurnaceBlockEntity>> ELECTRIC_FURNACE_BLOCK_ENTITY = BLOCK_ENTITIES.register("electric_furnace_block_entity", ()-> BlockEntityType.Builder.of(ElectricFurnaceBlockEntity::new, ModBlocks.ELECTRIC_FURNACE.get()).build(null));
     public static final RegistryObject<BlockEntityType<ModBarrelBlockEntity>> IMPROVED_BARREL_BLOCK_ENTITY = BLOCK_ENTITIES.register("improved_barrel_block_entity", () -> BlockEntityType.Builder.of(ModBarrelBlockEntity::new, ModBlocks.IMPROVED_BARREL.get()).build(null));
     public static final RegistryObject<BlockEntityType<ModBarrelBlockEntity>> PROFOUND_BARREL_BLOCK_ENTITY = BLOCK_ENTITIES.register("profound_barrel_block_entity", () -> BlockEntityType.Builder.of(ModBarrelBlockEntity::new, ModBlocks.PROFOUND_BARREL.get()).build(null));
     public static final RegistryObject<BlockEntityType<ModBarrelBlockEntity>> REINFORCED_BARREL_BLOCK_ENTITY = BLOCK_ENTITIES.register("reinforced_barrel_block_entity", () -> BlockEntityType.Builder.of(ModBarrelBlockEntity::new, ModBlocks.REINFORCED_BARREL.get()).build(null));

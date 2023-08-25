@@ -1,4 +1,4 @@
-package me.aes123.factory.block.entity.base;
+package me.aes123.factory.blockentity.base;
 
 import me.aes123.factory.util.ModEnergyStorage;
 import net.minecraft.core.BlockPos;

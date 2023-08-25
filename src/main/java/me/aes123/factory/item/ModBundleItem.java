@@ -35,12 +35,14 @@ import net.minecraft.world.level.gameevent.GameEvent;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.stream.Stream;
 
 public class ModBundleItem extends Item {
     private static final int BAR_COLOR = Mth.color(0.4F, 0.4F, 1.0F);
 
     public int size;
+    public static final Random rnd = new Random(0);
 
     public ModBundleItem(Item.Properties properties, int bundleSize) {
         super(properties.stacksTo(1));
@@ -118,7 +120,7 @@ public class ModBundleItem extends Item {
         ListTag listtag = compoundtag.getList("Items", 10);
         //if(listtag.size() < 0) return super.useOn(useOnContext);
 
-        int i = Main.rnd.nextInt(listtag.size());
+        int i = rnd.nextInt(listtag.size());
         ItemStack stack = ItemStack.of(listtag.getCompound(i));
 
         if(stack.getItem() instanceof BlockItem blockItem)

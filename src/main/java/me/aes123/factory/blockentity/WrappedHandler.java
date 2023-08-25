@@ -1,4 +1,4 @@
-package me.aes123.factory.block.entity;
+package me.aes123.factory.blockentity;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandlerModifiable;

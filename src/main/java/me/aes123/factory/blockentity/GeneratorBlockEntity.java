@@ -1,42 +1,22 @@
-package me.aes123.factory.block.entity;
+package me.aes123.factory.blockentity;
 
 import me.aes123.factory.block.GeneratorBlock;
-import me.aes123.factory.block.entity.base.PoweredMachineBlockEntity;
-import me.aes123.factory.block.entity.base.SlotType;
+import me.aes123.factory.blockentity.base.PoweredMachineBlockEntity;
+import me.aes123.factory.blockentity.base.SlotType;
 import me.aes123.factory.init.ModBlockEntityType;
-import me.aes123.factory.screen.DiscoveryStationMenu;
 import me.aes123.factory.screen.GeneratorMenu;
-import me.aes123.factory.util.ModEnergyStorage;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.Containers;
-import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 public class GeneratorBlockEntity extends PoweredMachineBlockEntity {
     private static final int ENERGY_PROD = 20;
@@ -104,7 +84,7 @@ public class GeneratorBlockEntity extends PoweredMachineBlockEntity {
                 itemHandler.extractItem(0, 1, false);
                 maxProgress = burnTime / 2;
                 level.setBlock(pos, state.setValue(GeneratorBlock.LIT, true), 3);
-                setChanged(level, pos, state);
+                BlockEntity.setChanged(level, pos, state);
             }
         }
         else
@@ -120,7 +100,7 @@ public class GeneratorBlockEntity extends PoweredMachineBlockEntity {
                     level.setBlock(pos, state.setValue(GeneratorBlock.LIT, false), 3);
                 }
             }
-            setChanged(level, pos, state);
+            BlockEntity.setChanged(level, pos, state);
         }
 
     }

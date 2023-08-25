@@ -4,7 +4,8 @@
   "mixins": [
     "BlockItemMixin",
     "HopperBlockEntityMixin",
-    "BlockEntityMixin"
+    "BlockEntityMixin",
+    "ExperienceOrbMixin"
   ],
   "client": [
     "LevelRendererMixin"

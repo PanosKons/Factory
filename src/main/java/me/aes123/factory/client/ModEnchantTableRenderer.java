@@ -3,7 +3,7 @@ package me.aes123.factory.client;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
-import me.aes123.factory.block.entity.ModEnchantmentTableBlockEntity;
+import me.aes123.factory.blockentity.ModEnchantmentTableBlockEntity;
 import net.minecraft.client.model.BookModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;

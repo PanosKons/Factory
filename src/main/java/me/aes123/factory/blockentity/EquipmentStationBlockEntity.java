@@ -1,4 +1,4 @@
-package me.aes123.factory.block.entity;
+package me.aes123.factory.blockentity;
 
 import me.aes123.factory.block.EquipmentStationBlock;
 import me.aes123.factory.init.ModBlockEntityType;

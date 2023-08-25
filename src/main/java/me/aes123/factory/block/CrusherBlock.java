@@ -1,6 +1,6 @@
 package me.aes123.factory.block;
 
-import me.aes123.factory.block.entity.CrusherBlockEntity;
+import me.aes123.factory.blockentity.CrusherBlockEntity;
 import me.aes123.factory.init.ModBlockEntityType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;

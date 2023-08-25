@@ -24,9 +24,14 @@ import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class ModEquipmentItem extends Item implements Vanishable {
     private static final DecimalFormat df = new DecimalFormat();
+    protected static final UUID BASE_PLAYER_SPEED_UUID = UUID.fromString("CB3F65D3-145C-4F38-A437-9C13A33DB5CF");
+    protected static final UUID BASE_BLOCK_REACH_UUID = UUID.fromString("CB3F65D3-245D-4F28-A437-9C13A44DB2CF");
+    protected static final UUID BASE_ENTITY_REACH_UUID = UUID.fromString("CB3F55D3-245D-4E28-B438-9C13A44DB2CF");
+
     public ModEquipmentItem(Properties properties) {
         super(properties.defaultDurability(1000));
         df.setMaximumFractionDigits(2);

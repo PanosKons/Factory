@@ -1,7 +1,7 @@
 package me.aes123.factory.block;
 
-import me.aes123.factory.block.entity.DiscoveryStationBlockEntity;
-import me.aes123.factory.block.entity.base.MachineBlockEntity;
+import me.aes123.factory.blockentity.DiscoveryStationBlockEntity;
+import me.aes123.factory.blockentity.base.MachineBlockEntity;
 import me.aes123.factory.init.ModBlockEntityType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;

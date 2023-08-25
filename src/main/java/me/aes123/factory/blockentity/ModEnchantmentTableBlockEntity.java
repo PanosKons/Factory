@@ -1,8 +1,8 @@
-package me.aes123.factory.block.entity;
+package me.aes123.factory.blockentity;
 
 import me.aes123.factory.block.ModEnchantmentTableBlock;
-import me.aes123.factory.block.entity.base.MachineBlockEntity;
-import me.aes123.factory.block.entity.base.SlotType;
+import me.aes123.factory.blockentity.base.MachineBlockEntity;
+import me.aes123.factory.blockentity.base.SlotType;
 import me.aes123.factory.init.ModBlockEntityType;
 import me.aes123.factory.init.ModBlocks;
 import me.aes123.factory.item.BoosterItem;
@@ -23,7 +23,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EnchantmentTableBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.fml.common.Mod;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -103,17 +102,18 @@ public class ModEnchantmentTableBlockEntity extends MachineBlockEntity implement
     }
     @Override
     protected void serverTick(Level level, BlockPos pos, BlockState state) {
-
+        if(XPstored > MaxXPstored) XPstored = MaxXPstored;
         int speed = 1;
         for(BlockPos blockpos : EnchantmentTableBlock.BOOKSHELF_OFFSETS) {
             if (ModEnchantmentTableBlock.isValidBookShelf(level, pos, blockpos)) {
                 speed += level.getBlockState(pos.offset(blockpos)).getEnchantPowerBonus(level, pos.offset(blockpos));
             }
         }
+        MaxXPstored = 100000 * speed;
         Player player = level.getNearestPlayer(pos.getX(), pos.getY(),pos.getZ(), 4.0, true);
         if(player != null && player.isCrouching())
         {
-            if(player.totalExperience == 0)
+            if(player.totalExperience == 0 && player.invulnerableTime <= 0)
             {
                 int amount = Math.min(speed, MaxXPstored - XPstored);
                 player.hurt(player.damageSources().magic(), amount);

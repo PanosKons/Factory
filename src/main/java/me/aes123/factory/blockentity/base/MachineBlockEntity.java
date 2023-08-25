@@ -1,8 +1,7 @@
-package me.aes123.factory.block.entity.base;
+package me.aes123.factory.blockentity.base;
 
 import me.aes123.factory.block.DiscoveryStationBlock;
-import me.aes123.factory.block.entity.AbstractModBlockEntity;
-import me.aes123.factory.block.entity.WrappedHandler;
+import me.aes123.factory.blockentity.WrappedHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -28,8 +27,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Map;
-
-
 
 public abstract class MachineBlockEntity extends AbstractModBlockEntity {
 
@@ -62,7 +59,7 @@ public abstract class MachineBlockEntity extends AbstractModBlockEntity {
 
             @Override
             public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-                return slot != slots.size();
+                return slot <= slots.size();
             }
         };
         directionWrappedHandlerMap =

@@ -1,27 +1,20 @@
-package me.aes123.factory.block.entity;
+package me.aes123.factory.blockentity;
 
-import me.aes123.factory.block.entity.base.MachineBlockEntity;
-import me.aes123.factory.block.entity.base.SlotType;
+import me.aes123.factory.blockentity.base.MachineBlockEntity;
+import me.aes123.factory.blockentity.base.SlotType;
 import me.aes123.factory.init.ModBlockEntityType;
 import me.aes123.factory.init.ModItems;
 import me.aes123.factory.item.recipe.UndiscoveredRecipeItem;
 import me.aes123.factory.screen.DiscoveryStationMenu;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
 
 import java.util.List;
-import java.util.Optional;
 
 public class DiscoveryStationBlockEntity extends MachineBlockEntity {
     private int progress = 0;

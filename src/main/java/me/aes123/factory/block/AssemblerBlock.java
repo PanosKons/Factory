@@ -1,6 +1,6 @@
 package me.aes123.factory.block;
 
-import me.aes123.factory.block.entity.AssemblerBlockEntity;
+import me.aes123.factory.blockentity.AssemblerBlockEntity;
 import me.aes123.factory.init.ModBlockEntityType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;

@@ -1,6 +1,6 @@
 package me.aes123.factory.screen;
 
-import me.aes123.factory.block.entity.ElectricBlockEntity;
+import me.aes123.factory.blockentity.ElectricFurnaceBlockEntity;
 import me.aes123.factory.init.ModBlocks;
 import me.aes123.factory.init.ModMenuTypes;
 import net.minecraft.network.FriendlyByteBuf;
@@ -14,7 +14,7 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class ElectricFurnaceMenu extends AbstractContainerMenu {
-    public final ElectricBlockEntity blockEntity;
+    public final ElectricFurnaceBlockEntity blockEntity;
     private final Level level;
     private final ContainerData data;
 
@@ -25,7 +25,7 @@ public class ElectricFurnaceMenu extends AbstractContainerMenu {
     public ElectricFurnaceMenu(int id, Inventory inv, BlockEntity entity, ContainerData data) {
         super(ModMenuTypes.QUARRY_MENU.get(), id);
         checkContainerSize(inv, 2);
-        blockEntity = (ElectricBlockEntity) entity;
+        blockEntity = (ElectricFurnaceBlockEntity) entity;
         this.level = inv.player.level();
         this.data = data;
 

@@ -1,4 +1,4 @@
-package me.aes123.factory.block.entity;
+package me.aes123.factory.blockentity;
 
 import me.aes123.factory.block.ModBarrelBlock;
 import me.aes123.factory.init.ModBlockEntityType;
@@ -21,9 +21,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.item.BundleItem;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.ContainerOpenersCounter;
@@ -32,7 +30,6 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class ModBarrelBlockEntity extends RandomizableContainerBlockEntity {
     private NonNullList<ItemStack> items;

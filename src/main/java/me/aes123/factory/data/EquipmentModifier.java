@@ -33,9 +33,9 @@ public class EquipmentModifier {
         KNOCKBACK(WEAPONS,10), ATTACK_DAMAGE(WEAPONS, 10),
         KNOCKBACK_RESISTANCE(ARMORS,10), ARMOR(ARMORS,30), THORNS(ARMORS,10),
         XP_BOOST(HOLDABLE, 10, DisplayFormat.PERCENTAGE),
-        PLAYER_SPEED(TOTEM, 5), NIGHT_VISION(TOTEM, 1), PLAYER_REACH(TOTEM, 5), PLAYER_LUCK(TOTEM, 5), REGENERATION(TOTEM, 5),
+        PLAYER_SPEED(TOTEM, 5), NIGHT_VISION(TOTEM, 1), BLOCK_REACH(TOTEM, 5), ENTITY_REACH(TOTEM, 5), LUCK(TOTEM, 5), REGENERATION(TOTEM, 5),
         STABILIZED(TOTEM, 1), ABSORB_DAMAGE_CHANCE(TOTEM, 10), HOTBAR_ACTIVE(TOTEM, 1), SLOWER_HUNGER(TOTEM,5), MAGNET_RANGE(TOTEM, 5),
-        WEATHER_CONTROL(TOTEM, 1, true), TIME_CONTROL(TOTEM, 1, true), TOTEM_OF_UNDYING(TOTEM, 1, true), ENTITY_HIGHLIGHTER(TOTEM, 1, true);
+        WEATHER_CONTROL(TOTEM, 1, true), TIME_CONTROL(TOTEM, 1, true), ENTITY_HIGHLIGHTER(TOTEM, 1, true);
 
         public enum DisplayFormat
         {
@@ -136,11 +136,10 @@ public class EquipmentModifier {
             case THORNS -> this.level;
             case XP_BOOST -> this.level * 10.0f;
             case MENDING, SILK_TOUCH -> this.level;
-            case PLAYER_SPEED -> this.level;
-            case NIGHT_VISION -> this.level;
-            case PLAYER_REACH -> this.level;
-            case PLAYER_LUCK -> this.level;
-            case REGENERATION -> this.level;
+            case PLAYER_SPEED -> 1 + this.level * 0.2f;
+            case BLOCK_REACH -> 4.5f + this.level * 0.5f;
+            case ENTITY_REACH -> 3.0f + this.level * 0.5f;
+            case LUCK, REGENERATION, NIGHT_VISION -> this.level;
             case STABILIZED -> this.level;
             case ABSORB_DAMAGE_CHANCE -> this.level;
             case HOTBAR_ACTIVE -> this.level;
@@ -148,7 +147,6 @@ public class EquipmentModifier {
             case MAGNET_RANGE -> this.level;
             case WEATHER_CONTROL -> this.level;
             case TIME_CONTROL -> this.level;
-            case TOTEM_OF_UNDYING -> this.level;
             case ENTITY_HIGHLIGHTER -> this.level;
         };
     }

@@ -1,6 +1,6 @@
 package me.aes123.factory.mixin;
 
-import me.aes123.factory.block.entity.ModBarrelBlockEntity;
+import me.aes123.factory.blockentity.ModBarrelBlockEntity;
 import me.aes123.factory.item.ModBundleItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -9,7 +9,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.BundleItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;

@@ -1,6 +1,6 @@
 package me.aes123.factory.block;
 
-import me.aes123.factory.block.entity.ModBarrelBlockEntity;
+import me.aes123.factory.blockentity.ModBarrelBlockEntity;
 import me.aes123.factory.util.ModRarity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -27,8 +27,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
 
