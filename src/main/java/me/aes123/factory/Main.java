@@ -2,9 +2,11 @@ package me.aes123.factory;
 
 import com.mojang.logging.LogUtils;
 import me.aes123.factory.client.ModEnchantTableRenderer;
+import me.aes123.factory.dungeon.Dungeon;
 import me.aes123.factory.entity.client.GuardRenderer;
 import me.aes123.factory.init.*;
 import me.aes123.factory.item.ModBundleItem;
+import me.aes123.factory.networking.ModMessages;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.blockentity.EnchantTableRenderer;
@@ -17,14 +19,18 @@ import net.minecraft.world.item.BundleItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.entity.EnchantmentTableBlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.targets.FMLServerLaunchHandler;
 import org.slf4j.Logger;
 import software.bernie.geckolib.GeckoLib;
 
+import java.text.DecimalFormat;
 import java.util.Random;
 
 @Mod(Main.MODID)
@@ -32,10 +38,11 @@ public class Main
 {
     public static final String MODID = "factory";
     public static final Logger LOGGER = LogUtils.getLogger();
-    public static final Random rnd = new Random();
-
+    public static final DecimalFormat df = new DecimalFormat();
     public Main()
     {
+        df.setMaximumFractionDigits(2);
+
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
         //THE ORDER IS IMPORTANT
@@ -50,8 +57,17 @@ public class Main
         ModLootModifiers.LOOT_MODIFIER_SERIALIZERS.register(bus);
         ModEntityTypes.ENTITIES.register(bus);
         ModEntityTypes.VANILLA_ENTITIES.register(bus);
+        ModAttributes.ATTRIBUTES.register(bus);
 
         GeckoLib.initialize();
+
+        MinecraftForge.EVENT_BUS.addListener(Dungeon::init);
+        bus.addListener(this::commonSetup);
+    }
+
+    private void commonSetup(FMLCommonSetupEvent event)
+    {
+        ModMessages.register();
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
@@ -63,7 +79,6 @@ public class Main
             ItemProperties.register(item,
                     new ResourceLocation("minecraft", "filled"), (stack, level, living, id) -> ModBundleItem.getFullnessDisplay(stack));
         }
-
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
 

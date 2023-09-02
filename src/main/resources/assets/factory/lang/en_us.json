@@ -69,5 +69,12 @@
   "container.factory.generator": "Generator",
   "container.factory.enchanting_table": "Enchant",
 
-  "entity.minecraft.villager.factory.discovery_station_profession": "Explorer"
+  "entity.minecraft.villager.factory.discovery_station_profession": "Explorer",
+  "key.category.factory.dungeon": "Dungeon",
+  "key.factory.open_shop": "Open Shop",
+
+  "dungeon.factory.loot": "+1 Loot",
+  "dungeon.factory.door": "Open nearest door",
+  "dungeon.factory.health_boost": "+1 Heart",
+  "dungeon.factory.slowness": "-1 Speed"
 }

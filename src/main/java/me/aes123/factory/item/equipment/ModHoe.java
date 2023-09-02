@@ -37,7 +37,7 @@ public class ModHoe extends ModTool {
                 if (!level.isClientSide) {
                     consumer.accept(useOnContext);
                     if (player != null) {
-                        takeDurabilityDamage(useOnContext.getItemInHand(),player,useOnContext.getItemInHand().getEquipmentSlot(), 1);
+                        takeDurabilityDamage(useOnContext.getItemInHand(),player,useOnContext.getHand(), 1);
                     }
                 }
 

@@ -3,6 +3,8 @@ package me.aes123.factory.blockentity;
 import me.aes123.factory.block.EquipmentStationBlock;
 import me.aes123.factory.init.ModBlockEntityType;
 import me.aes123.factory.init.ModItems;
+import me.aes123.factory.item.equipment.base.IEquipmentItem;
+import me.aes123.factory.item.equipment.base.ModEquipmentItem;
 import me.aes123.factory.screen.EquipmentStationMenu;
 import me.aes123.factory.data.EquipmentMaterial;
 import me.aes123.factory.data.EquipmentModifier;
@@ -240,8 +242,10 @@ public class EquipmentStationBlockEntity extends BlockEntity implements MenuProv
             for (var modifier : modifiersToAdd) {
                 modifier.add(nbt);
             }
-            nbt.putInt("durability", nbt.getInt("max_durability"));
+
             stack.setTag(nbt);
+            var item = (IEquipmentItem)stack.getItem();
+            item.setDurability((int)item.getModifierValue(EquipmentModifier.EquipmentModifierType.MAX_DURABILITY, stack) ,stack);
             entity.itemHandler.setStackInSlot(12, stack);
         }
          else{

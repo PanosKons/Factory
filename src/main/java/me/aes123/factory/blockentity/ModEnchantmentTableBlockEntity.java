@@ -6,6 +6,7 @@ import me.aes123.factory.blockentity.base.SlotType;
 import me.aes123.factory.init.ModBlockEntityType;
 import me.aes123.factory.init.ModBlocks;
 import me.aes123.factory.item.BoosterItem;
+import me.aes123.factory.item.equipment.base.IEquipmentItem;
 import me.aes123.factory.item.equipment.base.ModEquipmentItem;
 import me.aes123.factory.screen.ModEnchantmentMenu;
 import net.minecraft.core.BlockPos;
@@ -137,7 +138,7 @@ public class ModEnchantmentTableBlockEntity extends MachineBlockEntity implement
         ItemStack booster = inventory.getItem(1);
 
         if(booster.isEmpty()) {
-            if (stack.hasTag() && stack.getItem() instanceof ModEquipmentItem item && stack.getTag().getFloat("mending") >= 1.0f) {
+            if (stack.hasTag() && stack.getItem() instanceof IEquipmentItem item && stack.getTag().getFloat("mending") >= 1.0f) {
 
                 float cost = stack.getTag().getFloat("xp_cost");
                 int durability = stack.getTag().getInt("durability");

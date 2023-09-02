@@ -1,6 +1,8 @@
 package me.aes123.factory.item;
 
 import me.aes123.factory.Main;
+import me.aes123.factory.block.ModBarrelBlock;
+import me.aes123.factory.blockentity.ModBarrelBlockEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
@@ -42,7 +44,6 @@ public class ModBundleItem extends Item {
     private static final int BAR_COLOR = Mth.color(0.4F, 0.4F, 1.0F);
 
     public int size;
-    public static final Random rnd = new Random(0);
 
     public ModBundleItem(Item.Properties properties, int bundleSize) {
         super(properties.stacksTo(1));
@@ -108,6 +109,19 @@ public class ModBundleItem extends Item {
             return InteractionResultHolder.fail(itemstack);
         }
     }
+    public static boolean containsItem(ItemStack bundle, ItemStack stack)
+    {
+        CompoundTag compoundtag = bundle.getOrCreateTag();
+        if (!compoundtag.contains("Items")) return false;
+        ListTag listtag = compoundtag.getList("Items", 10);
+
+        for(int i = 0; i < listtag.size(); i++)
+        {
+            if(ModBarrelBlockEntity.sameItem(ItemStack.of(listtag.getCompound(i)), stack)) return true;
+        }
+
+        return false;
+    }
 
     @Override
     public InteractionResult useOn(UseOnContext useOnContext) {
@@ -120,7 +134,8 @@ public class ModBundleItem extends Item {
         ListTag listtag = compoundtag.getList("Items", 10);
         //if(listtag.size() < 0) return super.useOn(useOnContext);
 
-        int i = rnd.nextInt(listtag.size());
+        var pos = useOnContext.getClickedPos();
+        int i = new Random(pos.getX() + pos.getY() << 21 + + pos.getZ() << 42).nextInt(listtag.size());
         ItemStack stack = ItemStack.of(listtag.getCompound(i));
 
         if(stack.getItem() instanceof BlockItem blockItem)

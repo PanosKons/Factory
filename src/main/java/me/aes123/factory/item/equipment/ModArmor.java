@@ -2,6 +2,8 @@ package me.aes123.factory.item.equipment;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import me.aes123.factory.data.EquipmentModifier;
+import me.aes123.factory.item.equipment.base.IEquipmentItem;
 import me.aes123.factory.item.equipment.base.ModEquipmentItem;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -12,26 +14,27 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.EntitySelector;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.EnumMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.function.Consumer;
 
-public class ModArmor extends ModEquipmentItem implements Equipable {
+import static me.aes123.factory.data.EquipmentModifier.EquipmentModifierType.SILK_TOUCH;
+import static me.aes123.factory.data.EquipmentModifier.EquipmentModifierType.THORNS;
+
+public class ModArmor extends ArmorItem implements IEquipmentItem {
     private static final EnumMap<ArmorItem.Type, UUID> ARMOR_MODIFIER_UUID_PER_TYPE = Util.make(new EnumMap<>(ArmorItem.Type.class), (p_266744_) -> {
         p_266744_.put(ArmorItem.Type.BOOTS, UUID.fromString("845DB27C-C624-495F-8C9F-6020A9A58B6B"));
         p_266744_.put(ArmorItem.Type.LEGGINGS, UUID.fromString("D8499B04-0E66-4726-AB29-64469D734E0D"));
@@ -39,70 +42,95 @@ public class ModArmor extends ModEquipmentItem implements Equipable {
         p_266744_.put(ArmorItem.Type.HELMET, UUID.fromString("2AD3F246-FEE1-4E67-B886-69FD380BB150"));
     });
 
-    protected final ArmorItem.Type type;
-    protected final SoundEvent equipSound;
-
-    public ModArmor(ArmorItem.Type type, Properties properties, SoundEvent event) {
-        super(properties);
-        this.equipSound = event;
-        this.type = type;
-        DispenserBlock.registerBehavior(this, DISPENSE_ITEM_BEHAVIOR);
-    }
-    public static final DispenseItemBehavior DISPENSE_ITEM_BEHAVIOR = new DefaultDispenseItemBehavior() {
-        protected ItemStack execute(BlockSource blockSource, ItemStack itemStack) {
-            return ModArmor.dispenseArmor(blockSource, itemStack) ? itemStack : super.execute(blockSource, itemStack);
-        }
-    };
-
-    public static boolean dispenseArmor(BlockSource blockSource, ItemStack itemStack) {
-        BlockPos blockpos = blockSource.getPos().relative(blockSource.getBlockState().getValue(DispenserBlock.FACING));
-        List<LivingEntity> list = blockSource.getLevel().getEntitiesOfClass(LivingEntity.class, new AABB(blockpos), EntitySelector.NO_SPECTATORS.and(new EntitySelector.MobCanWearArmorEntitySelector(itemStack)));
-        if (list.isEmpty()) {
-            return false;
-        } else {
-            LivingEntity livingentity = list.get(0);
-            EquipmentSlot equipmentslot = Mob.getEquipmentSlotForItem(itemStack);
-            ItemStack itemstack = itemStack.split(1);
-            livingentity.setItemSlot(equipmentslot, itemstack);
-            if (livingentity instanceof Mob) {
-                ((Mob)livingentity).setDropChance(equipmentslot, 2.0F);
-                ((Mob)livingentity).setPersistenceRequired();
+    public ModArmor(ArmorItem.Type type, Properties properties, SoundEvent event, String materialName) {
+        super(new ArmorMaterial() {
+            @Override
+            public int getDurabilityForType(Type p_266807_) {
+                return 1000;
             }
 
-            return true;
-        }
-    }
+            @Override
+            public int getDefenseForType(Type p_267168_) {
+                return 0;
+            }
 
-    public ArmorItem.Type getType() {
-        return this.type;
-    }
+            @Override
+            public int getEnchantmentValue() {
+                return 0;
+            }
 
-    public InteractionResultHolder<ItemStack> use(Level p_40395_, Player p_40396_, InteractionHand p_40397_) {
-        return this.swapWithEquipmentSlot(this, p_40395_, p_40396_, p_40397_);
+            @Override
+            public SoundEvent getEquipSound() {
+                return event;
+            }
+
+            @Override
+            public Ingredient getRepairIngredient() {
+                return null;
+            }
+
+            @Override
+            public String getName() {
+                return materialName;
+            }
+
+            @Override
+            public float getToughness() {
+                return 0;
+            }
+
+            @Override
+            public float getKnockbackResistance() {
+                return 0;
+            }
+        },type, properties);
     }
 
     @Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot equipmentSlot, ItemStack stack) {
-        if(stack.hasTag() && equipmentSlot == this.type.getSlot())
-        {
+        if (stack.hasTag() && equipmentSlot == this.type.getSlot()) {
             ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
             UUID uuid = ARMOR_MODIFIER_UUID_PER_TYPE.get(type);
-            builder.put(Attributes.ARMOR, new AttributeModifier(uuid, "Armor modifier", (double)stack.getTag().getFloat("armor"), AttributeModifier.Operation.ADDITION));
-            builder.put(Attributes.ARMOR_TOUGHNESS, new AttributeModifier(uuid, "Armor toughness", (double)0, AttributeModifier.Operation.ADDITION));
+            builder.put(Attributes.ARMOR, new AttributeModifier(uuid, "Armor modifier", getModifierValue(EquipmentModifier.EquipmentModifierType.ARMOR, stack), AttributeModifier.Operation.ADDITION));
+            builder.put(Attributes.ARMOR_TOUGHNESS, new AttributeModifier(uuid, "Armor toughness", (double) 0, AttributeModifier.Operation.ADDITION));
 
-            if (stack.getTag().getFloat("knockback_resistance") > 0) {
-                builder.put(Attributes.KNOCKBACK_RESISTANCE, new AttributeModifier(uuid, "Armor knockback resistance", (double)stack.getTag().getFloat("knockback_resistance"), AttributeModifier.Operation.ADDITION));
+            if (getModifierValue(EquipmentModifier.EquipmentModifierType.KNOCKBACK_RESISTANCE, stack) > 0) {
+                builder.put(Attributes.KNOCKBACK_RESISTANCE, new AttributeModifier(uuid, "Armor knockback resistance", (double) getModifierValue(EquipmentModifier.EquipmentModifierType.KNOCKBACK_RESISTANCE, stack), AttributeModifier.Operation.ADDITION));
             }
             return builder.build();
         }
         return super.getDefaultAttributeModifiers(equipmentSlot);
     }
 
-    public EquipmentSlot getEquipmentSlot() {
-        return this.type.getSlot();
+
+    @Override
+    public <T extends LivingEntity> int damageItem(ItemStack stack, int amount, T entity, Consumer<T> onBroken) {
+        takeDurabilityDamage(stack, entity, getEquipmentSlot(), amount);
+        return 0;
     }
 
-    public SoundEvent getEquipSound() {
-        return equipSound;
+    @Override
+    public int getEnchantmentLevel(ItemStack stack, Enchantment enchantment) {
+        if(enchantment == Enchantments.THORNS) return (int)getModifierValue(THORNS, stack);
+        return 0;
+    }
+
+    @Override
+    public Map<Enchantment, Integer> getAllEnchantments(ItemStack stack) {
+        Map<Enchantment, Integer> map = new HashMap<>();
+        if(getModifierValue(THORNS, stack) > 0) map.put(Enchantments.THORNS, (int)getModifierValue(THORNS, stack));
+        return map;
+    }
+
+    @Override
+    public void inventoryTick(ItemStack stack, Level p_41405_, Entity p_41406_, int p_41407_, boolean p_41408_) {
+        tick(stack);
+        super.inventoryTick(stack, p_41405_, p_41406_, p_41407_, p_41408_);
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag flag) {
+
+        appendText(stack,components);
     }
 }

@@ -5,7 +5,10 @@
     "BlockItemMixin",
     "HopperBlockEntityMixin",
     "BlockEntityMixin",
-    "ExperienceOrbMixin"
+    "ExperienceOrbMixin",
+    "GameRendererMixin",
+    "ThornsEnchantmentMixin",
+    "PlayerMixin"
   ],
   "client": [
     "LevelRendererMixin"

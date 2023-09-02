@@ -50,7 +50,7 @@ public class ModShovel extends ModTool {
                     level.setBlock(blockpos, blockstate2, 11);
                     level.gameEvent(GameEvent.BLOCK_CHANGE, blockpos, GameEvent.Context.of(player, blockstate2));
                     if (player != null) {
-                        takeDurabilityDamage(useOnContext.getItemInHand(),player,useOnContext.getItemInHand().getEquipmentSlot(), 1);
+                        takeDurabilityDamage(useOnContext.getItemInHand(),player, useOnContext.getHand(), 1);
                     }
                 }
 

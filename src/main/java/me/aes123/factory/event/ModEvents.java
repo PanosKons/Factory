@@ -7,19 +7,29 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import me.aes123.factory.Main;
 import me.aes123.factory.blockentity.ModBarrelBlockEntity;
+import me.aes123.factory.dungeon.Dungeon;
+import me.aes123.factory.dungeon.PlayerDungeon;
+import me.aes123.factory.dungeon.PlayerDungeonProvider;
+import me.aes123.factory.init.ModAttributes;
 import me.aes123.factory.item.ModBundleItem;
 import me.aes123.factory.item.equipment.ModHammer;
 import me.aes123.factory.util.ILevelRenderer;
 import me.aes123.factory.util.ModTags;
+import net.minecraft.Util;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.GsonHelper;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.entity.player.Inventory;
@@ -27,13 +37,20 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.event.RenderHighlightEvent;
+import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AddReloadListenerEvent;
+import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 
 import java.io.BufferedReader;
@@ -164,7 +181,7 @@ public class ModEvents {
         for(int i = 0; i < inv.getContainerSize(); i++)
         {
             ItemStack stack = inv.getItem(i);
-            if(stack.getItem() instanceof ModBundleItem) {
+            if(stack.getItem() instanceof ModBundleItem && ModBundleItem.containsItem(stack, stackToAdd)) {
                 int count = ModBundleItem.add(stack, stackToAdd);
                 stackToAdd.shrink(count);
                 insertCount += count;
@@ -185,5 +202,41 @@ public class ModEvents {
         {
             hammer.setDestroySpeedEvent(event, stack);
         }
+    }
+    @SubscribeEvent
+    public static void getDigSpeed(TickEvent.PlayerTickEvent event) {
+        double value = event.player.getAttributeValue(ModAttributes.REGENERATION.get());
+        event.player.heal((float)value / 40);
+    }
+
+    @SubscribeEvent
+    public static void tickDungeon(TickEvent event)
+    {
+        if(event.side == LogicalSide.SERVER)
+            Dungeon.dungeonTick();
+    }
+    @SubscribeEvent
+    public static void onAttachCapabilitiesPlayer(AttachCapabilitiesEvent<Entity> event) {
+        if(event.getObject() instanceof Player) {
+            if(!event.getObject().getCapability(PlayerDungeonProvider.PLAYER_DUNGEON).isPresent()) {
+                event.addCapability(new ResourceLocation(Main.MODID, "properties"), new PlayerDungeonProvider());
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerCloned(PlayerEvent.Clone event) {
+        if(event.isWasDeath()) {
+            event.getOriginal().getCapability(PlayerDungeonProvider.PLAYER_DUNGEON).ifPresent(oldStore -> {
+                event.getOriginal().getCapability(PlayerDungeonProvider.PLAYER_DUNGEON).ifPresent(newStore -> {
+                    newStore.copyFrom(oldStore);
+                });
+            });
+        }
+    }
+
+    @SubscribeEvent
+    public static void onRegisterCapabilities(RegisterCapabilitiesEvent event) {
+        event.register(PlayerDungeon.class);
     }
 }

@@ -1,5 +1,6 @@
 package me.aes123.factory.item.equipment;
 
+import me.aes123.factory.data.EquipmentModifier;
 import me.aes123.factory.item.equipment.base.ModTool;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -45,7 +46,7 @@ public class ModHammer extends ModTool {
         event.setNewSpeed(event.getOriginalSpeed() * originalHardness / newHardness);
     }
     public List<BlockPos> getBlocksToBeDestroyed(ItemStack stack, BlockPos initalBlockPos, Player player, LevelAccessor level) {
-        int range = stack.getTag().getFloat("mine_aoe") > 0.0f ? 2 : 1;
+        int range = getModifierValue(EquipmentModifier.EquipmentModifierType.MINE_AOE, stack) > 0.0f ? 2 : 1;
         List<BlockPos> positions = new ArrayList<>();
 
         BlockHitResult traceResult = player.level().clip(new ClipContext(player.getEyePosition(1f),

@@ -3,6 +3,7 @@ package me.aes123.factory.item.equipment;
 import me.aes123.factory.item.equipment.base.ModTool;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -14,6 +15,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraftforge.fml.loading.targets.FMLServerLaunchHandler;
 
 import java.util.Optional;
 
@@ -52,7 +54,7 @@ public class ModAxe extends ModTool {
             level.setBlock(blockpos, optional3.get(), 11);
             level.gameEvent(GameEvent.BLOCK_CHANGE, blockpos, GameEvent.Context.of(player, optional3.get()));
             if (player != null) {
-                takeDurabilityDamage(useOnContext.getItemInHand(),player,useOnContext.getItemInHand().getEquipmentSlot(), 1);
+                takeDurabilityDamage(useOnContext.getItemInHand(), player, useOnContext.getHand(), 1);
             }
 
             return InteractionResult.sidedSuccess(level.isClientSide);

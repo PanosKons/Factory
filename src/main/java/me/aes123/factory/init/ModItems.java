@@ -25,8 +25,8 @@ public class ModItems {
             () -> new Item(new Item.Properties().food((new FoodProperties.Builder().alwaysEat()
                     .nutrition(3).saturationMod(0.2f).effect(() -> new MobEffectInstance(MobEffects.HEAL, 1,0), 1)
                     .build()))));
-    public static final RegistryObject<Item> BLANK_CARD = ITEMS.register("blank_card",
-            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<CardItem> BLANK_CARD = ITEMS.register("blank_card",
+            () -> new CardItem(new Item.Properties()));
 
     public static final RegistryObject<Item> STEEL_INGOT = ITEMS.register("steel_ingot", () -> new Item(new Item.Properties()));
     public static final RegistryObject<UndiscoveredRecipeItem> UNDISCOVERED_RECIPE = ITEMS.register("undiscovered_recipe", () -> new UndiscoveredRecipeItem(new Item.Properties().stacksTo(1)));
@@ -160,58 +160,58 @@ public class ModItems {
             () -> new ModHoe(new Item.Properties(),2));
 
     public static final RegistryObject<ArmorItem> LEATHER_HELMET = VANILLA_ITEMS.register("leather_helmet",
-            () -> new DyeableArmorItem(ModArmorMaterials.WEAK_LEATHER, ArmorItem.Type.HELMET, new Item.Properties()));
+            () -> new DyeableArmorItem(ModArmorMaterials.LEATHER, ArmorItem.Type.HELMET, new Item.Properties()));
     public static final RegistryObject<ArmorItem> LEATHER_CHESTPLATE = VANILLA_ITEMS.register("leather_chestplate",
-            () -> new DyeableArmorItem(ModArmorMaterials.WEAK_LEATHER, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
+            () -> new DyeableArmorItem(ModArmorMaterials.LEATHER, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
     public static final RegistryObject<ArmorItem> LEATHER_LEGGINGS = VANILLA_ITEMS.register("leather_leggings",
-            () -> new DyeableArmorItem(ModArmorMaterials.WEAK_LEATHER, ArmorItem.Type.LEGGINGS, new Item.Properties()));
+            () -> new DyeableArmorItem(ModArmorMaterials.LEATHER, ArmorItem.Type.LEGGINGS, new Item.Properties()));
     public static final RegistryObject<ArmorItem> LEATHER_BOOTS = VANILLA_ITEMS.register("leather_boots",
-            () -> new DyeableArmorItem(ModArmorMaterials.WEAK_LEATHER, ArmorItem.Type.BOOTS, new Item.Properties()));
+            () -> new DyeableArmorItem(ModArmorMaterials.LEATHER, ArmorItem.Type.BOOTS, new Item.Properties()));
 
     public static final RegistryObject<ArmorItem> CHAINMAIL_HELMET = VANILLA_ITEMS.register("chainmail_helmet",
-            () -> new ArmorItem(ModArmorMaterials.WEAK_CHAINMAIL, ArmorItem.Type.HELMET, new Item.Properties()));
+            () -> new ArmorItem(ModArmorMaterials.CHAINMAIL, ArmorItem.Type.HELMET, new Item.Properties()));
     public static final RegistryObject<ArmorItem> CHAINMAIL_CHESTPLATE = VANILLA_ITEMS.register("chainmail_chestplate",
-            () -> new ArmorItem(ModArmorMaterials.WEAK_CHAINMAIL, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
+            () -> new ArmorItem(ModArmorMaterials.CHAINMAIL, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
     public static final RegistryObject<ArmorItem> CHAINMAIL_LEGGINGS = VANILLA_ITEMS.register("chainmail_leggings",
-            () -> new ArmorItem(ModArmorMaterials.WEAK_CHAINMAIL, ArmorItem.Type.LEGGINGS, new Item.Properties()));
+            () -> new ArmorItem(ModArmorMaterials.CHAINMAIL, ArmorItem.Type.LEGGINGS, new Item.Properties()));
     public static final RegistryObject<ArmorItem> CHAINMAIL_BOOTS = VANILLA_ITEMS.register("chainmail_boots",
-            () -> new ArmorItem(ModArmorMaterials.WEAK_CHAINMAIL, ArmorItem.Type.BOOTS, new Item.Properties()));
+            () -> new ArmorItem(ModArmorMaterials.CHAINMAIL, ArmorItem.Type.BOOTS, new Item.Properties()));
 
     public static final RegistryObject<ModArmor> IRON_HELMET = VANILLA_ITEMS.register("iron_helmet",
-            () -> new ModArmor(ArmorItem.Type.HELMET, new Item.Properties(), SoundEvents.ARMOR_EQUIP_IRON));
+            () -> new ModArmor(ArmorItem.Type.HELMET, new Item.Properties(), SoundEvents.ARMOR_EQUIP_IRON, "iron"));
     public static final RegistryObject<ModArmor> IRON_CHESTPLATE = VANILLA_ITEMS.register("iron_chestplate",
-            () -> new ModArmor(ArmorItem.Type.CHESTPLATE, new Item.Properties(), SoundEvents.ARMOR_EQUIP_IRON));
+            () -> new ModArmor(ArmorItem.Type.CHESTPLATE, new Item.Properties(), SoundEvents.ARMOR_EQUIP_IRON, "iron"));
     public static final RegistryObject<ModArmor> IRON_LEGGINGS = VANILLA_ITEMS.register("iron_leggings",
-            () -> new ModArmor(ArmorItem.Type.LEGGINGS, new Item.Properties(), SoundEvents.ARMOR_EQUIP_IRON));
+            () -> new ModArmor(ArmorItem.Type.LEGGINGS, new Item.Properties(), SoundEvents.ARMOR_EQUIP_IRON, "iron"));
     public static final RegistryObject<ModArmor> IRON_BOOTS = VANILLA_ITEMS.register("iron_boots",
-            () -> new ModArmor(ArmorItem.Type.BOOTS, new Item.Properties(), SoundEvents.ARMOR_EQUIP_IRON));
+            () -> new ModArmor(ArmorItem.Type.BOOTS, new Item.Properties(), SoundEvents.ARMOR_EQUIP_IRON, "iron"));
 
-    public static final RegistryObject<ModArmor> GOLD_HELMET = VANILLA_ITEMS.register("gold_helmet",
-            () -> new ModArmor(ArmorItem.Type.HELMET, new Item.Properties(), SoundEvents.ARMOR_EQUIP_GOLD));
-    public static final RegistryObject<ModArmor> GOLD_CHESTPLATE = VANILLA_ITEMS.register("gold_chestplate",
-            () -> new ModArmor(ArmorItem.Type.CHESTPLATE, new Item.Properties(), SoundEvents.ARMOR_EQUIP_GOLD));
-    public static final RegistryObject<ModArmor> GOLD_LEGGINGS = VANILLA_ITEMS.register("gold_leggings",
-            () -> new ModArmor(ArmorItem.Type.LEGGINGS, new Item.Properties(), SoundEvents.ARMOR_EQUIP_GOLD));
-    public static final RegistryObject<ModArmor> GOLD_BOOTS = VANILLA_ITEMS.register("gold_boots",
-            () -> new ModArmor(ArmorItem.Type.BOOTS, new Item.Properties(), SoundEvents.ARMOR_EQUIP_GOLD));
+    public static final RegistryObject<ModArmor> GOLD_HELMET = VANILLA_ITEMS.register("golden_helmet",
+            () -> new ModArmor(ArmorItem.Type.HELMET, new Item.Properties(), SoundEvents.ARMOR_EQUIP_GOLD, "golden"));
+    public static final RegistryObject<ModArmor> GOLD_CHESTPLATE = VANILLA_ITEMS.register("golden_chestplate",
+            () -> new ModArmor(ArmorItem.Type.CHESTPLATE, new Item.Properties(), SoundEvents.ARMOR_EQUIP_GOLD, "golden"));
+    public static final RegistryObject<ModArmor> GOLD_LEGGINGS = VANILLA_ITEMS.register("golden_leggings",
+            () -> new ModArmor(ArmorItem.Type.LEGGINGS, new Item.Properties(), SoundEvents.ARMOR_EQUIP_GOLD, "golden"));
+    public static final RegistryObject<ModArmor> GOLD_BOOTS = VANILLA_ITEMS.register("golden_boots",
+            () -> new ModArmor(ArmorItem.Type.BOOTS, new Item.Properties(), SoundEvents.ARMOR_EQUIP_GOLD, "golden"));
 
     public static final RegistryObject<ModArmor> DIAMOND_HELMET = VANILLA_ITEMS.register("diamond_helmet",
-            () -> new ModArmor(ArmorItem.Type.HELMET, new Item.Properties(), SoundEvents.ARMOR_EQUIP_DIAMOND));
+            () -> new ModArmor(ArmorItem.Type.HELMET, new Item.Properties(), SoundEvents.ARMOR_EQUIP_DIAMOND, "diamond"));
     public static final RegistryObject<ModArmor> DIAMOND_CHESTPLATE = VANILLA_ITEMS.register("diamond_chestplate",
-            () -> new ModArmor(ArmorItem.Type.CHESTPLATE, new Item.Properties(), SoundEvents.ARMOR_EQUIP_DIAMOND));
+            () -> new ModArmor(ArmorItem.Type.CHESTPLATE, new Item.Properties(), SoundEvents.ARMOR_EQUIP_DIAMOND, "diamond"));
     public static final RegistryObject<ModArmor> DIAMOND_LEGGINGS = VANILLA_ITEMS.register("diamond_leggings",
-            () -> new ModArmor(ArmorItem.Type.LEGGINGS, new Item.Properties(), SoundEvents.ARMOR_EQUIP_DIAMOND));
+            () -> new ModArmor(ArmorItem.Type.LEGGINGS, new Item.Properties(), SoundEvents.ARMOR_EQUIP_DIAMOND, "diamond"));
     public static final RegistryObject<ModArmor> DIAMOND_BOOTS = VANILLA_ITEMS.register("diamond_boots",
-            () -> new ModArmor(ArmorItem.Type.BOOTS, new Item.Properties(), SoundEvents.ARMOR_EQUIP_DIAMOND));
+            () -> new ModArmor(ArmorItem.Type.BOOTS, new Item.Properties(), SoundEvents.ARMOR_EQUIP_DIAMOND, "diamond"));
 
     public static final RegistryObject<ModArmor> NETHERITE_HELMET = VANILLA_ITEMS.register("netherite_helmet",
-            () -> new ModArmor(ArmorItem.Type.HELMET, new Item.Properties().fireResistant(), SoundEvents.ARMOR_EQUIP_NETHERITE));
+            () -> new ModArmor(ArmorItem.Type.HELMET, new Item.Properties().fireResistant(), SoundEvents.ARMOR_EQUIP_NETHERITE, "netherite"));
     public static final RegistryObject<ModArmor> NETHERITE_CHESTPLATE = VANILLA_ITEMS.register("netherite_chestplate",
-            () -> new ModArmor(ArmorItem.Type.CHESTPLATE, new Item.Properties().fireResistant(), SoundEvents.ARMOR_EQUIP_NETHERITE));
+            () -> new ModArmor(ArmorItem.Type.CHESTPLATE, new Item.Properties().fireResistant(), SoundEvents.ARMOR_EQUIP_NETHERITE, "netherite"));
     public static final RegistryObject<ModArmor> NETHERITE_LEGGINGS = VANILLA_ITEMS.register("netherite_leggings",
-            () -> new ModArmor(ArmorItem.Type.LEGGINGS, new Item.Properties().fireResistant(), SoundEvents.ARMOR_EQUIP_NETHERITE));
+            () -> new ModArmor(ArmorItem.Type.LEGGINGS, new Item.Properties().fireResistant(), SoundEvents.ARMOR_EQUIP_NETHERITE, "netherite"));
     public static final RegistryObject<ModArmor> NETHERITE_BOOTS = VANILLA_ITEMS.register("netherite_boots",
-            () -> new ModArmor(ArmorItem.Type.BOOTS, new Item.Properties().fireResistant(), SoundEvents.ARMOR_EQUIP_NETHERITE));
+            () -> new ModArmor(ArmorItem.Type.BOOTS, new Item.Properties().fireResistant(), SoundEvents.ARMOR_EQUIP_NETHERITE, "netherite"));
 
 
     public static final RegistryObject<ModMinecartItem> MINECART_ITEM = VANILLA_ITEMS.register("minecart",

@@ -2,9 +2,11 @@ package me.aes123.factory.item.equipment.base;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import me.aes123.factory.data.EquipmentModifier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -35,7 +37,7 @@ public class ModTool extends ModHandItem {
 
     @Override
     public boolean hurtEnemy(ItemStack itemStack, LivingEntity livingEntity, LivingEntity livingEntity1) {
-        takeDurabilityDamage(itemStack, livingEntity1, EquipmentSlot.MAINHAND,2);
+        takeDurabilityDamage(itemStack, livingEntity1, InteractionHand.MAIN_HAND,2);
         return true;
     }
 
@@ -43,7 +45,7 @@ public class ModTool extends ModHandItem {
     public boolean mineBlock(ItemStack stack, Level level, BlockState state, BlockPos pos, LivingEntity entity) {
         if(!level.isClientSide)
         {
-            takeDurabilityDamage(stack, entity, EquipmentSlot.MAINHAND,1);
+            takeDurabilityDamage(stack, entity, InteractionHand.MAIN_HAND,1);
         }
         return true;
     }
@@ -89,6 +91,6 @@ public class ModTool extends ModHandItem {
     public float getDestroySpeed(ItemStack stack, BlockState state) {
         float speed = state.is(BlockTags.DEEPSLATE_ORE_REPLACEABLES) || state.is(Blocks.DEEPSLATE_DIAMOND_ORE) || state.is(Blocks.DEEPSLATE_REDSTONE_ORE) || state.is(Blocks.DEEPSLATE_IRON_ORE ) || state.is(Blocks.DEEPSLATE_GOLD_ORE) || state.is(Blocks.DEEPSLATE_COAL_ORE)
                 || state.is(Blocks.DEEPSLATE_COPPER_ORE) || state.is(Blocks.DEEPSLATE_EMERALD_ORE) || state.is(Blocks.DEEPSLATE_LAPIS_ORE) ? 0.6f : 1.0f;
-        return isCorrectToolForDrops(stack, state) ? speed * stack.getTag().getFloat("mining_speed") : 1.0F;
+        return isCorrectToolForDrops(stack, state) ? speed * getModifierValue(EquipmentModifier.EquipmentModifierType.MINING_SPEED, stack) : 1.0F;
     }
 }

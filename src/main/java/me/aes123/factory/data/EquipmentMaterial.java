@@ -36,28 +36,28 @@ public class EquipmentMaterial {
         nbt.putInt("HideFlags", 26);
         int durability = equipmentStationCraft ? baseDurability : baseDurability / 3;
         int armorDurability = equipmentStationCraft ? baseArmorDurability : baseArmorDurability / 3;
-        nbt.putInt("max_durability", durability);
+        nbt.putInt("base_max_durability", durability);
 
         if(EquipmentModifier.TOOLS.contains(toolName))
         {
-            nbt.putFloat("mining_speed", baseMiningSpeed);
+            nbt.putFloat("base_mining_speed", baseMiningSpeed);
         }
         if(EquipmentModifier.MELEE.contains(toolName))
         {
-            nbt.putFloat("attack_cooldown", baseMeleeAttackCooldown);
-            nbt.putFloat("attack_damage", baseMeleeAttackDamage);
+            nbt.putFloat("base_attack_cooldown", baseMeleeAttackCooldown);
+            nbt.putFloat("base_attack_damage", baseMeleeAttackDamage);
         }
         if(EquipmentModifier.ARMORS.contains(toolName))
         {
-            nbt.putFloat("armor", baseArmorPoints);
-            nbt.putInt("durability", armorDurability);
+            nbt.putFloat("base_armor", baseArmorPoints);
+            nbt.putInt("base_armor_durability", armorDurability);
         }
         if(EquipmentModifier.PROJECTILE.contains(toolName))
         {
-            nbt.putFloat("fire_rate", baseFireRate);
-            nbt.putFloat("attack_damage", baseProjectileAttackDamage);
+            nbt.putFloat("base_fire_rate", baseFireRate);
+            nbt.putFloat("base_attack_damage", baseProjectileAttackDamage);
         }
 
-        nbt.putInt("durability", nbt.getInt("max_durability"));
+        nbt.putInt("durability", nbt.getInt("base_max_durability"));
     }
 }

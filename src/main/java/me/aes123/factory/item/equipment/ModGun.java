@@ -1,5 +1,6 @@
 package me.aes123.factory.item.equipment;
 
+import me.aes123.factory.data.EquipmentModifier;
 import me.aes123.factory.item.equipment.base.ModHandItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -8,6 +9,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
@@ -29,8 +31,10 @@ public class ModGun extends ModHandItem {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+        if(hand != InteractionHand.MAIN_HAND) return super.use(level, player,hand);
+
         ItemStack stack = player.getItemInHand(hand);
-        float fireRate = stack.getOrCreateTag().getFloat("fire_rate");
+        float fireRate = getModifierValue(EquipmentModifier.EquipmentModifierType.FIRE_RATE, stack);
         if(fireRate == 0.0f) return InteractionResultHolder.fail(stack);
 
         float tickTime = 1.0f;
@@ -39,7 +43,7 @@ public class ModGun extends ModHandItem {
         HitResult hitResult = player.pick(REACH, 1.0f, false);
         double reach = hitResult != null && hitResult.getType() != HitResult.Type.MISS ? hitResult.getLocation().distanceToSqr(eyePos) : REACH * REACH;
         EntityHitResult result = ProjectileUtil.getEntityHitResult(player, eyePos , eyePos.add(scaledView), player.getBoundingBox().expandTowards(scaledView).inflate(1.0D, 1.0D, 1.0D), (pentity) -> !pentity.isSpectator() && pentity instanceof LivingEntity, reach);
-        takeDurabilityDamage(stack, player,player.getMainHandItem().getEquipmentSlot(), 1);
+        takeDurabilityDamage(stack, player, InteractionHand.MAIN_HAND ,1);
         player.getCooldowns().addCooldown(this, (int)(fireRate * 20));
         playSound(level, player.getOnPos().above());
         if(result != null)

@@ -116,8 +116,10 @@ public class EquipmentModifier {
         this.modifierType = modifierType;
         this.level = level;
     }
-    private float getValue(float baseValue)
+    public float getValue(float baseValue)
     {
+        if(this.level == 0) return 0.0f;
+
         return switch (this.modifierType)
         {
             case MAX_DURABILITY -> this.level * 0.05f * baseValue;
@@ -152,10 +154,6 @@ public class EquipmentModifier {
     }
     public void add(CompoundTag nbt)
     {
-        float baseValue = nbt.getFloat(modifierType.toString().toLowerCase());
-        if(modifierType == EquipmentModifierType.MAX_DURABILITY)
-            nbt.putInt(modifierType.toString().toLowerCase(), (int)(getValue(baseValue) + baseValue));
-        else
-            nbt.putFloat(modifierType.toString().toLowerCase(), getValue(baseValue) + baseValue);
+        nbt.putFloat(modifierType.toString().toLowerCase(), level);
     }
 }

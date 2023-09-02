@@ -4,6 +4,8 @@ import me.aes123.factory.Main;
 import me.aes123.factory.client.XPHudOverlay;
 import me.aes123.factory.init.ModMenuTypes;
 import me.aes123.factory.screen.*;
+import me.aes123.factory.util.KeyBinding;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
@@ -19,15 +21,23 @@ public class ClientEvents {
     {
         @SubscribeEvent
         public static void onKeyInput(InputEvent.Key event) {
-
+            if(KeyBinding.SHOP_KEY.consumeClick())
+            {
+                var minecraft = Minecraft.getInstance();
+                if(minecraft.screen == null)
+                {
+                    minecraft.setScreen(new ShopScreen());
+                }
+            }
         }
     }
 
     @Mod.EventBusSubscriber(modid = Main.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class ClientModBusEvents{
         @SubscribeEvent
-        public static void onKeyRegister(RegisterKeyMappingsEvent event) {}
-
+        public static void onKeyRegister(RegisterKeyMappingsEvent event) {
+            event.register(KeyBinding.SHOP_KEY);
+        }
         @SubscribeEvent
         public static void RegisterGuiOverlays(RegisterGuiOverlaysEvent event)
         {

@@ -2,10 +2,12 @@ package me.aes123.factory.item.equipment;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import me.aes123.factory.data.EquipmentModifier;
 import me.aes123.factory.item.equipment.base.ModHandItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -32,9 +34,9 @@ public class ModSword extends ModHandItem{
         if(stack.hasTag() && equipmentSlot == EquipmentSlot.MAINHAND)
         {
             ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-            builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", stack.getTag().getInt("attack_damage"), AttributeModifier.Operation.ADDITION));
-            builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", (1.0f / stack.getTag().getFloat("attack_cooldown")) - 4, AttributeModifier.Operation.ADDITION));
-            if(stack.getTag().getFloat("knockback") > 0.0) builder.put(Attributes.ATTACK_KNOCKBACK, new AttributeModifier(UUID.fromString("FA293E1C-4180-5865-B01B-BCCE9685ACA1"), "Weapon modifier", stack.getTag().getFloat("knockback"), AttributeModifier.Operation.ADDITION));
+            builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", getModifierValue(EquipmentModifier.EquipmentModifierType.ATTACK_DAMAGE, stack), AttributeModifier.Operation.ADDITION));
+            builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", (1.0f / getModifierValue(EquipmentModifier.EquipmentModifierType.ATTACK_COOLDOWN, stack)) - 4, AttributeModifier.Operation.ADDITION));
+            if(getModifierValue(EquipmentModifier.EquipmentModifierType.KNOCKBACK, stack) > 0.0) builder.put(Attributes.ATTACK_KNOCKBACK, new AttributeModifier(UUID.fromString("FA293E1C-4180-5865-B01B-BCCE9685ACA1"), "Weapon modifier", getModifierValue(EquipmentModifier.EquipmentModifierType.KNOCKBACK, stack), AttributeModifier.Operation.ADDITION));
             return builder.build();
         }
         return super.getDefaultAttributeModifiers(equipmentSlot);
@@ -51,7 +53,7 @@ public class ModSword extends ModHandItem{
     public boolean mineBlock(ItemStack stack, Level level, BlockState state, BlockPos pos, LivingEntity entity) {
         if(!level.isClientSide)
         {
-            takeDurabilityDamage(stack, entity, EquipmentSlot.MAINHAND,2);
+            takeDurabilityDamage(stack, entity, InteractionHand.MAIN_HAND,2);
         }
         return true;
     }
@@ -69,7 +71,7 @@ public class ModSword extends ModHandItem{
     }
     @Override
     public boolean hurtEnemy(ItemStack itemStack, LivingEntity livingEntity, LivingEntity livingEntity1) {
-        takeDurabilityDamage(itemStack, livingEntity1, EquipmentSlot.MAINHAND,1);
+        takeDurabilityDamage(itemStack, livingEntity1, InteractionHand.MAIN_HAND,1);
         return true;
     }
 }

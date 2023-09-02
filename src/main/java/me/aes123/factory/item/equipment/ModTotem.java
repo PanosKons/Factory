@@ -23,7 +23,6 @@ import java.util.Random;
 import static me.aes123.factory.data.EquipmentModifier.EquipmentModifierType.*;
 
 public class ModTotem extends ModEquipmentItem {
-    Random rnd = new Random(0);
     private final List<EquipmentModifier> possiblePassiveRolls = List.of(
             new EquipmentModifier(PLAYER_SPEED,1),
             new EquipmentModifier(PLAYER_SPEED,2),
@@ -54,15 +53,22 @@ public class ModTotem extends ModEquipmentItem {
         {
             boolean flag1 = player.getItemInHand(InteractionHand.MAIN_HAND) == stack;
             boolean flag2 = player.getItemInHand(InteractionHand.OFF_HAND) == stack;
-            if((flag1 || flag2) && rnd.nextInt(20 * 10) == 0) takeDurabilityDamage(stack, player, flag1 ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND ,1);
-            if((flag1 || flag2))
-            {
-                if(stack.getTag().getFloat("night_vision") > 0) player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 1, 0, false, false));
-                if(stack.getTag().getFloat("regeneration") > 0) player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, (int)stack.getTag().getFloat("regeneration"), 0, false, false));
-                if(stack.getTag().getFloat("luck") > 0) player.addEffect(new MobEffectInstance(MobEffects.LUCK, (int)stack.getTag().getFloat("luck"), 0, false, false));
-            }
+            if((flag1 || flag2) && addDurabilityTick(stack)) takeDurabilityDamage(stack, player, flag1 ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND ,1);
         }
         super.inventoryTick(stack, level, entity, slotIndex, b);
+    }
+
+    private boolean addDurabilityTick(ItemStack stack) {
+        boolean ret = false;
+        int holdTicks = stack.getTag().getInt("hold_time");
+        holdTicks++;
+        if(holdTicks > 20 * 10)
+        {
+            holdTicks = 0;
+            ret = true;
+        }
+        stack.getTag().putInt("hold_time", holdTicks);
+        return ret;
     }
 
     @Override
@@ -71,9 +77,10 @@ public class ModTotem extends ModEquipmentItem {
         if(stack.hasTag() && (equipmentSlot == EquipmentSlot.MAINHAND || equipmentSlot == EquipmentSlot.OFFHAND))
         {
             ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-            if(stack.getTag().getFloat("player_speed") > 0) builder.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(BASE_PLAYER_SPEED_UUID, "Speed modifier", (stack.getTag().getFloat("player_speed") - 1) / 10.0f, AttributeModifier.Operation.ADDITION));
-            if(stack.getTag().getFloat("block_reach") > 0) builder.put(ForgeMod.BLOCK_REACH.get(), new AttributeModifier(BASE_BLOCK_REACH_UUID, "Reach modifier", stack.getTag().getFloat("block_reach") - 4.5f, AttributeModifier.Operation.ADDITION));
-            if(stack.getTag().getFloat("entity_reach") > 0) builder.put(ForgeMod.ENTITY_REACH.get(), new AttributeModifier(BASE_ENTITY_REACH_UUID, "Reach modifier", stack.getTag().getFloat("entity_reach") - 3.0f, AttributeModifier.Operation.ADDITION));
+            if(getModifierValue(PLAYER_SPEED, stack) > 0) builder.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(BASE_PLAYER_SPEED_UUID, "Speed modifier", (getModifierValue(PLAYER_SPEED, stack) - 1) / 10.0f, AttributeModifier.Operation.ADDITION));
+            if(getModifierValue(BLOCK_REACH, stack) > 0) builder.put(ForgeMod.BLOCK_REACH.get(), new AttributeModifier(BASE_BLOCK_REACH_UUID, "Reach modifier", getModifierValue(BLOCK_REACH, stack) - 4.5f, AttributeModifier.Operation.ADDITION));
+            if(getModifierValue(ENTITY_REACH, stack) > 0) builder.put(ForgeMod.ENTITY_REACH.get(), new AttributeModifier(BASE_ENTITY_REACH_UUID, "Reach modifier",getModifierValue(ENTITY_REACH, stack) - 3.0f, AttributeModifier.Operation.ADDITION));
+            if(getModifierValue(LUCK, stack) > 0) builder.put(Attributes.LUCK, new AttributeModifier(BASE_LUCK_UUID, "Luck modifier",getModifierValue(LUCK, stack), AttributeModifier.Operation.ADDITION));
             return builder.build();
         }
         return super.getDefaultAttributeModifiers(equipmentSlot);
@@ -82,15 +89,15 @@ public class ModTotem extends ModEquipmentItem {
     @Override
     public void addDefaultStats(ItemStack stack) {
         var nbt = stack.getTag();
-
+        var rnd = new Random(nbt.getInt("seed"));
         nbt.putInt("HideFlags", 26);
         int max_durability = 200 + rnd.nextInt(800);
-        nbt.putInt("max_durability", max_durability);
+        nbt.putInt("base_max_durability", max_durability);
 
         possiblePassiveRolls.get(rnd.nextInt(possiblePassiveRolls.size())).add(nbt);
         possibleActiveRolls.get(rnd.nextInt(possibleActiveRolls.size())).add(nbt);
 
-        nbt.putInt("durability", nbt.getInt("max_durability"));
+        setDurability((int)getModifierValue(MAX_DURABILITY, stack), stack);
     }
     @Override
     public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
