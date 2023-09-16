@@ -19,7 +19,6 @@ import java.util.List;
 public class CrusherBlockEntity extends PoweredMachineBlockEntity {
     private static final int ENERGY_PROD = 20;
 
-    protected final ContainerData data;
     private int progress = 0;
     private int maxProgress = 0;
     public CrusherBlockEntity(BlockPos pos, BlockState state) {

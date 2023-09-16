@@ -17,7 +17,7 @@ public class ModBlocks {
     public static final DeferredRegister<Block> VANILLA_BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, "minecraft");
 
 
-    public static final RegistryObject<Block> DOOR_BLOCK = BLOCKS.register("door_block", () -> new ModDoorBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK)));
+    public static final RegistryObject<Block> GATE_BLOCK = BLOCKS.register("gate_block", () -> new GateBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK)));
     public static final RegistryObject<AssemblerBlock> ASSEMBLER = BLOCKS.register("assembler", () -> new AssemblerBlock(BlockBehaviour.Properties
             .copy(Blocks.IRON_BLOCK)
             .requiresCorrectToolForDrops()

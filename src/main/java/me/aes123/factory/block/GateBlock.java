@@ -1,6 +1,6 @@
 package me.aes123.factory.block;
 
-import me.aes123.factory.blockentity.ModDoorBlockEntity;
+import me.aes123.factory.blockentity.GateBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -14,17 +14,17 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
-public class ModDoorBlock extends BaseEntityBlock {
-    public ModDoorBlock(Properties properties) {
-        super(properties.noCollission());
+public class GateBlock extends BaseEntityBlock {
+    public GateBlock(Properties properties) {
+        super(properties);
     }
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos,
                                  Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (!pLevel.isClientSide()) {
             BlockEntity entity = pLevel.getBlockEntity(pPos);
-            if(entity instanceof ModDoorBlockEntity door) {
-                door.use((ServerLevel)pLevel,(ServerPlayer) pPlayer);
+            if(entity instanceof GateBlockEntity gate) {
+                gate.use((ServerLevel)pLevel,(ServerPlayer) pPlayer);
             } else {
                 throw new IllegalStateException("Our Container provider is missing!");
             }
@@ -41,6 +41,6 @@ public class ModDoorBlock extends BaseEntityBlock {
     @javax.annotation.Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new ModDoorBlockEntity(pos, state);
+        return new GateBlockEntity(pos, state);
     }
 }

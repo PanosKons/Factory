@@ -24,7 +24,8 @@ public class UndiscoveredRecipeItem extends Item {
         if(stack.hasTag()) {
             int progress = stack.getTag().getInt("progress");
             int max_progress = stack.getTag().getInt("max_progress");
-            stack.setDamageValue(1000 - (1000 * progress) / max_progress);
+            if(max_progress != 0)
+                stack.setDamageValue(1000 - (1000 * progress) / max_progress);
         }
     }
 

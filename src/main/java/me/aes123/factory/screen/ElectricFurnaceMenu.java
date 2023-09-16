@@ -19,12 +19,12 @@ public class ElectricFurnaceMenu extends AbstractContainerMenu {
     private final ContainerData data;
 
     public ElectricFurnaceMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
-        this(id, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(4));
+        this(id, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(7));
     }
 
     public ElectricFurnaceMenu(int id, Inventory inv, BlockEntity entity, ContainerData data) {
-        super(ModMenuTypes.QUARRY_MENU.get(), id);
-        checkContainerSize(inv, 2);
+        super(ModMenuTypes.ELECTRIC_FURNACE_MENU.get(), id);
+        checkContainerSize(inv, 3);
         blockEntity = (ElectricFurnaceBlockEntity) entity;
         this.level = inv.player.level();
         this.data = data;
@@ -33,31 +33,43 @@ public class ElectricFurnaceMenu extends AbstractContainerMenu {
         addPlayerHotbar(inv);
 
         this.blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
-            this.addSlot(new SlotItemHandler(handler, 0, 80, 53));
-            this.addSlot(new SlotItemHandler(handler, 1, 80, 17));
+            this.addSlot(new SlotItemHandler(handler, 0, 56, 17));
+            this.addSlot(new SlotItemHandler(handler, 1, 56, 53));
+            this.addSlot(new SlotItemHandler(handler, 2, 116, 35));
         });
 
         addDataSlots(data);
     }
-
+    public boolean isSmelting() {
+        return data.get(2) > 0;
+    }
     public boolean isCrafting() {
         return data.get(1) > 0;
     }
 
-    public int getScaledProgress() {
+    public int getArrowScaledProgress() {
         int progress = this.data.get(0);
         int maxProgress = this.data.get(1);  // Max Progress
+        int progressArrowSize = 24; // This is the height in pixels of your arrow
+
+        return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
+    }
+
+    public int getLitScaledProgress() {
+        int progress = this.data.get(2);
+        int maxProgress = this.data.get(3);  // Max Progress
         int progressArrowSize = 14; // This is the height in pixels of your arrow
 
-        return maxProgress != 0 && progress != 0 ? progressArrowSize - progress * progressArrowSize / maxProgress : 0;
+        return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
     }
+
     public int getEnergy()
     {
-        return this.data.get(2);
+        return this.data.get(4);
     }
     public int getMaxEnergy()
     {
-        return this.data.get(3);
+        return this.data.get(5);
     }
 
 
@@ -78,7 +90,7 @@ public class ElectricFurnaceMenu extends AbstractContainerMenu {
     private static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
 
     // THIS YOU HAVE TO DEFINE!
-    private static final int TE_INVENTORY_SLOT_COUNT = 2;  // must be the number of slots you have!
+    private static final int TE_INVENTORY_SLOT_COUNT = 3;  // must be the number of slots you have!
 
     @Override
     public ItemStack quickMoveStack(Player playerIn, int index) {

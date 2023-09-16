@@ -31,7 +31,6 @@ import org.slf4j.Logger;
 import software.bernie.geckolib.GeckoLib;
 
 import java.text.DecimalFormat;
-import java.util.Random;
 
 @Mod(Main.MODID)
 public class Main

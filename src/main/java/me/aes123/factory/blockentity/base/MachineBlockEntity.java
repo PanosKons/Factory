@@ -35,7 +35,7 @@ public abstract class MachineBlockEntity extends AbstractModBlockEntity {
         T newObject(int id, Inventory inventory, BlockEntity blockEntity, ContainerData containerData);
     }
 
-    private static String translationName;
+    private String translationName;
     protected ContainerData data;
     private AbstractContainerMenuFactory<? extends AbstractContainerMenu> factory;
     protected final ItemStackHandler itemHandler;
@@ -74,7 +74,6 @@ public abstract class MachineBlockEntity extends AbstractModBlockEntity {
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
         if (cap == ForgeCapabilities.ITEM_HANDLER) {
-            System.out.println(side);
             if (side == null) {
                 return lazyItemHandler.cast();
             }

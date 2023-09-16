@@ -33,7 +33,7 @@ public class ModBlockEntityType {
     }
 
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, Main.MODID);
-    public static final RegistryObject<BlockEntityType<ModDoorBlockEntity>> DOOR_BLOCK_ENTITY = BLOCK_ENTITIES.register("door_block_entity", ()-> BlockEntityType.Builder.of(ModDoorBlockEntity::new, ModBlocks.DOOR_BLOCK.get()).build(null));
+    public static final RegistryObject<BlockEntityType<GateBlockEntity>> GATE_BLOCK_ENTITY = BLOCK_ENTITIES.register("gate_block_entity", ()-> BlockEntityType.Builder.of(GateBlockEntity::new, ModBlocks.GATE_BLOCK.get()).build(null));
     public static final RegistryObject<BlockEntityType<AssemblerBlockEntity>> ASSEMBLER_BLOCK_ENTITY = BLOCK_ENTITIES.register("assembler_block_entity", ()-> BlockEntityType.Builder.of(AssemblerBlockEntity::new, ModBlocks.ASSEMBLER.get()).build(null));
     public static final RegistryObject<BlockEntityType<GeneratorBlockEntity>> GENERATOR_BLOCK_ENTITY = BLOCK_ENTITIES.register("generator_block_entity", ()-> BlockEntityType.Builder.of(GeneratorBlockEntity::new, ModBlocks.GENERATOR.get()).build(null));
     public static final RegistryObject<BlockEntityType<CrusherBlockEntity>> CRUSHER_BLOCK_ENTITY = BLOCK_ENTITIES.register("crusher_block_entity", ()-> BlockEntityType.Builder.of(CrusherBlockEntity::new, ModBlocks.CRUSHER.get()).build(null));

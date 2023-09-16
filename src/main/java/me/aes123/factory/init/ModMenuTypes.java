@@ -23,8 +23,8 @@ public class ModMenuTypes {
             registerMenuType(CrusherMenu::new, "crusher_menu");
     public static final RegistryObject<MenuType<GeneratorMenu>> GENERATOR_MENU =
             registerMenuType(GeneratorMenu::new, "generator_menu");
-    public static final RegistryObject<MenuType<ElectricFurnaceMenu>> QUARRY_MENU =
-            registerMenuType(ElectricFurnaceMenu::new, "quarry_menu");
+    public static final RegistryObject<MenuType<ElectricFurnaceMenu>> ELECTRIC_FURNACE_MENU =
+            registerMenuType(ElectricFurnaceMenu::new, "electric_furnace_menu");
     public static final RegistryObject<MenuType<ModEnchantmentMenu>> ENCHANTMENT_MENU =
             registerMenuType(ModEnchantmentMenu::new, "enchanting_table_menu");
 

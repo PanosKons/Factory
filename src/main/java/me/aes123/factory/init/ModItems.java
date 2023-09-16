@@ -71,6 +71,8 @@ public class ModItems {
     public static final RegistryObject<BlockItem> PROFOUND_HOPPER_ITEM = ITEMS.register("profound_hopper", () -> new BlockItem(ModBlocks.PROFOUND_HOPPER.get(), new Item.Properties()));
     public static final RegistryObject<BlockItem> REINFORCED_HOPPER_ITEM = ITEMS.register("reinforced_hopper", () -> new BlockItem(ModBlocks.REINFORCED_HOPPER.get(), new Item.Properties()));
 
+    public static final RegistryObject<BlockItem> GATE_BLOCK_ITEM = ITEMS.register("gate_block", () -> new BlockItem(ModBlocks.GATE_BLOCK.get(), new Item.Properties()));
+
     public static final RegistryObject<ModHammer> IRON_HAMMER = ITEMS.register("iron_hammer",
             () -> new ModHammer(new Item.Properties(), 2));
     public static final RegistryObject<ModHammer> GOLD_HAMMER = ITEMS.register("golden_hammer",

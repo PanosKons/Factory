@@ -12,7 +12,7 @@ import net.minecraft.world.entity.player.Inventory;
 import java.util.Optional;
 
 public class ElectricFurnaceScreen extends AbstractContainerScreen<ElectricFurnaceMenu> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Main.MODID, "textures/gui/quarry_gui.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(Main.MODID, "textures/gui/electric_furnace_gui.png");
     private EnergyInfoArea energyInfoArea;
     public ElectricFurnaceScreen(ElectricFurnaceMenu menu, Inventory inventory, Component component) {
         super(menu, inventory, component);
@@ -54,10 +54,16 @@ public class ElectricFurnaceScreen extends AbstractContainerScreen<ElectricFurna
         guiGraphics.blit(TEXTURE, x, y, 0,0, imageWidth, imageHeight);
         energyInfoArea.draw(guiGraphics, menu.getEnergy(), menu.getMaxEnergy());
         renderProgressArrow(guiGraphics, x, y);
+        renderProgressLit(guiGraphics, x, y);
+    }
+    private void renderProgressLit(GuiGraphics guiGraphics, int x, int y) {
+        if(menu.isSmelting()) {
+            guiGraphics.blit(TEXTURE, x + 56, y + 36 + 12 - menu.getLitScaledProgress(), 176,12 - menu.getLitScaledProgress(),14,menu.getLitScaledProgress() + 1);
+        }
     }
     private void renderProgressArrow(GuiGraphics guiGraphics, int x, int y) {
         if(menu.isCrafting()) {
-            guiGraphics.blit(TEXTURE, x + 80, y + 36 + 12 - menu.getScaledProgress(), 176,12 - menu.getScaledProgress(),14,menu.getScaledProgress() + 1);
+            guiGraphics.blit(TEXTURE, x + 80, y + 35, 176, 14, menu.getArrowScaledProgress(), 17);
         }
     }
 

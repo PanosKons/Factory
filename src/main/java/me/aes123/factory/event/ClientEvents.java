@@ -51,7 +51,7 @@ public class ClientEvents {
             MenuScreens.register(ModMenuTypes.EQUIPMENT_STATION_MENU.get(), EquipmentStationScreen::new);
             MenuScreens.register(ModMenuTypes.CRUSHER_MENU.get(), CrusherScreen::new);
             MenuScreens.register(ModMenuTypes.GENERATOR_MENU.get(), GeneratorScreen::new);
-            MenuScreens.register(ModMenuTypes.QUARRY_MENU.get(), ElectricFurnaceScreen::new);
+            MenuScreens.register(ModMenuTypes.ELECTRIC_FURNACE_MENU.get(), ElectricFurnaceScreen::new);
             MenuScreens.register(ModMenuTypes.ENCHANTMENT_MENU.get(), ModEnchantmentScreen::new);
         }
     }
