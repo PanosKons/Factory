@@ -1,0 +1,23 @@
+{
+  "type": "factory:assembling",
+  "pattern": [
+    "LLL",
+    "LfL",
+    "LLL"
+  ],
+  "key": {
+    "f": {
+      "tag": "minecraft:tools"
+    },
+    "L": {
+      "item": "minecraft:paper"
+    }
+  },
+  "speed": 20,
+  "required_recipe": "none",
+  "result": {
+    "item": "factory:undiscovered_recipe",
+    "nbt": {"max_progress": 1, "progress": 0, "recipe": "Capacity III Molds"},
+    "count": 1
+  }
+}

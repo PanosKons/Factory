@@ -46,7 +46,7 @@ public class ModHammer extends ModTool {
         event.setNewSpeed(event.getOriginalSpeed() * originalHardness / newHardness);
     }
     public List<BlockPos> getBlocksToBeDestroyed(ItemStack stack, BlockPos initalBlockPos, Player player, LevelAccessor level) {
-        int range = getModifierValue(EquipmentModifier.EquipmentModifierType.MINE_AOE, stack) > 0.0f ? 2 : 1;
+        int range = (int)getModifierValue(EquipmentModifier.EquipmentModifierType.MINE_AOE, stack) + 1;
         List<BlockPos> positions = new ArrayList<>();
 
         BlockHitResult traceResult = player.level().clip(new ClipContext(player.getEyePosition(1f),

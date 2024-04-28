@@ -50,7 +50,7 @@ public class EquipmentMaterial {
         if(EquipmentModifier.ARMORS.contains(toolName))
         {
             nbt.putFloat("base_armor", baseArmorPoints);
-            nbt.putInt("base_armor_durability", armorDurability);
+            nbt.putInt("base_armor_durability", armorDurability); ///?
         }
         if(EquipmentModifier.PROJECTILE.contains(toolName))
         {

@@ -1,0 +1,22 @@
+{
+    "type": "factory:assembling",
+    "pattern": [
+        "L L",
+        "LfL",
+        " L "
+    ],
+    "key": {
+        "f": {
+            "item": "minecraft:hopper"
+        },
+        "L": {
+            "item": "minecraft:steel_ingot"
+        }
+    },
+    "speed": 5,
+    "required_recipe": "none",
+    "result": {
+        "item": "factory:improved_hopper",
+        "count": 1
+    }
+}

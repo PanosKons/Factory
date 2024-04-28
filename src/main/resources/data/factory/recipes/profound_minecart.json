@@ -1,0 +1,23 @@
+{
+    "type": "factory:assembling",
+    "pattern": [
+        "   ",
+        "LfL",
+        "LLL"
+    ],
+    "key": {
+        "f": {
+            "item": "minecraft:minecart"
+        },
+        "L": {
+            "item": "minecraft:diamond"
+        }
+    },
+    "speed": 5,
+    "required_recipe": "Profound Blocks",
+    "result": {
+        "item": "minecraft:minecart",
+        "tag": "MaxSpeedModifier:1.8",
+        "count": 1
+    }
+}

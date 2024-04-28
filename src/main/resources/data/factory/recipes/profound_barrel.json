@@ -1,0 +1,22 @@
+{
+    "type": "factory:assembling",
+    "pattern": [
+        "LLL",
+        "LfL",
+        "LLL"
+    ],
+    "key": {
+        "f": {
+            "item": "factory:improved_barrel"
+        },
+        "L": {
+            "item": "minecraft:steel_ingot"
+        }
+    },
+    "speed": 5,
+    "required_recipe": "Profound Blocks",
+    "result": {
+        "item": "factory:profound_barrel",
+        "count": 1
+    }
+}

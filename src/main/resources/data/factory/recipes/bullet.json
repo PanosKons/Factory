@@ -1,0 +1,22 @@
+{
+    "type": "factory:assembling",
+    "pattern": [
+        "   ",
+        " AC",
+        "   "
+    ],
+    "key": {
+        "A": {
+            "item": "minecraft:arrow"
+        },
+        "C": {
+            "tag": "minecraft:copper_ingot"
+        }
+    },
+    "speed": 80,
+    "required_recipe": "none",
+    "result": {
+        "item": "factory:bullet",
+        "count": 1
+    }
+}

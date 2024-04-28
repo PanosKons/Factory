@@ -1,0 +1,40 @@
+{
+    "type": "factory:assembling",
+    "pattern": [
+        "PAS",
+        "BCH",
+        "WfW"
+    ],
+    "key": {
+        "f": {
+            "item": "factory:steel_ingot"
+        },
+        "C": {
+            "item": "minecraft:crafting_table"
+        },
+        "P": {
+            "tag": "minecraft:pickaxes"
+        },
+        "A": {
+            "tag": "minecraft:axes"
+        },
+        "S": {
+            "tag": "minecraft:shovels"
+        },
+        "B": {
+            "tag": "minecraft:swords"
+        },
+        "H": {
+            "tag": "minecraft:hoes"
+        },
+        "W": {
+            "item": "minecraft:iron_ingot"
+        }
+    },
+    "speed": 2,
+    "required_recipe": "none",
+    "result": {
+        "item": "factory:equipment_station",
+        "count": 1
+    }
+}

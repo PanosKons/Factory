@@ -1,0 +1,23 @@
+{
+    "type": "factory:assembling",
+    "pattern": [
+        "LLL",
+        "LfL",
+        "LLL"
+    ],
+    "key": {
+        "f": {
+            "item": "factory:pickaxe_mold"
+        },
+        "L": {
+            "item": "minecraft:netherite"
+        }
+    },
+    "speed": 20,
+    "required_recipe": "Capacity IV Molds",
+    "result": {
+        "item": "factory:pickaxe_mold",
+        "nbt": {"capacity": 9},
+        "count": 1
+    }
+}

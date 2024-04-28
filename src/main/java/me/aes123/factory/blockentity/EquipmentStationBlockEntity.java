@@ -67,7 +67,7 @@ public class EquipmentStationBlockEntity extends BlockEntity implements MenuProv
 
         @Override
         public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-            if(slot < 10) return true;
+            if(slot < 10) return true; //Modifiers
             if(slot == 10) return true; // Iron, diamond, netherite blocks
             if(slot == 11) return true; // Molds, tools
             if(slot == 12) return false;
@@ -228,12 +228,14 @@ public class EquipmentStationBlockEntity extends BlockEntity implements MenuProv
                 List<EquipmentModifier> itemModifiers = EquipmentModifier.EQUIPMENT_MODIFIERS.get(item);
 
                 for (var modifier : itemModifiers) {
+                    //if (modifier.modifierType == null) continue;
                     if (modifier.modifierType != null && !modifier.modifierType.applicableTools.contains(toolName)) continue;
                     var optional = modifiersToAdd.stream().filter((m) -> m.modifierType == modifier.modifierType).findFirst();
                     if (optional.isPresent()) {
                         int oldLevel = optional.get().level;
                         modifiersToAdd.remove(optional.get());
-                        modifiersToAdd.add(new EquipmentModifier(modifier.modifierType,Math.min(oldLevel + modifier.level, modifier.modifierType.maxLevel)));
+                        if(modifier.modifierType != null)
+                            modifiersToAdd.add(new EquipmentModifier(modifier.modifierType, Math.min(oldLevel + modifier.level, modifier.modifierType.maxLevel)));
                     } else {
                         modifiersToAdd.add(modifier);
                     }

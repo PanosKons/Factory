@@ -1,0 +1,23 @@
+{
+    "type": "factory:assembling",
+    "pattern": [
+        "LLL",
+        "LfL",
+        "LLL"
+    ],
+    "key": {
+        "f": {
+            "item": "factory:assembler"
+        },
+        "L": {
+            "item": "factory:steel_ingot"
+        }
+    },
+    "speed": 20,
+    "required_recipe": "none",
+    "result": {
+        "item": "factory:undiscovered_recipe",
+        "nbt": {"max_progress": 5, "progress": 0, "recipe": "Profound Blocks"},
+        "count": 1
+    }
+}

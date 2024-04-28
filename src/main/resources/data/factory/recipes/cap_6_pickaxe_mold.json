@@ -1,0 +1,23 @@
+{
+    "type": "factory:assembling",
+    "pattern": [
+        "LLL",
+        "LfL",
+        "LLL"
+    ],
+    "key": {
+        "f": {
+            "item": "factory:pickaxe_mold"
+        },
+        "L": {
+            "item": "minecraft:blaze_rod"
+        }
+    },
+    "speed": 20,
+    "required_recipe": "Capacity VI Molds",
+    "result": {
+        "item": "factory:pickaxe_mold",
+        "nbt": {"capacity": 6},
+        "count": 1
+    }
+}

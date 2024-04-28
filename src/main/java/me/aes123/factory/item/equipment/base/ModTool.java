@@ -89,8 +89,8 @@ public class ModTool extends ModHandItem {
     }
     @Override
     public float getDestroySpeed(ItemStack stack, BlockState state) {
-        float speed = state.is(BlockTags.DEEPSLATE_ORE_REPLACEABLES) || state.is(Blocks.DEEPSLATE_DIAMOND_ORE) || state.is(Blocks.DEEPSLATE_REDSTONE_ORE) || state.is(Blocks.DEEPSLATE_IRON_ORE ) || state.is(Blocks.DEEPSLATE_GOLD_ORE) || state.is(Blocks.DEEPSLATE_COAL_ORE)
-                || state.is(Blocks.DEEPSLATE_COPPER_ORE) || state.is(Blocks.DEEPSLATE_EMERALD_ORE) || state.is(Blocks.DEEPSLATE_LAPIS_ORE) ? 0.6f : 1.0f;
-        return isCorrectToolForDrops(stack, state) ? speed * getModifierValue(EquipmentModifier.EquipmentModifierType.MINING_SPEED, stack) : 1.0F;
+        float speedModifier = state.is(BlockTags.DEEPSLATE_ORE_REPLACEABLES) || state.is(Blocks.DEEPSLATE_DIAMOND_ORE) || state.is(Blocks.DEEPSLATE_REDSTONE_ORE) || state.is(Blocks.DEEPSLATE_IRON_ORE ) || state.is(Blocks.DEEPSLATE_GOLD_ORE) || state.is(Blocks.DEEPSLATE_COAL_ORE)
+                || state.is(Blocks.DEEPSLATE_COPPER_ORE) || state.is(Blocks.DEEPSLATE_EMERALD_ORE) || state.is(Blocks.DEEPSLATE_LAPIS_ORE) ? 0.7f : 1.0f;
+        return isCorrectToolForDrops(stack, state) ? speedModifier * getModifierValue(EquipmentModifier.EquipmentModifierType.MINING_SPEED, stack) : 1.0F;
     }
 }

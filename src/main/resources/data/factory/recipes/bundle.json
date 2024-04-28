@@ -1,0 +1,22 @@
+{
+    "type": "factory:assembling",
+    "pattern": [
+        "SLS",
+        "L L",
+        "LLL"
+    ],
+    "key": {
+        "S": {
+            "item": "minecraft:string"
+        },
+        "L": {
+            "item": "minecraft:leather"
+        }
+    },
+    "speed": 5,
+    "required_recipe": "none",
+    "result": {
+        "item": "minecraft:bundle",
+        "count": 1
+    }
+}

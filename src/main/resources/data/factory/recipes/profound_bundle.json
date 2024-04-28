@@ -1,0 +1,22 @@
+{
+    "type": "factory:assembling",
+    "pattern": [
+        "SSS",
+        "SfS",
+        "SSS"
+    ],
+    "key": {
+        "f": {
+            "item": "factory:improved_bundle"
+        },
+        "S": {
+            "item": "factory:steel_ingot"
+        }
+    },
+    "speed": 5,
+    "required_recipe": "Profound Blocks",
+    "result": {
+        "item": "factory:profound_bundle",
+        "count": 1
+    }
+}

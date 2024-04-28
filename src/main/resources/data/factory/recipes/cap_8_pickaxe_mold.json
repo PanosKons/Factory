@@ -1,0 +1,23 @@
+{
+    "type": "factory:assembling",
+    "pattern": [
+        "LLL",
+        "LfL",
+        "LLL"
+    ],
+    "key": {
+        "f": {
+            "item": "factory:pickaxe_mold"
+        },
+        "L": {
+            "item": "minecraft:netherite_scrap"
+        }
+    },
+    "speed": 20,
+    "required_recipe": "Capacity VIII Molds",
+    "result": {
+        "item": "factory:pickaxe_mold",
+        "nbt": {"capacity": 8},
+        "count": 1
+    }
+}

@@ -1,0 +1,23 @@
+{
+    "type": "factory:assembling",
+    "pattern": [
+        "LLL",
+        "LfL",
+        "LLL"
+    ],
+    "key": {
+        "f": {
+            "item": "factory:hoe_mold"
+        },
+        "L": {
+            "item": "minecraft:gold_ingot"
+        }
+    },
+    "speed": 20,
+    "required_recipe": "Capacity III Molds",
+    "result": {
+        "item": "factory:hoe_mold",
+        "nbt": {"capacity": 3},
+        "count": 1
+    }
+}

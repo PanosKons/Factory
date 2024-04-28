@@ -1,0 +1,22 @@
+{
+    "type": "factory:assembling",
+    "pattern": [
+        "LLL",
+        "LfL",
+        "LLL"
+    ],
+    "key": {
+        "f": {
+            "item": "minecraft:bundle"
+        },
+        "L": {
+            "item": "minecraft:copper_ingot"
+        }
+    },
+    "speed": 5,
+    "required_recipe": "none",
+    "result": {
+        "item": "factory:improved_bundle",
+        "count": 1
+    }
+}

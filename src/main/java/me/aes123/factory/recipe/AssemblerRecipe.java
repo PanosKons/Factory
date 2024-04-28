@@ -149,7 +149,7 @@ public class AssemblerRecipe implements Recipe<SimpleContainer> {
             ItemStack requiredRecipe = new ItemStack(ModItems.DISCOVERED_RECIPE.get(),1);
             CompoundTag nbt = new CompoundTag();
             String required_recipe = GsonHelper.getAsString(serializedRecipe, "required_recipe");
-            nbt.putString("required_recipe", required_recipe);
+            nbt.putString("recipe", required_recipe);
             requiredRecipe.setTag(nbt);
             if(required_recipe.isEmpty() || required_recipe.equals("none")) requiredRecipe = null;
 

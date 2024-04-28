@@ -20,7 +20,6 @@
     "required_recipe": "none",
     "result": {
         "item": "factory:discovery_station",
-        "nbt": {"re": 1},
         "count": 1
     }
 }

@@ -29,6 +29,8 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
+import static me.aes123.factory.data.EquipmentModifier.EquipmentModifierType.MAX_DURABILITY;
+
 public class ModEnchantmentTableBlockEntity extends MachineBlockEntity implements Nameable {
     public int time;
     public float flip;
@@ -101,27 +103,44 @@ public class ModEnchantmentTableBlockEntity extends MachineBlockEntity implement
     protected void clientTick(Level level, BlockPos pos, BlockState state) {
         bookAnimationTick(level, pos, state);
     }
+
+    private int getXpCapacity(int enchantingPower)
+    {
+        if(enchantingPower <= 5)
+        {
+            return 1000 * enchantingPower;
+        }
+        else if(enchantingPower <= 10)
+        {
+            return 5000 + 2000 * (enchantingPower - 5);
+        }
+        else
+        {
+            return 15000 + 5000 * (enchantingPower - 10);
+        }
+    }
     @Override
     protected void serverTick(Level level, BlockPos pos, BlockState state) {
         if(XPstored > MaxXPstored) XPstored = MaxXPstored;
-        int speed = 1;
+        int enchantingPower = 1;
         for(BlockPos blockpos : EnchantmentTableBlock.BOOKSHELF_OFFSETS) {
             if (ModEnchantmentTableBlock.isValidBookShelf(level, pos, blockpos)) {
-                speed += level.getBlockState(pos.offset(blockpos)).getEnchantPowerBonus(level, pos.offset(blockpos));
+                enchantingPower += level.getBlockState(pos.offset(blockpos)).getEnchantPowerBonus(level, pos.offset(blockpos));
             }
         }
-        MaxXPstored = 100000 * speed;
+
+        MaxXPstored = getXpCapacity(enchantingPower);
         Player player = level.getNearestPlayer(pos.getX(), pos.getY(),pos.getZ(), 4.0, true);
         if(player != null && player.isCrouching())
         {
             if(player.totalExperience == 0 && player.invulnerableTime <= 0)
             {
-                int amount = Math.min(speed, MaxXPstored - XPstored);
+                int amount = Math.min(enchantingPower, MaxXPstored - XPstored);
                 player.hurt(player.damageSources().magic(), amount);
                 XPstored += amount;
             }
             else {
-                int amount = Math.min(Math.min(speed, player.totalExperience), MaxXPstored - XPstored);
+                int amount = Math.min(Math.min(enchantingPower, player.totalExperience), MaxXPstored - XPstored);
                 if (amount > 0) {
                     player.giveExperiencePoints(-amount);
                     XPstored += amount;
@@ -143,7 +162,7 @@ public class ModEnchantmentTableBlockEntity extends MachineBlockEntity implement
                 float cost = stack.getTag().getFloat("xp_cost");
                 int durability = stack.getTag().getInt("durability");
 
-                if (cost < XPstored && durability < stack.getTag().getInt("max_durability")) {
+                if (cost < XPstored && durability <  (int)item.getModifierValue(MAX_DURABILITY, stack)) {
                     XPstored -= cost;
                     stack.getTag().putInt("durability", durability + 1);
                     item.updateDurabilityBar(stack);

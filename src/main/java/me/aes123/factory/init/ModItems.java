@@ -92,9 +92,10 @@ public class ModItems {
             () -> new ModGun(new Item.Properties().stacksTo(1).fireResistant()));
     public static final RegistryObject<Item> BULLET = ITEMS.register("bullet",
             () -> new Item(new Item.Properties()));
+
     //VANILLA ITEMS
 
-    public static final RegistryObject<ModTotem> TOTEM = VANILLA_ITEMS.register("totem_of_undying", () -> new ModTotem(new Item.Properties().defaultDurability(1000)));
+    public static final RegistryObject<Item> TOTEM = VANILLA_ITEMS.register("totem_of_undying", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> WOODEN_PICKAXE = VANILLA_ITEMS.register("wooden_pickaxe",
             () -> new PickaxeItem(ModTiers.WEAK_WOOD, 1, -2.8F, new Item.Properties()));
     public static final RegistryObject<Item> WOODEN_AXE = VANILLA_ITEMS.register("wooden_axe",

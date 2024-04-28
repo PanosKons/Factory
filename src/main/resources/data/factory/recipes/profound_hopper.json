@@ -1,0 +1,25 @@
+{
+    "type": "factory:assembling",
+    "pattern": [
+        "L L",
+        "LfL",
+        " K "
+    ],
+    "key": {
+        "f": {
+            "item": "factory:improved_hopper"
+        },
+        "L": {
+            "item": "minecraft:amethyst_shard"
+        },
+        "K": {
+            "item": "minecraft:diamond"
+        }
+    },
+    "speed": 5,
+    "required_recipe": "Profound Blocks",
+    "result": {
+        "item": "factory:profound_hopper",
+        "count": 1
+    }
+}

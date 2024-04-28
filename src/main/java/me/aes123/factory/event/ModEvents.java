@@ -7,12 +7,15 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import me.aes123.factory.Main;
 import me.aes123.factory.blockentity.ModBarrelBlockEntity;
+import me.aes123.factory.data.EquipmentModifier;
 import me.aes123.factory.dungeon.Dungeon;
 import me.aes123.factory.dungeon.PlayerDungeon;
 import me.aes123.factory.dungeon.PlayerDungeonProvider;
 import me.aes123.factory.init.ModAttributes;
+import me.aes123.factory.init.ModBlocks;
 import me.aes123.factory.item.ModBundleItem;
 import me.aes123.factory.item.equipment.ModHammer;
+import me.aes123.factory.item.equipment.base.IEquipmentItem;
 import me.aes123.factory.util.ILevelRenderer;
 import me.aes123.factory.util.ModTags;
 import net.minecraft.Util;
@@ -30,6 +33,7 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.entity.player.Inventory;
@@ -44,6 +48,7 @@ import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
@@ -204,7 +209,7 @@ public class ModEvents {
         }
     }
     @SubscribeEvent
-    public static void getDigSpeed(TickEvent.PlayerTickEvent event) {
+    public static void regenerationAttribute(TickEvent.PlayerTickEvent event) {
         double value = event.player.getAttributeValue(ModAttributes.REGENERATION.get());
         event.player.heal((float)value / 40);
     }
@@ -238,5 +243,35 @@ public class ModEvents {
     @SubscribeEvent
     public static void onRegisterCapabilities(RegisterCapabilitiesEvent event) {
         event.register(PlayerDungeon.class);
+    }
+
+    @SubscribeEvent
+    public static void onBreakBlock(BlockEvent.BreakEvent event)
+    {
+        ItemStack stack = event.getPlayer().getItemInHand(InteractionHand.MAIN_HAND);
+        if(stack.getItem() instanceof IEquipmentItem item)
+        {
+            float xpboost = item.getModifierValue(EquipmentModifier.EquipmentModifierType.XP_BOOST, stack);
+            if(xpboost > 0)
+            {
+                event.setExpToDrop((int)(event.getExpToDrop() * (xpboost/100.0f + 1)));
+            }
+        }
+    }
+    @SubscribeEvent
+    public static void onEntityDie(LivingDeathEvent event)
+    {
+        if(event.getSource().getEntity() instanceof Player player)
+        {
+            ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
+            if(stack.getItem() instanceof IEquipmentItem item)
+            {
+                float xpboost = item.getModifierValue(EquipmentModifier.EquipmentModifierType.XP_BOOST, stack);
+                if(xpboost > 0 && player.level() instanceof ServerLevel level)
+                {
+                    ExperienceOrb.award(level, event.getEntity().getPosition(1), (int)(event.getEntity().getExperienceReward() * (xpboost/100.0f + 1)));
+                }
+            }
+        }
     }
 }

@@ -26,7 +26,7 @@ public interface IEquipmentItem {
     default void updateDurabilityBar(ItemStack stack)
     {
         if((int)getModifierValue(MAX_DURABILITY, stack) == 0) return;
-        stack.setDamageValue(1000 - (1000 * getDurability(stack)) / (int)getModifierValue(MAX_DURABILITY, stack));
+        stack.setDamageValue(100000 - (100000 * getDurability(stack)) / (int)getModifierValue(MAX_DURABILITY, stack));
     }
     default int getDurability(ItemStack stack)
     {
@@ -41,6 +41,10 @@ public interface IEquipmentItem {
         float baseValue = stack.getTag().getFloat("base_" + modifierType.toString().toLowerCase());
         return new EquipmentModifier(modifierType, stack.getTag().getInt(modifierType.toString().toLowerCase())).getValue(baseValue) + baseValue;
     }
+    default int getModifierLevel(EquipmentModifier.EquipmentModifierType modifierType, ItemStack stack)
+    {
+        return stack.getTag().getInt(modifierType.toString().toLowerCase());
+    }
     default String getToolMaterial(ItemStack stack)
     {
         String[] ls = (ForgeRegistries.ITEMS.getKey(stack.getItem()).toString().split(":"))[1].split("_");
@@ -50,55 +54,64 @@ public interface IEquipmentItem {
     {
         return (ForgeRegistries.ITEMS.getKey(stack.getItem()).toString().split(":"))[1].split("_")[1];
     }
+    static String intToRoman(int num)
+    {
+        int[] values = {1000,900,500,400,100,90,50,40,10,9,5,4,1};
+        String[] romanLetters = {"M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"};
+        StringBuilder roman = new StringBuilder();
+        for(int i=0;i<values.length;i++)
+        {
+            while(num >= values[i])
+            {
+                num = num - values[i];
+                roman.append(romanLetters[i]);
+            }
+        }
+        return roman.toString();
+    }
     default void appendText(ItemStack stack, List<Component> components)
     {
         if(getDurability(stack) == 0) return;
 
         components.add(Component.literal("Durability " + getDurability(stack) + "/" + (int)getModifierValue(MAX_DURABILITY, stack)).withStyle(ChatFormatting.GRAY));
+        components.add(Component.literal("Instability " + Main.df.format(stack.getTag().getFloat("xp_cost"))).withStyle(ChatFormatting.LIGHT_PURPLE));
 
-        if(Screen.hasShiftDown())
+        var allModifiers = EquipmentModifier.EquipmentModifierType.values();
+        Arrays.stream(allModifiers).sorted(Comparator.comparingInt(a -> a.format.ordinal()));
+        for(var modifierType : allModifiers)
         {
-            var ls = getEquipmentStats(stack);
-            for(var entry : ls)
-            {
-                String snake_case = entry.a.toString().toLowerCase();
-                String[] parts = snake_case.split("_");
-                String displayName = "";
-                for (int i = 0; i < parts.length; i++){
-
-                    String string = parts[i];
-                    String temp = string.substring(0, 1).toUpperCase()+string.substring(1);
-                    displayName = displayName.concat(temp + " ");
-                }
-
-                if(entry.a != MAX_DURABILITY)
-                    switch (entry.a.format)
-                    {
-                        case DEFAULT -> components.add(Component.literal(displayName + Main.df.format(entry.b)).withStyle(ChatFormatting.GRAY));
-                        case PERCENTAGE -> components.add(Component.literal(displayName + Main.df.format(entry.b) + "%").withStyle(ChatFormatting.GRAY));
-                        case ONLY_TYPE -> components.add(Component.literal(displayName).withStyle(ChatFormatting.GREEN));
-                        case LEGENDARY -> components.add(Component.literal(displayName).withStyle(ChatFormatting.DARK_RED));
-                    }
-            }
-
-            components.add(Component.literal("XP Cost " + Main.df.format(stack.getTag().getFloat("xp_cost"))).withStyle(ChatFormatting.LIGHT_PURPLE));
-        }
-        else
-        {
-            components.add(Component.literal("<Hold SHIFT for info>").withStyle(ChatFormatting.YELLOW));
-        }
-    }
-    default List<Pair<EquipmentModifier.EquipmentModifierType, Float>> getEquipmentStats(ItemStack stack)
-    {
-        List<Pair<EquipmentModifier.EquipmentModifierType, Float>> ret = new ArrayList<>();
-        var values = EquipmentModifier.EquipmentModifierType.values();
-        Arrays.stream(values).sorted(Comparator.comparingInt(a -> a.format.ordinal()));
-        for(var modifierType : values)
-        {
+            if(modifierType == MAX_DURABILITY) continue;
+            int level = getModifierLevel(modifierType, stack);
             float value = getModifierValue(modifierType, stack);
-            if(value > 0.0f) ret.add(new Pair(modifierType,value));
+            if(level == 0) continue;
+            String snake_case = modifierType.toString().toLowerCase();
+            String[] parts = snake_case.split("_");
+            String displayName = "";
+            for (int i = 0; i < parts.length; i++){
+
+                String string = parts[i];
+                String temp = string.substring(0, 1).toUpperCase()+string.substring(1);
+                displayName = displayName.concat(temp + " ");
+            }
+            if(!Screen.hasShiftDown())
+                switch (modifierType.format)
+                {
+                    case DEFAULT, PERCENTAGE -> components.add(Component.literal(displayName + intToRoman(level)).withStyle(ChatFormatting.GRAY));
+                    case ONLY_TYPE -> components.add(Component.literal(displayName).withStyle(ChatFormatting.GREEN));
+                    case LEGENDARY -> components.add(Component.literal(displayName).withStyle(ChatFormatting.DARK_RED));
+                }
+            else{
+                switch (modifierType.format)
+                {
+                    case DEFAULT -> components.add(Component.literal(displayName + Main.df.format(value)).withStyle(ChatFormatting.GRAY));
+                    case PERCENTAGE -> components.add(Component.literal(displayName + Main.df.format(value) + "%").withStyle(ChatFormatting.GRAY));
+                    case ONLY_TYPE -> components.add(Component.literal(displayName).withStyle(ChatFormatting.GREEN));
+                    case LEGENDARY -> components.add(Component.literal(displayName).withStyle(ChatFormatting.DARK_RED));
+                }
+            }
         }
-        return ret;
+        if(!Screen.hasShiftDown())
+            components.add(Component.literal("<Hold SHIFT for stats>").withStyle(ChatFormatting.YELLOW));
     }
     default void takeDurabilityDamage(ItemStack stack, LivingEntity entity, InteractionHand slot, int damage)
     {
