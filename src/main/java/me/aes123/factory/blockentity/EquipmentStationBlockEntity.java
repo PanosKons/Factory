@@ -183,6 +183,7 @@ public class EquipmentStationBlockEntity extends BlockEntity implements MenuProv
         SimpleContainer inventory = new SimpleContainer(itemHandler.getSlots());
         for (int i = 0; i < itemHandler.getSlots(); i++)
         {
+            if(i == 12) continue;
             inventory.setItem(i, itemHandler.getStackInSlot(i));
         }
 
@@ -203,13 +204,16 @@ public class EquipmentStationBlockEntity extends BlockEntity implements MenuProv
         }
     }
     public static void tick(Level level, BlockPos pos, BlockState state, EquipmentStationBlockEntity entity) {
+
         if (level.isClientSide()) {
             return;
         }
+
         SimpleContainer inventory = new SimpleContainer(entity.itemHandler.getSlots());
         for (int i = 0; i < entity.itemHandler.getSlots(); i++) {
             inventory.setItem(i, entity.itemHandler.getStackInSlot(i));
         }
+
         if (hasRecipe(inventory)) {
 
             String toolName = ACCEPTED_MOLDS.get(inventory.getItem(11).getItem());
@@ -224,20 +228,25 @@ public class EquipmentStationBlockEntity extends BlockEntity implements MenuProv
             for (int i = 0; i < 10; i++) {
                 Item item = inventory.getItem(i).getItem();
                 if (!EquipmentModifier.EQUIPMENT_MODIFIERS.containsKey(item)) continue;
-
                 List<EquipmentModifier> itemModifiers = EquipmentModifier.EQUIPMENT_MODIFIERS.get(item);
 
                 for (var modifier : itemModifiers) {
-                    //if (modifier.modifierType == null) continue;
-                    if (modifier.modifierType != null && !modifier.modifierType.applicableTools.contains(toolName)) continue;
-                    var optional = modifiersToAdd.stream().filter((m) -> m.modifierType == modifier.modifierType).findFirst();
-                    if (optional.isPresent()) {
-                        int oldLevel = optional.get().level;
-                        modifiersToAdd.remove(optional.get());
-                        if(modifier.modifierType != null)
-                            modifiersToAdd.add(new EquipmentModifier(modifier.modifierType, Math.min(oldLevel + modifier.level, modifier.modifierType.maxLevel)));
-                    } else {
-                        modifiersToAdd.add(modifier);
+                    try {
+                        if (!modifier.modifierType.applicableTools.contains(toolName)) continue;
+                        var optional = modifiersToAdd.stream().filter((m) -> m.modifierType == modifier.modifierType).findFirst();
+                        if (optional.isPresent()) {
+                            int oldLevel = optional.get().level;
+                            modifiersToAdd.remove(optional.get());
+                            if (modifier.modifierType != null)
+                                modifiersToAdd.add(new EquipmentModifier(modifier.modifierType, Math.min(oldLevel + modifier.level, modifier.modifierType.maxLevel)));
+                        } else {
+                            modifiersToAdd.add(modifier);
+                        }
+                    }
+                    catch (NullPointerException e)
+                    {
+                        System.out.println(modifier.level);
+                        System.out.println(modifier.modifierType);
                     }
                 }
             }

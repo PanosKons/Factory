@@ -2,6 +2,7 @@ package me.aes123.factory.item.equipment.base;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import me.aes123.factory.init.ModAttributes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -46,16 +47,16 @@ public class ModEquipmentItem extends Item implements Vanishable, IEquipmentItem
     @Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot equipmentSlot, ItemStack stack)
     {
-        if(stack.hasTag() && (equipmentSlot == EquipmentSlot.MAINHAND || equipmentSlot == EquipmentSlot.OFFHAND))
+        if(stack.hasTag())
         {
             ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-            //if(getModifierValue(PLAYER_SPEED, stack) > 0) builder.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(BASE_PLAYER_SPEED_UUID, "Speed modifier", (getModifierValue(PLAYER_SPEED, stack) - 1) / 10.0f, AttributeModifier.Operation.ADDITION));
-            if(getModifierValue(REACH, stack) > 0)
+            if(equipmentSlot.isArmor() && getModifierValue(MOVEMENT_SPEED, stack) > 0) builder.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(BASE_PLAYER_SPEED_UUID, "Speed modifier", (getModifierValue(MOVEMENT_SPEED, stack) - 1) / 100.0f, AttributeModifier.Operation.ADDITION));
+            if(equipmentSlot == EquipmentSlot.MAINHAND && getModifierValue(REACH, stack) > 0)
             {
                 builder.put(ForgeMod.BLOCK_REACH.get(), new AttributeModifier(BASE_BLOCK_REACH_UUID, "Reach modifier", getModifierValue(REACH, stack) - 4.5f, AttributeModifier.Operation.ADDITION));
                 builder.put(ForgeMod.ENTITY_REACH.get(), new AttributeModifier(BASE_ENTITY_REACH_UUID, "Reach modifier",getModifierValue(REACH, stack) - 3.0f - 1.5f, AttributeModifier.Operation.ADDITION));
             }
-            //if(getModifierValue(LUCK, stack) > 0) builder.put(Attributes.LUCK, new AttributeModifier(BASE_LUCK_UUID, "Luck modifier",getModifierValue(LUCK, stack), AttributeModifier.Operation.ADDITION));
+            if(equipmentSlot.isArmor() && getModifierValue(REGENERATION, stack) > 0) builder.put(ModAttributes.REGENERATION.get(), new AttributeModifier(BASE_REGENERATION_UUID, "Regeneration modifier", getModifierValue(REGENERATION, stack), AttributeModifier.Operation.ADDITION));
             return builder.build();
         }
         return super.getDefaultAttributeModifiers(equipmentSlot);

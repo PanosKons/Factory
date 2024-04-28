@@ -8,7 +8,8 @@
     "ExperienceOrbMixin",
     "GameRendererMixin",
     "ThornsEnchantmentMixin",
-    "PlayerMixin"
+    "PlayerMixin",
+    "FoodDataMixin"
   ],
   "client": [
     "LevelRendererMixin"

@@ -14,23 +14,24 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 
-    public class AssemblerRecipeCategory implements IRecipeCategory<AssemblerRecipe> {
+public class AssemblerRecipeCategory implements IRecipeCategory<AssemblerRecipe> {
         public final static ResourceLocation UID = new ResourceLocation(Main.MODID, "assembling");
         public final static ResourceLocation TEXTURE =
                 new ResourceLocation(Main.MODID, "textures/gui/assembler_gui.png");
-
+        public static final RecipeType<AssemblerRecipe> ASSEMBLER_TYPE = new RecipeType<>(UID, AssemblerRecipe.class);
         private final IDrawable background;
         private final IDrawable icon;
 
         public AssemblerRecipeCategory(IGuiHelper helper) {
-            this.background = helper.createDrawable(TEXTURE, 0, 0, 176, 85);
+            this.background = helper.createDrawable(TEXTURE, 0, 0, 176, 75);
             this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlocks.ASSEMBLER.get()));
         }
 
         @Override
         public RecipeType<AssemblerRecipe> getRecipeType() {
-            return JEIFactoryModPlugin.INFUSION_TYPE;
+            return ASSEMBLER_TYPE;
         }
 
         @Override
@@ -60,6 +61,8 @@ import net.minecraft.world.item.ItemStack;
             builder.addSlot(RecipeIngredientRole.INPUT, 48, 53).addIngredients(recipe.getIngredients().get(7));
             builder.addSlot(RecipeIngredientRole.INPUT, 66, 53).addIngredients(recipe.getIngredients().get(8));
 
+            if(recipe.requiredRecipe != null)
+                builder.addSlot(RecipeIngredientRole.CATALYST, 94, 56).addIngredients(Ingredient.of(recipe.requiredRecipe));
 
             builder.addSlot(RecipeIngredientRole.OUTPUT, 124, 35).addItemStack(recipe.getResultItem(null));
         }

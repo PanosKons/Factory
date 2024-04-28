@@ -49,6 +49,7 @@ import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
@@ -272,6 +273,15 @@ public class ModEvents {
                     ExperienceOrb.award(level, event.getEntity().getPosition(1), (int)(event.getEntity().getExperienceReward() * (xpboost/100.0f + 1)));
                 }
             }
+        }
+    }
+    @SubscribeEvent
+    public static void onEatFood(LivingEntityUseItemEvent.Finish event)
+    {
+        int nutrition = event.getItem().getFoodProperties(event.getEntity()).getNutrition();
+        if(nutrition > 0)
+        {
+            event.getEntity().heal(nutrition / 4.0f);
         }
     }
 }

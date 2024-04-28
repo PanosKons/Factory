@@ -29,7 +29,7 @@ public class AssemblerRecipe implements Recipe<SimpleContainer> {
     final int height;
     final NonNullList<Ingredient> recipeItems;
     final ItemStack output;
-    final ItemStack requiredRecipe;
+    public final ItemStack requiredRecipe;
     private final ResourceLocation id;
     final int speed;
 
