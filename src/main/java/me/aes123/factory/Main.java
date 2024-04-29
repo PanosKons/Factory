@@ -2,6 +2,7 @@ package me.aes123.factory;
 
 import com.mojang.logging.LogUtils;
 import me.aes123.factory.client.ModEnchantTableRenderer;
+import me.aes123.factory.config.FactoryCommonConfig;
 import me.aes123.factory.dungeon.Dungeon;
 import me.aes123.factory.entity.client.GuardRenderer;
 import me.aes123.factory.init.*;
@@ -22,7 +23,9 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -59,6 +62,8 @@ public class Main
         ModAttributes.ATTRIBUTES.register(bus);
 
         GeckoLib.initialize();
+
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, FactoryCommonConfig.SPEC, "factory-common.toml");
 
         MinecraftForge.EVENT_BUS.addListener(Dungeon::init);
         bus.addListener(this::commonSetup);

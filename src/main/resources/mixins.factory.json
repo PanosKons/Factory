@@ -1,4 +1,5 @@
 {
+  "refmap": "mixins.factory.refmap.json",
   "required": true,
   "package": "me.aes123.factory.mixin",
   "mixins": [
@@ -14,5 +15,9 @@
   "client": [
     "LevelRendererMixin"
   ],
-  "server": []
+  "server": [],
+  "injectors":
+  {
+    "defaultRequire": 1
+  }
 }

@@ -132,7 +132,18 @@ public class AssemblerBlockEntity extends MachineBlockEntity {
     }
 
     private static boolean canInsertItemIntoOutputSlot(SimpleContainer inventory, ItemStack itemStack) {
-        return (inventory.getItem(9).getItem() == itemStack.getItem() && inventory.getItem(9).getTag().equals(itemStack.getTag())) || inventory.getItem(9).isEmpty();
+        return (inventory.getItem(9).getItem() == itemStack.getItem() && sameTag(inventory.getItem(9), itemStack)) || inventory.getItem(9).isEmpty();
+    }
+    private static boolean sameTag(ItemStack stack1, ItemStack stack2)
+    {
+        if(stack1.hasTag() && stack2.hasTag())
+        {
+            return stack1.getTag().equals(stack2.getTag());
+        }
+        else
+        {
+            return !(stack1.hasTag() ^ stack2.hasTag());
+        }
     }
 
     private static boolean canInsertAmountIntoOutputSlot(SimpleContainer inventory, int InsertCount) {

@@ -1,5 +1,7 @@
 package me.aes123.factory.event;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.SheetedDecalTextureGenerator;
@@ -7,6 +9,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import me.aes123.factory.Main;
 import me.aes123.factory.blockentity.ModBarrelBlockEntity;
+import me.aes123.factory.data.EquipmentMaterialModifier;
 import me.aes123.factory.data.EquipmentModifier;
 import me.aes123.factory.dungeon.Dungeon;
 import me.aes123.factory.dungeon.PlayerDungeon;
@@ -38,6 +41,7 @@ import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -58,15 +62,42 @@ import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
+import static me.aes123.factory.data.EquipmentMaterialModifier.EQUIPMENT_MATERIAL_MODIFIERS;
+
 
 @Mod.EventBusSubscriber(modid = Main.MODID)
 public class ModEvents {
+
+    private static EquipmentMaterialModifier deserializeMaterialModifiers(JsonElement json)
+    {
+        JsonObject obj = json.getAsJsonObject();
+        ResourceLocation location = new ResourceLocation(obj.get("item").getAsString());
+        if(ForgeRegistries.ITEMS.containsKey(location))
+        {
+            Item item = ForgeRegistries.ITEMS.getValue(location);
+            List<EquipmentModifier> modifiers = new ArrayList<>();
+            JsonArray array = obj.get("modifiers").getAsJsonArray();
+            for(int i = 0; i < array.size(); i++)
+            {
+                var modifierobj = array.get(i).getAsJsonObject();
+                String modifier = modifierobj.get("id").getAsString().toUpperCase();
+                EquipmentModifier.EquipmentModifierType modifierType = EquipmentModifier.EquipmentModifierType.valueOf(modifier);
+                int level = modifierobj.get("level").getAsInt();
+                modifiers.add(new EquipmentModifier(modifierType, level));
+            }
+            return new EquipmentMaterialModifier(item, modifiers);
+        }
+
+        return null;
+    }
+
     @SubscribeEvent
     public static void onReload(AddReloadListenerEvent event)
     {
@@ -87,6 +118,18 @@ public class ModEvents {
                 JsonObject data = GsonHelper.parse(new BufferedReader(new InputStreamReader(Minecraft.getInstance().getResourceManager().getResource(new ResourceLocation("factory:custom/loot_table_tags/chest_epic.json")).get().open())));
                 for (var entry : GsonHelper.getAsJsonArray(data, "values")) {
                     ModTags.EPIC_CHESTS.add(entry.getAsString());
+                }
+            }
+            {
+                EQUIPMENT_MATERIAL_MODIFIERS = new ArrayList<>();
+
+                JsonObject data = GsonHelper.parse(new BufferedReader(new InputStreamReader(Minecraft.getInstance().getResourceManager().getResource(new ResourceLocation("factory:custom/materials/material_modifiers.json")).get().open())));
+                for (var entry : GsonHelper.getAsJsonArray(data, "values")) {
+                    var a = deserializeMaterialModifiers(entry);
+                    if(a != null)
+                    {
+                        EQUIPMENT_MATERIAL_MODIFIERS.add(a);
+                    }
                 }
             }
 

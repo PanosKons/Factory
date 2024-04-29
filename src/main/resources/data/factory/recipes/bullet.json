@@ -10,7 +10,7 @@
             "item": "minecraft:arrow"
         },
         "C": {
-            "tag": "minecraft:copper_ingot"
+            "item": "minecraft:copper_ingot"
         }
     },
     "speed": 80,

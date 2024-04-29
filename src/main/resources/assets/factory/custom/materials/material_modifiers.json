@@ -1,0 +1,177 @@
+{
+  "values": [
+    {
+      "item": "minecraft:copper_ingot",
+      "modifiers": [
+        {"id": "mining_speed", "level": 1},
+        {"id": "attack_cooldown", "level": 1},
+        {"id": "fire_rate", "level": 1},
+        {"id": "movement_speed", "level": 1}
+      ]
+    },
+    {
+      "item": "minecraft:redstone",
+      "modifiers": [
+        {"id": "mining_speed", "level": 2},
+        {"id": "attack_cooldown", "level": 2},
+        {"id": "fire_rate", "level": 2},
+        {"id": "movement_speed", "level": 2}
+      ]
+    },
+    {
+      "item": "minecraft:gold_ingot",
+      "modifiers": [
+        {"id": "mining_speed", "level": 3},
+        {"id": "attack_cooldown", "level": 3},
+        {"id": "fire_rate", "level": 3},
+        {"id": "movement_speed", "level": 3}
+      ]
+    },
+    {
+      "item": "minecraft:netherite_ingot",
+      "modifiers": [
+        {"id": "mining_speed", "level": 5},
+        {"id": "attack_cooldown", "level": 5},
+        {"id": "fire_rate", "level": 5},
+        {"id": "movement_speed", "level": 5}
+      ]
+    },
+    {
+      "item": "minecraft:quartz",
+      "modifiers": [
+        {"id": "attack_damage", "level": 1},
+        {"id": "armor", "level": 1}
+      ]
+    },
+    {
+      "item": "minecraft:diamond",
+      "modifiers": [
+        {"id": "attack_damage", "level": 3},
+        {"id": "armor", "level": 3}
+      ]
+    },
+    {
+      "item": "minecraft:amethyst_shard",
+      "modifiers": [
+        {"id": "xp_boost", "level": 1}
+      ]
+    },
+    {
+      "item": "minecraft:emerald",
+      "modifiers": [
+        {"id": "xp_boost", "level": 2}
+      ]
+    },
+    {
+      "item": "minecraft:nether_star",
+      "modifiers": [
+        {"id": "xp_boost", "level": 5}
+      ]
+    },
+    {
+      "item": "minecraft:coal",
+      "modifiers": [
+        {"id": "max_durability", "level": 1}
+      ]
+    },
+    {
+      "item": "minecraft:obsidian",
+      "modifiers": [
+        {"id": "max_durability", "level": 2}
+      ]
+    },
+    {
+      "item": "minecraft:echo_shard",
+      "modifiers": [
+        {"id": "mine_aoe", "level": 1},
+        {"id": "attack_aoe", "level": 1},
+        {"id": "thorns", "level": 1}
+      ]
+    },
+    {
+      "item": "minecraft:iron_ingot",
+      "modifiers": [
+        {"id": "magnetic", "level": 1}
+      ]
+    },
+    {
+      "item": "factory:steel_ingot",
+      "modifiers": [
+        {"id": "magnetic", "level": 2}
+      ]
+    },
+    {
+      "item": "minecraft:ender_pearl",
+      "modifiers": [
+        {"id": "magnetic", "level": 3}
+      ]
+    },
+    {
+      "item": "minecraft:glowstone",
+      "modifiers": [
+        {"id": "reach", "level": 1}
+      ]
+    },
+    {
+      "item": "minecraft:lapis_lazuli",
+      "modifiers": [
+        {"id": "reach", "level": 1}
+      ]
+    },
+    {
+      "item": "minecraft:ghast_tear",
+      "modifiers": [
+        {"id": "reach", "level": 2}
+      ]
+    },
+    {
+      "item": "minecraft:blaze_rod",
+      "modifiers": [
+        {"id": "reach", "level": 2}
+      ]
+    },
+    {
+      "item": "minecraft:elytra",
+      "modifiers": [
+        {"id": "reach", "level": 5}
+      ]
+    },
+    {
+      "item": "minecraft:slime_ball",
+      "modifiers": [
+        {"id": "knockback", "level": 1},
+        {"id": "knockback_resistance", "level": 1}
+      ]
+    },
+    {
+      "item": "minecraft:ancient_debris",
+      "modifiers": [
+        {"id": "reinforced", "level": 1}
+      ]
+    },
+    {
+      "item": "minecraft:heart_of_the_sea",
+      "modifiers": [
+        {"id": "silk_touch", "level": 1}
+      ]
+    },
+    {
+      "item": "minecraft:totem_of_undying",
+      "modifiers": [
+        {"id": "regeneration", "level": 1}
+      ]
+    },
+    {
+      "item": "minecraft:enchanted_golden_apple",
+      "modifiers": [
+        {"id": "regeneration", "level": 4}
+      ]
+    },
+    {
+      "item": "factory:ruby",
+      "modifiers": [
+        {"id": "mending", "level": 1}
+      ]
+    }
+  ]
+}

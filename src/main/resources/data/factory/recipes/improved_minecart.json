@@ -10,14 +10,14 @@
             "item": "minecraft:minecart"
         },
         "L": {
-            "item": "minecraft:steel_ingot"
+            "item": "factory:steel_ingot"
         }
     },
     "speed": 5,
     "required_recipe": "none",
     "result": {
         "item": "minecraft:minecart",
-        "tag": "MaxSpeedModifier:1.5",
+        "nbt": {"MaxSpeedModifier" : 1.5},
         "count": 1
     }
 }

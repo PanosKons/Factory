@@ -10,7 +10,7 @@
             "item": "minecraft:hopper"
         },
         "L": {
-            "item": "minecraft:steel_ingot"
+            "item": "factory:steel_ingot"
         }
     },
     "speed": 5,

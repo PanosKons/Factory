@@ -40,6 +40,8 @@ import java.util.List;
 import java.util.AbstractMap;
 import java.util.Map;
 
+import static me.aes123.factory.data.EquipmentMaterialModifier.EQUIPMENT_MATERIAL_MODIFIERS;
+
 public class EquipmentStationBlockEntity extends BlockEntity implements MenuProvider {
     public static final Map<Item, String> ACCEPTED_MATERIALS = Map.of(Items.IRON_BLOCK, "iron_", Items.GOLD_BLOCK, "golden_", Items.DIAMOND_BLOCK, "diamond_", Items.NETHERITE_BLOCK, "netherite_");
     public static final Map<Item, String> ITEM_MATERIAL = Map.of(Items.IRON_BLOCK, "iron", Items.GOLD_BLOCK, "gold", Items.DIAMOND_BLOCK, "diamond", Items.NETHERITE_BLOCK, "netherite");
@@ -199,6 +201,7 @@ public class EquipmentStationBlockEntity extends BlockEntity implements MenuProv
         if(inventory.getItem(12).isEmpty() && hasRecipe(inventory))
         {
             for (int i = 0; i < inventory.getContainerSize(); i++) {
+                if(i == 11) continue;
                 itemHandler.extractItem(i,1,false);
             }
         }
@@ -227,26 +230,24 @@ public class EquipmentStationBlockEntity extends BlockEntity implements MenuProv
 
             for (int i = 0; i < 10; i++) {
                 Item item = inventory.getItem(i).getItem();
-                if (!EquipmentModifier.EQUIPMENT_MODIFIERS.containsKey(item)) continue;
-                List<EquipmentModifier> itemModifiers = EquipmentModifier.EQUIPMENT_MODIFIERS.get(item);
+                for(var element : EQUIPMENT_MATERIAL_MODIFIERS)
+                {
+                    if(element.item != item) continue;
+                    List<EquipmentModifier> itemModifiers = element.modifiers;
 
-                for (var modifier : itemModifiers) {
-                    try {
+                    for (var modifier : itemModifiers) {
                         if (!modifier.modifierType.applicableTools.contains(toolName)) continue;
+
                         var optional = modifiersToAdd.stream().filter((m) -> m.modifierType == modifier.modifierType).findFirst();
                         if (optional.isPresent()) {
                             int oldLevel = optional.get().level;
                             modifiersToAdd.remove(optional.get());
-                            if (modifier.modifierType != null)
-                                modifiersToAdd.add(new EquipmentModifier(modifier.modifierType, Math.min(oldLevel + modifier.level, modifier.modifierType.maxLevel)));
+
+                            modifiersToAdd.add(new EquipmentModifier(modifier.modifierType, Math.min(oldLevel + modifier.level, modifier.modifierType.maxLevel)));
+
                         } else {
                             modifiersToAdd.add(modifier);
                         }
-                    }
-                    catch (NullPointerException e)
-                    {
-                        System.out.println(modifier.level);
-                        System.out.println(modifier.modifierType);
                     }
                 }
             }
