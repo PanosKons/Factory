@@ -3,7 +3,6 @@ package me.aes123.factory.item.equipment.base;
 import me.aes123.factory.Main;
 import me.aes123.factory.data.EquipmentMaterial;
 import me.aes123.factory.data.EquipmentModifier;
-import me.aes123.factory.util.Pair;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -74,7 +73,7 @@ public interface IEquipmentItem {
         if(getDurability(stack) == 0) return;
 
         components.add(Component.literal("Durability " + getDurability(stack) + "/" + (int)getModifierValue(MAX_DURABILITY, stack)).withStyle(ChatFormatting.GRAY));
-        components.add(Component.literal("Instability " + Main.df.format(stack.getTag().getFloat("xp_cost"))).withStyle(ChatFormatting.LIGHT_PURPLE));
+        //components.add(Component.literal("Instability " + Main.df.format(stack.getTag().getFloat("xp_cost"))).withStyle(ChatFormatting.LIGHT_PURPLE));
 
         var allModifiers = EquipmentModifier.EquipmentModifierType.values();
         Arrays.stream(allModifiers).sorted(Comparator.comparingInt(a -> a.format.ordinal()));
@@ -82,7 +81,6 @@ public interface IEquipmentItem {
         {
             if(modifierType == MAX_DURABILITY) continue;
             int level = getModifierLevel(modifierType, stack);
-            float value = getModifierValue(modifierType, stack);
             if(level == 0) continue;
             String snake_case = modifierType.toString().toLowerCase();
             String[] parts = snake_case.split("_");
@@ -93,25 +91,12 @@ public interface IEquipmentItem {
                 String temp = string.substring(0, 1).toUpperCase()+string.substring(1);
                 displayName = displayName.concat(temp + " ");
             }
-            if(!Screen.hasShiftDown())
-                switch (modifierType.format)
-                {
-                    case DEFAULT, PERCENTAGE -> components.add(Component.literal(displayName + intToRoman(level)).withStyle(ChatFormatting.GRAY));
-                    case ONLY_TYPE -> components.add(Component.literal(displayName).withStyle(ChatFormatting.GREEN));
-                    case LEGENDARY -> components.add(Component.literal(displayName).withStyle(ChatFormatting.DARK_RED));
-                }
-            else{
-                switch (modifierType.format)
-                {
-                    case DEFAULT -> components.add(Component.literal(displayName + Main.df.format(value)).withStyle(ChatFormatting.GRAY));
-                    case PERCENTAGE -> components.add(Component.literal(displayName + Main.df.format(value) + "%").withStyle(ChatFormatting.GRAY));
-                    case ONLY_TYPE -> components.add(Component.literal(displayName).withStyle(ChatFormatting.GREEN));
-                    case LEGENDARY -> components.add(Component.literal(displayName).withStyle(ChatFormatting.DARK_RED));
-                }
+            switch (modifierType.format)
+            {
+                case DEFAULT -> components.add(Component.literal(displayName + intToRoman(level)).withStyle(ChatFormatting.GRAY));
+                case ONLY_TYPE -> components.add(Component.literal(displayName).withStyle(ChatFormatting.GREEN));
             }
         }
-        if(!Screen.hasShiftDown())
-            components.add(Component.literal("<Hold SHIFT for stats>").withStyle(ChatFormatting.YELLOW));
     }
     default void takeDurabilityDamage(ItemStack stack, LivingEntity entity, InteractionHand slot, int damage)
     {
@@ -145,7 +130,7 @@ public interface IEquipmentItem {
     }
     default void addDefaultStats(ItemStack stack) {
 
-        EquipmentMaterial.EQUIPMENT_MATERIALS.get(getToolMaterial(stack)).addBaseMaterial(stack.getTag(), getToolName(stack),false);
+        EquipmentMaterial.EQUIPMENT_MATERIALS.get(getToolMaterial(stack)).applyBaseStats(stack.getTag(), getToolName(stack),false);
     }
     default void tick(ItemStack stack)
     {

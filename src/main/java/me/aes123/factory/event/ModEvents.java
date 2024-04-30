@@ -321,10 +321,11 @@ public class ModEvents {
     @SubscribeEvent
     public static void onEatFood(LivingEntityUseItemEvent.Finish event)
     {
-        int nutrition = event.getItem().getFoodProperties(event.getEntity()).getNutrition();
-        if(nutrition > 0)
-        {
-            event.getEntity().heal(nutrition / 4.0f);
+        if(null != event.getItem().getFoodProperties(event.getEntity())) {
+            int nutrition = event.getItem().getFoodProperties(event.getEntity()).getNutrition();
+            if (nutrition > 0) {
+                event.getEntity().heal(nutrition / 4.0f);
+            }
         }
     }
 }

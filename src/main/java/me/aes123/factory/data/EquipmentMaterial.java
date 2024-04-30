@@ -6,10 +6,10 @@ import java.util.Map;
 
 public class EquipmentMaterial {
     public static Map<String, EquipmentMaterial> EQUIPMENT_MATERIALS = Map.of(
-            "iron", new EquipmentMaterial(6,0.6f,6,3,1,900,8, 300),
-            "gold", new EquipmentMaterial(18,0.4f,5,2,0.65f,90,6, 30),
-            "diamond", new EquipmentMaterial(8,0.6f,8,4,0.9f,3600,10, 1200),
-            "netherite", new EquipmentMaterial(9,0.6f,10,5,0.85f,9000,12, 3000)
+            "iron", new EquipmentMaterial(6,0.6f,6,3,1,900,5, 300),
+            "gold", new EquipmentMaterial(18,0.4f,5,2,0.65f,90,5, 30),
+            "diamond", new EquipmentMaterial(8,0.6f,8,4,0.9f,3600,8, 1200),
+            "netherite", new EquipmentMaterial(9,0.6f,10,5,0.85f,9000,10, 3000)
     );
 
     public final float baseMiningSpeed;
@@ -31,12 +31,14 @@ public class EquipmentMaterial {
         this.baseDurability = baseDurability;
         this.baseArmorDurability = baseArmorDurability;
     }
-    public void addBaseMaterial(CompoundTag nbt, String toolName, boolean equipmentStationCraft) {
+    public void applyBaseStats(CompoundTag nbt, String toolName, boolean equipmentStationCraft) {
 
         nbt.putInt("HideFlags", 26);
         int durability = equipmentStationCraft ? baseDurability : baseDurability / 3;
         int armorDurability = equipmentStationCraft ? baseArmorDurability : baseArmorDurability / 3;
-        nbt.putInt("base_max_durability", durability);
+
+        int toolDurability = EquipmentModifier.ARMORS.contains(toolName) ? armorDurability : durability;
+        nbt.putInt("base_max_durability", toolDurability);
 
         if(EquipmentModifier.TOOLS.contains(toolName))
         {
@@ -50,7 +52,6 @@ public class EquipmentMaterial {
         if(EquipmentModifier.ARMORS.contains(toolName))
         {
             nbt.putFloat("base_armor", baseArmorPoints);
-            nbt.putInt("base_armor_durability", armorDurability); ///?
         }
         if(EquipmentModifier.PROJECTILE.contains(toolName))
         {

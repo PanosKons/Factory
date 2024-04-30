@@ -4,7 +4,6 @@ import me.aes123.factory.block.EquipmentStationBlock;
 import me.aes123.factory.init.ModBlockEntityType;
 import me.aes123.factory.init.ModItems;
 import me.aes123.factory.item.equipment.base.IEquipmentItem;
-import me.aes123.factory.item.equipment.base.ModEquipmentItem;
 import me.aes123.factory.screen.EquipmentStationMenu;
 import me.aes123.factory.data.EquipmentMaterial;
 import me.aes123.factory.data.EquipmentModifier;
@@ -224,7 +223,7 @@ public class EquipmentStationBlockEntity extends BlockEntity implements MenuProv
             ItemStack stack = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(namespace + ACCEPTED_MATERIALS.get(inventory.getItem(10).getItem()) + toolName)));
 
             CompoundTag nbt = new CompoundTag();
-            EquipmentMaterial.EQUIPMENT_MATERIALS.get(ITEM_MATERIAL.get(inventory.getItem(10).getItem())).addBaseMaterial(nbt, toolName, true);
+            EquipmentMaterial.EQUIPMENT_MATERIALS.get(ITEM_MATERIAL.get(inventory.getItem(10).getItem())).applyBaseStats(nbt, toolName, true);
 
             List<EquipmentModifier> modifiersToAdd = new ArrayList<>();
 
@@ -252,7 +251,7 @@ public class EquipmentStationBlockEntity extends BlockEntity implements MenuProv
                 }
             }
             for (var modifier : modifiersToAdd) {
-                modifier.add(nbt);
+                nbt.putFloat(modifier.modifierType.toString().toLowerCase(), modifier.level);
             }
 
             stack.setTag(nbt);

@@ -1,14 +1,6 @@
 package me.aes123.factory.data;
 
-import me.aes123.factory.init.ModItems;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.AbstractMap;
 import java.util.List;
-import java.util.Map;
 
 public class EquipmentModifier {
     public static final List<String> TOOLS = List.of("pickaxe", "axe", "hoe", "shovel", "hammer");
@@ -27,17 +19,17 @@ public class EquipmentModifier {
         MINING_SPEED(TOOLS,50), FIRE_RATE(PROJECTILE,50), ATTACK_COOLDOWN(MELEE,50), MOVEMENT_SPEED(ARMORS, 50),
         SILK_TOUCH(TOOLS,1, DisplayFormat.ONLY_TYPE),
         REGENERATION(ARMORS, 4),
-        REINFORCED(PICKAXE, 10, DisplayFormat.PERCENTAGE),
+        REINFORCED(PICKAXE, 10),
         REACH(HOLDABLE, 20),
         MINE_AOE(HAMMER, 1, DisplayFormat.ONLY_TYPE), ATTACK_AOE(MELEE,3), THORNS(ARMORS,3),
         ATTACK_DAMAGE(WEAPONS, 10), ARMOR(ARMORS,30),
         KNOCKBACK(WEAPONS,2), KNOCKBACK_RESISTANCE(ARMORS,10),
-        XP_BOOST(HOLDABLE, 50, DisplayFormat.PERCENTAGE),
+        XP_BOOST(HOLDABLE, 50),
         MAGNETIC(HOLDABLE, 6);
 
         public enum DisplayFormat
         {
-            DEFAULT, PERCENTAGE, ONLY_TYPE, LEGENDARY
+            DEFAULT, ONLY_TYPE
         }
 
         public final List<String> applicableTools;
@@ -90,9 +82,5 @@ public class EquipmentModifier {
             case MENDING, SILK_TOUCH -> this.level;
             case MOVEMENT_SPEED -> this.level + 1;
         };
-    }
-    public void add(CompoundTag nbt)
-    {
-        nbt.putFloat(modifierType.toString().toLowerCase(), level);
     }
 }
