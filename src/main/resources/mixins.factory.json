@@ -6,11 +6,11 @@
     "BlockItemMixin",
     "HopperBlockEntityMixin",
     "BlockEntityMixin",
-    "ExperienceOrbMixin",
     "GameRendererMixin",
     "ThornsEnchantmentMixin",
     "PlayerMixin",
-    "FoodDataMixin"
+    "FoodDataMixin",
+    "AnvilMenuMixin"
   ],
   "client": [
     "LevelRendererMixin"

@@ -77,5 +77,7 @@
   "dungeon.factory.loot": "+1 Loot",
   "dungeon.factory.door": "Open nearest door",
   "dungeon.factory.health_boost": "+1 Heart",
-  "dungeon.factory.slowness": "-1 Speed"
+  "dungeon.factory.slowness": "-1 Speed",
+
+  "enchantment.factory.soulbound": "Soulbound"
 }

@@ -3,6 +3,7 @@ package me.aes123.factory.item.equipment;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import me.aes123.factory.data.EquipmentModifier;
+import me.aes123.factory.init.ModAttributes;
 import me.aes123.factory.item.equipment.base.IEquipmentItem;
 import me.aes123.factory.item.equipment.base.ModEquipmentItem;
 import net.minecraft.Util;
@@ -31,8 +32,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 import java.util.function.Consumer;
 
-import static me.aes123.factory.data.EquipmentModifier.EquipmentModifierType.SILK_TOUCH;
-import static me.aes123.factory.data.EquipmentModifier.EquipmentModifierType.THORNS;
+import static me.aes123.factory.data.EquipmentModifier.EquipmentModifierType.*;
+import static me.aes123.factory.data.EquipmentModifier.EquipmentModifierType.REGENERATION;
 
 public class ModArmor extends ArmorItem implements IEquipmentItem {
     private static final EnumMap<ArmorItem.Type, UUID> ARMOR_MODIFIER_UUID_PER_TYPE = Util.make(new EnumMap<>(ArmorItem.Type.class), (p_266744_) -> {
@@ -87,6 +88,11 @@ public class ModArmor extends ArmorItem implements IEquipmentItem {
     }
 
     @Override
+    public boolean isValidRepairItem(ItemStack p_41402_, ItemStack p_41403_) {
+        return false;
+    }
+
+    @Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot equipmentSlot, ItemStack stack) {
         if (stack.hasTag() && equipmentSlot == this.type.getSlot()) {
             ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
@@ -96,6 +102,12 @@ public class ModArmor extends ArmorItem implements IEquipmentItem {
 
             if (getModifierValue(EquipmentModifier.EquipmentModifierType.KNOCKBACK_RESISTANCE, stack) > 0) {
                 builder.put(Attributes.KNOCKBACK_RESISTANCE, new AttributeModifier(uuid, "Armor knockback resistance", (double) getModifierValue(EquipmentModifier.EquipmentModifierType.KNOCKBACK_RESISTANCE, stack), AttributeModifier.Operation.ADDITION));
+            }
+            if(getModifierValue(REGENERATION, stack) > 0){
+                builder.put(ModAttributes.REGENERATION.get(), new AttributeModifier(uuid, "Regeneration modifier", getModifierValue(REGENERATION, stack), AttributeModifier.Operation.ADDITION));
+            }
+            if(getModifierValue(MOVEMENT_SPEED, stack) > 0) {
+                builder.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(uuid, "Speed modifier", (getModifierValue(MOVEMENT_SPEED, stack) - 1) / 1000.0f, AttributeModifier.Operation.ADDITION));
             }
             return builder.build();
         }
@@ -112,12 +124,12 @@ public class ModArmor extends ArmorItem implements IEquipmentItem {
     @Override
     public int getEnchantmentLevel(ItemStack stack, Enchantment enchantment) {
         if(enchantment == Enchantments.THORNS) return (int)getModifierValue(THORNS, stack);
-        return 0;
+        return super.getEnchantmentLevel(stack, enchantment);
     }
 
     @Override
     public Map<Enchantment, Integer> getAllEnchantments(ItemStack stack) {
-        Map<Enchantment, Integer> map = new HashMap<>();
+        Map<Enchantment, Integer> map = super.getAllEnchantments(stack);
         if(getModifierValue(THORNS, stack) > 0) map.put(Enchantments.THORNS, (int)getModifierValue(THORNS, stack));
         return map;
     }
@@ -132,5 +144,14 @@ public class ModArmor extends ArmorItem implements IEquipmentItem {
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag flag) {
 
         appendText(stack,components);
+    }
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
+        return stack.getItem() instanceof IEquipmentItem;
+    }
+
+    @Override
+    public int getEnchantmentValue(ItemStack stack) {
+        return stack.getItem() instanceof IEquipmentItem ? 10 : 0;
     }
 }

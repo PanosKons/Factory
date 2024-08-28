@@ -23,7 +23,7 @@ public class ModItems {
     //ITEMS
     public static final RegistryObject<Item> CHOCOLATE = ITEMS.register("chocolate",
             () -> new Item(new Item.Properties().food((new FoodProperties.Builder().alwaysEat()
-                    .nutrition(3).saturationMod(0.2f).effect(() -> new MobEffectInstance(MobEffects.HEAL, 1,0), 1)
+                    .nutrition(3).saturationMod(0.2f).effect(() -> new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 3,2), 1)
                     .build()))));
     public static final RegistryObject<CardItem> BLANK_CARD = ITEMS.register("blank_card",
             () -> new CardItem(new Item.Properties()));
@@ -48,14 +48,12 @@ public class ModItems {
     public static final RegistryObject<ModBundleItem> IMPROVED_BUNDLE = ITEMS.register("improved_bundle", () -> new ModBundleItem(new Item.Properties(), 128));
     public static final RegistryObject<ModBundleItem> PROFOUND_BUNDLE = ITEMS.register("profound_bundle", () -> new ModBundleItem(new Item.Properties(), 256));
     public static final RegistryObject<ModBundleItem> REINFORCED_BUNDLE = ITEMS.register("reinforced_bundle", () -> new ModBundleItem(new Item.Properties(), 512));
-    public static final RegistryObject<BoosterItem> WEAK_BOOSTER = ITEMS.register("weak_booster", () -> new BoosterItem(new Item.Properties().stacksTo(4)));
-    public static final RegistryObject<BoosterItem> STRONG_BOOSTER = ITEMS.register("strong_booster", () -> new BoosterItem(new Item.Properties().stacksTo(16)));
-    public static final RegistryObject<BoosterItem> REINFORCED_BOOSTER = ITEMS.register("reinforced_booster", () -> new BoosterItem(new Item.Properties().stacksTo(64)));
+    public static final RegistryObject<BoosterItem> WEAK_BOOSTER = ITEMS.register("weak_booster", () -> new BoosterItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<BoosterItem> STRONG_BOOSTER = ITEMS.register("strong_booster", () -> new BoosterItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<BoosterItem> REINFORCED_BOOSTER = ITEMS.register("reinforced_booster", () -> new BoosterItem(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> RUBY_SHARD = ITEMS.register("ruby_shard", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> RUBY = ITEMS.register("ruby", () -> new Item(new Item.Properties()));
 
-
-    public static final RegistryObject<Item> GUARD_SPAWN_EGG = ITEMS.register("guard_spawn_egg", () -> new ForgeSpawnEggItem(ModEntityTypes.GUARD, 0xD57E36, 0x1D0D00, new Item.Properties()));
 
     public static final RegistryObject<BlockItem> EQUIPMENT_STATION_ITEM = ITEMS.register("equipment_station", () -> new BlockItem(ModBlocks.EQUIPMENT_STATION.get(),new Item.Properties()));
     public static final RegistryObject<BlockItem> ASSEMBLER_ITEM = ITEMS.register("assembler", () -> new BlockItem(ModBlocks.ASSEMBLER.get(), new Item.Properties()));

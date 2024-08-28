@@ -26,14 +26,6 @@ public class ModMinecartItem extends MinecartItem {
         super(p_42938_, p_42939_);
         modType = p_42938_;
     }
-    @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag flag) {
-        if(stack.hasTag()) {
-            float speed = stack.getTag().getFloat("MaxSpeedModifier");
-            components.add(Component.literal("Speed: " + speed).withStyle(ChatFormatting.RED));
-        }
-        super.appendHoverText(stack, level, components, flag);
-    }
 
     @Override
     public InteractionResult useOn(UseOnContext p_42943_) {

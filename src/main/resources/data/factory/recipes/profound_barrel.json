@@ -10,7 +10,7 @@
             "item": "factory:improved_barrel"
         },
         "L": {
-            "item": "minecraft:steel_ingot"
+            "item": "factory:steel_ingot"
         }
     },
     "speed": 5,

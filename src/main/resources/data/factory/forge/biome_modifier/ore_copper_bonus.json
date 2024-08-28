@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "features": "factory:ore_copper_bonus",
+  "biomes": "#forge:is_ocean",
+  "step": "underground_ores"
+}

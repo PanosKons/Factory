@@ -1,7 +1,6 @@
 {
     "type": "factory:assembling",
     "pattern": [
-        "   ",
         "LfL",
         "LLL"
     ],
@@ -17,7 +16,7 @@
     "required_recipe": "Profound Blocks",
     "result": {
         "item": "minecraft:minecart",
-        "nbt": {"MaxSpeedModifier" : 1.8},
+        "nbt": {"MaxSpeedModifier": 1.8},
         "count": 1
     }
 }

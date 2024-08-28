@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "food",
+  "pattern": [
+    "wxw",
+    "wxw",
+    "wxw"
+  ],
+  "key": {
+    "w": {
+      "item": "minecraft:cocoa_beans"
+    },
+    "x": {
+      "item": "minecraft:sugar"
+    }
+  },
+  "result": {
+    "item": "factory:chocolate",
+    "count": 1
+  }
+}

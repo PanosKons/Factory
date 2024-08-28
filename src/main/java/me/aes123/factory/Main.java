@@ -1,10 +1,10 @@
 package me.aes123.factory;
 
+import com.google.gson.*;
 import com.mojang.logging.LogUtils;
 import me.aes123.factory.client.ModEnchantTableRenderer;
 import me.aes123.factory.config.FactoryCommonConfig;
 import me.aes123.factory.dungeon.Dungeon;
-import me.aes123.factory.entity.client.GuardRenderer;
 import me.aes123.factory.init.*;
 import me.aes123.factory.item.ModBundleItem;
 import me.aes123.factory.networking.ModMessages;
@@ -18,6 +18,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.BundleItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.level.block.entity.EnchantmentTableBlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -31,8 +32,9 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.targets.FMLServerLaunchHandler;
 import org.slf4j.Logger;
-import software.bernie.geckolib.GeckoLib;
 
+import java.lang.reflect.Type;
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
 @Mod(Main.MODID)
@@ -41,6 +43,8 @@ public class Main
     public static final String MODID = "factory";
     public static final Logger LOGGER = LogUtils.getLogger();
     public static final DecimalFormat df = new DecimalFormat();
+    //public static final Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setPrettyPrinting().registerTypeAdapter(Double.class, new DoubleJsonSerializer()).create();
+    //public static final DecimalFormat FORMAT = new DecimalFormat("#.##");
     public Main()
     {
         df.setMaximumFractionDigits(2);
@@ -57,11 +61,10 @@ public class Main
         ModRecipes.SERIALIZERS.register(bus);
         ModCreativeTabs.CREATIVE_MODE_TABS.register(bus);
         ModLootModifiers.LOOT_MODIFIER_SERIALIZERS.register(bus);
-        ModEntityTypes.ENTITIES.register(bus);
         ModEntityTypes.VANILLA_ENTITIES.register(bus);
         ModAttributes.ATTRIBUTES.register(bus);
+        ModEnchantments.ENCHANTMENTS.register(bus);
 
-        GeckoLib.initialize();
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, FactoryCommonConfig.SPEC, "factory-common.toml");
 
@@ -93,7 +96,6 @@ public class Main
                 bundleProperty(ModItems.REINFORCED_BUNDLE.get());
             });
 
-            EntityRenderers.register(ModEntityTypes.GUARD.get(), GuardRenderer::new);
             BlockEntityRenderers.register(ModBlockEntityType.ENCHANTMENT_TABLE_BLOCK_ENTITY.get(), ModEnchantTableRenderer::new);
             EntityRenderers.register(ModEntityTypes.MINECART.get(), (p_174070_) -> new MinecartRenderer<>(p_174070_, ModelLayers.MINECART));
         }

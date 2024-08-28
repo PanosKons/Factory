@@ -62,6 +62,9 @@ public class EquipmentStationBlockEntity extends BlockEntity implements MenuProv
         protected void onContentsChanged(int slot)
         {
             setChanged();
+            if (level.isClientSide()) {
+                return;
+            }
             if(slot == 12)
                 onOutputExtracted(this);
         }
@@ -197,20 +200,21 @@ public class EquipmentStationBlockEntity extends BlockEntity implements MenuProv
         for (int i = 0; i < itemHandler.getSlots(); i++) {
             inventory.setItem(i, itemHandler.getStackInSlot(i));
         }
-        if(inventory.getItem(12).isEmpty() && hasRecipe(inventory))
+        if(inventory.getItem(12).isEmpty() && hasRecipe(inventory) && tick > 0)
         {
             for (int i = 0; i < inventory.getContainerSize(); i++) {
                 if(i == 11) continue;
                 itemHandler.extractItem(i,1,false);
             }
+            tick = 0;
         }
     }
+    static int tick = 0;
     public static void tick(Level level, BlockPos pos, BlockState state, EquipmentStationBlockEntity entity) {
-
         if (level.isClientSide()) {
             return;
         }
-
+        tick++;
         SimpleContainer inventory = new SimpleContainer(entity.itemHandler.getSlots());
         for (int i = 0; i < entity.itemHandler.getSlots(); i++) {
             inventory.setItem(i, entity.itemHandler.getStackInSlot(i));

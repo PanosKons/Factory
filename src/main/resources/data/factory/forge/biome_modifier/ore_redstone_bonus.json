@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "features": "factory:ore_redstone_bonus",
+  "biomes": "#forge:is_savanna",
+  "step": "underground_ores"
+}

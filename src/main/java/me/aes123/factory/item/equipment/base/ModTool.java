@@ -21,7 +21,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class ModTool extends ModHandItem {
     private final TagKey<Block> blocks;
-    private int harvestLevel;
+    private final int harvestLevel;
     Multimap<Attribute, AttributeModifier> defaultModifiers;
 
     public ModTool(Properties properties, int harvestLevel, TagKey<Block> blocks) {

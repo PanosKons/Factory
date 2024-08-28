@@ -16,7 +16,7 @@ public class EquipmentModifier {
     public enum EquipmentModifierType
     {
         MAX_DURABILITY(ALL,10), MENDING(ALL,1, DisplayFormat.ONLY_TYPE),
-        MINING_SPEED(TOOLS,50), FIRE_RATE(PROJECTILE,50), ATTACK_COOLDOWN(MELEE,50), MOVEMENT_SPEED(ARMORS, 50),
+        MINING_SPEED(TOOLS,50), FIRE_RATE(PROJECTILE,25), ATTACK_COOLDOWN(MELEE,15), MOVEMENT_SPEED(ARMORS, 50),
         SILK_TOUCH(TOOLS,1, DisplayFormat.ONLY_TYPE),
         REGENERATION(ARMORS, 4),
         REINFORCED(PICKAXE, 10),
@@ -70,9 +70,9 @@ public class EquipmentModifier {
             case REINFORCED -> this.level * 10.0f;
             case REACH -> 4.5f + this.level * 0.5f;
             case MINE_AOE -> this.level;
-            case ATTACK_COOLDOWN -> -this.level * 0.025f;
+            case ATTACK_COOLDOWN -> -this.level * 0.015f;
             case ATTACK_AOE -> this.level;
-            case FIRE_RATE -> -this.level * 0.05f;
+            case FIRE_RATE -> -this.level * 0.025f;
             case KNOCKBACK -> this.level;
             case ATTACK_DAMAGE -> this.level * 0.5f;
             case KNOCKBACK_RESISTANCE -> this.level * 0.5f;

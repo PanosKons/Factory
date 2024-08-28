@@ -1,0 +1,8 @@
+{
+  "values":
+  [
+    "factory:weak_booster",
+    "factory:strong_booster",
+    "factory:reinforced_booster"
+  ]
+}

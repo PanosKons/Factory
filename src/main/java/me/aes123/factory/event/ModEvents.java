@@ -62,6 +62,8 @@ import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
+import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.io.BufferedReader;
@@ -319,13 +321,13 @@ public class ModEvents {
         }
     }
     @SubscribeEvent
-    public static void onEatFood(LivingEntityUseItemEvent.Finish event)
-    {
-        if(null != event.getItem().getFoodProperties(event.getEntity())) {
+    public static void onEatFood(LivingEntityUseItemEvent.Finish event) {
+        if (null != event.getItem().getFoodProperties(event.getEntity())) {
             int nutrition = event.getItem().getFoodProperties(event.getEntity()).getNutrition();
             if (nutrition > 0) {
                 event.getEntity().heal(nutrition / 4.0f);
             }
         }
     }
+
 }

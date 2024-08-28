@@ -11,7 +11,7 @@ import net.minecraft.world.level.Level;
 
 public class ModMinecart extends Minecart {
 
-    public float speedModifier = 1.0f;
+    public float speedModifier = 2.0f;
 
     public ModMinecart(EntityType<?> entityType, Level level) {
         super(entityType, level);
@@ -56,6 +56,6 @@ public class ModMinecart extends Minecart {
     public void readAdditionalSaveData(CompoundTag compoundTag) {
         super.readAdditionalSaveData(compoundTag);
         this.speedModifier = compoundTag.getFloat("MaxSpeedModifier");
-        if(this.speedModifier == 0.0f) this.speedModifier = 1.0f;
+        if(this.speedModifier == 0.0f) this.speedModifier = 2.0f;
     }
 }

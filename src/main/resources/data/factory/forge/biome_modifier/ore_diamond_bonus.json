@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "features": "factory:ore_diamond_bonus",
+  "biomes": "#forge:is_jungle",
+  "step": "underground_ores"
+}

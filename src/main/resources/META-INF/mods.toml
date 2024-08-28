@@ -12,7 +12,7 @@ loaderVersion="${loader_version_range}" #mandatory This is typically bumped ever
 license="${mod_license}"
 # A URL to refer people to when problems occur with this mod
 #issueTrackerURL="https://change.me.to.your.issue.tracker.example.invalid/" #optional
-# A list of mods - how many allowed here is determined by the individual mod loader
+# A list of mods - how many allowed herfe is determined by the individual mod loader
 [[mods]] #mandatory
 # The modid of the mod
 modId="${mod_id}" #mandatory
@@ -55,19 +55,19 @@ description='''${mod_description}'''
     # Side this dependency is applied on - BOTH, CLIENT, or SERVER
     side="BOTH"
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
-[[dependencies.${mod_id}]] #optional
+#[[dependencies.${mod_id}]] #optional
 # the modid of the dependency
-modId="geckolib" #mandatory
+#modId="geckolib" #mandatory
 # Does this dependency have to exist - if not, ordering below must be specified
-mandatory=true #mandatory
+#mandatory=false #mandatory
 # The version range of the dependency
-versionRange="[4.1.2,)" #mandatory
+#versionRange="[4.1.2,)" #mandatory
 # An ordering relationship for the dependency - BEFORE or AFTER required if the dependency is not mandatory
 # BEFORE - This mod is loaded BEFORE the dependency
 # AFTER - This mod is loaded AFTER the dependency
-ordering="NONE"
+#ordering="NONE"
 # Side this dependency is applied on - BOTH, CLIENT, or SERVER
-side="BOTH"
+#side="BOTH"
 # Here's another dependency
 [[dependencies.${mod_id}]]
     modId="minecraft"

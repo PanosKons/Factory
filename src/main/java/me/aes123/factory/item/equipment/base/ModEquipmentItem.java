@@ -32,12 +32,12 @@ public class ModEquipmentItem extends Item implements Vanishable, IEquipmentItem
         if(enchantment == Enchantments.SILK_TOUCH && getModifierValue(SILK_TOUCH, stack) > 0) return 1;
         if(enchantment == Enchantments.SWEEPING_EDGE && getModifierLevel(ATTACK_AOE,stack) > 0) return getModifierLevel(ATTACK_AOE,stack);
         if(enchantment == Enchantments.KNOCKBACK && getModifierLevel(KNOCKBACK, stack) > 0) return getModifierLevel(KNOCKBACK,stack);
-        return 0;
+        return super.getEnchantmentLevel(stack, enchantment);
     }
 
     @Override
     public Map<Enchantment, Integer> getAllEnchantments(ItemStack stack) {
-        Map<Enchantment, Integer> map = new HashMap<>();
+        Map<Enchantment, Integer> map = super.getAllEnchantments(stack);
         if(getModifierValue(SILK_TOUCH, stack) > 0) map.put(Enchantments.SILK_TOUCH, 1);
         if(getModifierLevel(ATTACK_AOE,stack) > 0) map.put(Enchantments.SWEEPING_EDGE, getModifierLevel(ATTACK_AOE,stack));
         if(getModifierLevel(KNOCKBACK,stack) > 0) map.put(Enchantments.KNOCKBACK, getModifierLevel(KNOCKBACK,stack));
@@ -50,13 +50,11 @@ public class ModEquipmentItem extends Item implements Vanishable, IEquipmentItem
         if(stack.hasTag())
         {
             ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-            if(equipmentSlot.isArmor() && getModifierValue(MOVEMENT_SPEED, stack) > 0) builder.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(BASE_PLAYER_SPEED_UUID, "Speed modifier", (getModifierValue(MOVEMENT_SPEED, stack) - 1) / 100.0f, AttributeModifier.Operation.ADDITION));
             if(equipmentSlot == EquipmentSlot.MAINHAND && getModifierValue(REACH, stack) > 0)
             {
                 builder.put(ForgeMod.BLOCK_REACH.get(), new AttributeModifier(BASE_BLOCK_REACH_UUID, "Reach modifier", getModifierValue(REACH, stack) - 4.5f, AttributeModifier.Operation.ADDITION));
                 builder.put(ForgeMod.ENTITY_REACH.get(), new AttributeModifier(BASE_ENTITY_REACH_UUID, "Reach modifier",getModifierValue(REACH, stack) - 3.0f - 1.5f, AttributeModifier.Operation.ADDITION));
             }
-            if(equipmentSlot.isArmor() && getModifierValue(REGENERATION, stack) > 0) builder.put(ModAttributes.REGENERATION.get(), new AttributeModifier(BASE_REGENERATION_UUID, "Regeneration modifier", getModifierValue(REGENERATION, stack), AttributeModifier.Operation.ADDITION));
             return builder.build();
         }
         return super.getDefaultAttributeModifiers(equipmentSlot);
@@ -72,5 +70,15 @@ public class ModEquipmentItem extends Item implements Vanishable, IEquipmentItem
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag flag) {
 
         appendText(stack,components);
+    }
+
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
+        return stack.getItem() instanceof IEquipmentItem;
+    }
+
+    @Override
+    public int getEnchantmentValue(ItemStack stack) {
+        return stack.getItem() instanceof IEquipmentItem ? 10 : 0;
     }
 }
