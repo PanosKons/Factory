@@ -43,8 +43,8 @@ public class Main
     public static final String MODID = "factory";
     public static final Logger LOGGER = LogUtils.getLogger();
     public static final DecimalFormat df = new DecimalFormat();
-    //public static final Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setPrettyPrinting().registerTypeAdapter(Double.class, new DoubleJsonSerializer()).create();
-    //public static final DecimalFormat FORMAT = new DecimalFormat("#.##");
+    public static final Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setPrettyPrinting().registerTypeAdapter(Double.class, new DoubleJsonSerializer()).create();
+    public static final DecimalFormat FORMAT = new DecimalFormat("#.##");
     public Main()
     {
         df.setMaximumFractionDigits(2);
@@ -98,6 +98,31 @@ public class Main
 
             BlockEntityRenderers.register(ModBlockEntityType.ENCHANTMENT_TABLE_BLOCK_ENTITY.get(), ModEnchantTableRenderer::new);
             EntityRenderers.register(ModEntityTypes.MINECART.get(), (p_174070_) -> new MinecartRenderer<>(p_174070_, ModelLayers.MINECART));
+        }
+    }
+
+
+    private static final class DoubleJsonSerializer implements JsonSerializer<Double> {
+
+        @Override
+        public JsonElement serialize(final Double src, final Type typeOfSrc, final JsonSerializationContext context) {
+
+            if (src.isInfinite() || src.isNaN()) {
+
+                return new JsonPrimitive(src);
+            }
+
+            BigDecimal value = BigDecimal.valueOf(src);
+
+            try {
+                value = new BigDecimal(value.toBigIntegerExact());
+            }
+
+            catch (ArithmeticException e) {
+                // NO-OP
+            }
+
+            return new JsonPrimitive(value);
         }
     }
 }

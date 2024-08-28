@@ -10,7 +10,9 @@
     "ThornsEnchantmentMixin",
     "PlayerMixin",
     "FoodDataMixin",
-    "AnvilMenuMixin"
+    "AnvilMenuMixin",
+    "RangedAttributeMixin",
+    "CombatRulesMixin"
   ],
   "client": [
     "LevelRendererMixin"
