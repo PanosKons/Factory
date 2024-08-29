@@ -1,6 +1,7 @@
 package me.aes123.factory.item.equipment;
 
 import me.aes123.factory.data.EquipmentModifier;
+import me.aes123.factory.init.ModEnchantments;
 import me.aes123.factory.init.ModItems;
 import me.aes123.factory.item.equipment.base.ModHandItem;
 import net.minecraft.core.BlockPos;
@@ -37,17 +38,17 @@ public class ModGun extends ModHandItem {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         if(hand != InteractionHand.MAIN_HAND) return super.use(level, player,hand);
 
-
         ItemStack stack = player.getItemInHand(hand);
         float fireRate = getModifierValue(EquipmentModifier.EquipmentModifierType.FIRE_RATE, stack);
         if(fireRate == 0.0f) return InteractionResultHolder.fail(stack);
 
         Inventory inv = player.getInventory();
         boolean ret = true;
+        boolean teleportFlag = stack.getAllEnchantments().containsKey(ModEnchantments.TELEPORT.get());
         for(ItemStack itemstack : inv.items)
         {
-            if(!itemstack.is(ModItems.BULLET.get())) continue;
-            if(ret == true)
+            if(!((itemstack.is(ModItems.BULLET.get()) && !teleportFlag) || (itemstack.is(Items.ENDER_PEARL) && teleportFlag))) continue;
+            if(ret)
             {
                 ret = false;
                 itemstack.shrink(1);
@@ -73,12 +74,25 @@ public class ModGun extends ModHandItem {
         }
 
         takeDurabilityDamage(stack, player, InteractionHand.MAIN_HAND ,1);
-        player.getCooldowns().addCooldown(this, (int)(fireRate * 20));
+        float teleportDelay = 1.0f;
+        if(teleportFlag) teleportDelay = (21 - stack.getAllEnchantments().get(ModEnchantments.TELEPORT.get())) * 5;
+        player.getCooldowns().addCooldown(this, (int)(fireRate * 20 * teleportDelay));
         playSound(level, player.getOnPos().above());
-        if(result != null)
+        if(result != null && !teleportFlag)
         {
             LivingEntity entity = (LivingEntity) result.getEntity();
             entity.hurt(player.damageSources().mobAttack(player),10.0f);
+        }
+        else if(teleportFlag)
+        {
+            var x = hitResult.getLocation().x;
+            var y = hitResult.getLocation().y;
+            var z = hitResult.getLocation().z;
+            if (player.isPassenger()) {
+                player.dismountTo(x, y,z);
+            } else {
+                player.teleportTo(x, y,z);
+            }
         }
         return InteractionResultHolder.consume(stack);
     }

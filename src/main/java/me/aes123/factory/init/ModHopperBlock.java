@@ -1,5 +1,6 @@
 package me.aes123.factory.init;
 
+import me.aes123.factory.mixin.BlockEntityMixin;
 import me.aes123.factory.util.IBlockEntity;
 import me.aes123.factory.util.IHopperBlockEntity;
 import net.minecraft.core.BlockPos;
@@ -27,7 +28,7 @@ public class ModHopperBlock extends HopperBlock {
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState state) {
         var entity = new HopperBlockEntity(blockPos, state);
-        ((IBlockEntity)(entity)).setType(type.get());
+        ((BlockEntityMixin)(entity)).be_setType(type.get());
         ((IHopperBlockEntity)(entity)).setMoveItemDelay(moveItemDelay);
         return entity;
     }

@@ -1,0 +1,22 @@
+{
+    "type": "factory:assembling",
+    "pattern": [
+        "LLL",
+        "LfL",
+        "LLL"
+    ],
+    "key": {
+        "f": {
+            "item": "factory:profound_barrel"
+        },
+        "L": {
+            "item": "factory:diamond_ingot"
+        }
+    },
+    "speed": 5,
+    "required_recipe": "Reinforced Blocks",
+    "result": {
+        "item": "factory:reinforced_barrel",
+        "count": 1
+    }
+}

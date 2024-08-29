@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -45,6 +46,7 @@ public class ModTool extends ModHandItem {
     public boolean mineBlock(ItemStack stack, Level level, BlockState state, BlockPos pos, LivingEntity entity) {
         if(!level.isClientSide)
         {
+            if(stack.hasTag() && stack.getTag().getFloat("charge") >= state.getBlock().defaultDestroyTime()) stack.getTag().putFloat("charge", stack.getTag().getFloat("charge") - state.getBlock().defaultDestroyTime());
             takeDurabilityDamage(stack, entity, InteractionHand.MAIN_HAND,1);
         }
         return true;
@@ -91,6 +93,7 @@ public class ModTool extends ModHandItem {
     public float getDestroySpeed(ItemStack stack, BlockState state) {
         float speedModifier = state.is(BlockTags.DEEPSLATE_ORE_REPLACEABLES) || state.is(Blocks.DEEPSLATE_DIAMOND_ORE) || state.is(Blocks.DEEPSLATE_REDSTONE_ORE) || state.is(Blocks.DEEPSLATE_IRON_ORE ) || state.is(Blocks.DEEPSLATE_GOLD_ORE) || state.is(Blocks.DEEPSLATE_COAL_ORE)
                 || state.is(Blocks.DEEPSLATE_COPPER_ORE) || state.is(Blocks.DEEPSLATE_EMERALD_ORE) || state.is(Blocks.DEEPSLATE_LAPIS_ORE) ? 0.7f : 1.0f;
+        if(stack.hasTag() && stack.getTag().getFloat("charge") >= state.getBlock().defaultDestroyTime()) speedModifier = 1000;
         return isCorrectToolForDrops(stack, state) ? speedModifier * getModifierValue(EquipmentModifier.EquipmentModifierType.MINING_SPEED, stack) : 1.0F;
     }
 }

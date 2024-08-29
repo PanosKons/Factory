@@ -5,11 +5,14 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import me.aes123.factory.Main;
+import me.aes123.factory.init.ModItems;
 import me.aes123.factory.util.ModTags;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
@@ -53,6 +56,10 @@ public class AddItemModifier extends LootModifier {
                     if(context.getRandom().nextFloat() > 0.3f) modifiedLoot.add(new ItemStack(Items.DIAMOND));
                     else modifiedLoot.add(new ItemStack(Items.NETHERITE_SCRAP));
                 }
+                if(ModTags.LEGENDARY_CHESTS.contains(context.getQueriedLootTableId().toString())) {
+                    if(context.getRandom().nextFloat() > 0.3f) modifiedLoot.add(new ItemStack(Items.NETHERITE_SCRAP));
+                    else modifiedLoot.add(new ItemStack(Items.NETHERITE_INGOT));
+                }
             }
         }
 
@@ -62,11 +69,34 @@ public class AddItemModifier extends LootModifier {
             if(context.getRandom().nextFloat() >= 0.85f) {
                 modifiedLoot.add(new ItemStack(item));
             }
+            if(context.getRandom().nextFloat() >= 0.95f) {
+                int level = 1;
+                while (context.getRandom().nextFloat() >= 0.95f) {
+                    level++;
+                }
+                modifiedLoot.add(addEnchantedBook(level));
+            }
+            if(context.getRandom().nextFloat() >= 0.95f) {
+                modifiedLoot.add(new ItemStack(ModItems.WEAK_BOOSTER.get()));
+            }
         }
         if(ModTags.RARE_CHESTS.contains(context.getQueriedLootTableId().toString()))
         {
             if(context.getRandom().nextFloat() >= 0.65f) {
                 modifiedLoot.add(new ItemStack(item));
+            }
+            if(context.getRandom().nextFloat() >= 0.7f) {
+                int level = 1;
+                while (context.getRandom().nextFloat() >= 0.85f) {
+                    level++;
+                }
+                modifiedLoot.add(addEnchantedBook(level));
+            }
+            if(context.getRandom().nextFloat() >= 0.8f) {
+                modifiedLoot.add(new ItemStack(ModItems.WEAK_BOOSTER.get()));
+            }
+            if(context.getRandom().nextFloat() >= 0.95f) {
+                modifiedLoot.add(new ItemStack(ModItems.STRONG_BOOSTER.get()));
             }
         }
         if(ModTags.EPIC_CHESTS.contains(context.getQueriedLootTableId().toString()))
@@ -74,11 +104,56 @@ public class AddItemModifier extends LootModifier {
             if(context.getRandom().nextFloat() >= 0.3f) {
                 modifiedLoot.add(new ItemStack(item));
             }
+            if(context.getRandom().nextFloat() >= 0.3f) {
+                int level = 1;
+                while (context.getRandom().nextFloat() >= 0.65f) {
+                    level++;
+                }
+                modifiedLoot.add(addEnchantedBook(level));
+            }
+            if(context.getRandom().nextFloat() >= 0.8f) {
+                modifiedLoot.add(new ItemStack(ModItems.WEAK_BOOSTER.get()));
+            }
+            if(context.getRandom().nextFloat() >= 0.9f) {
+                modifiedLoot.add(new ItemStack(ModItems.STRONG_BOOSTER.get()));
+            }
+            if(context.getRandom().nextFloat() >= 0.95f) {
+                modifiedLoot.add(new ItemStack(ModItems.REINFORCED_BOOSTER.get()));
+            }
+        }
+        if(ModTags.LEGENDARY_CHESTS.contains(context.getQueriedLootTableId().toString()))
+        {
+            if(context.getRandom().nextFloat() >= 0.1f) {
+                modifiedLoot.add(new ItemStack(item));
+            }
+            if(context.getRandom().nextFloat() >= 0.2f) {
+                int level = 1;
+                while (context.getRandom().nextFloat() >= 0.45f) {
+                    level++;
+                }
+                modifiedLoot.add(addEnchantedBook(level));
+            }
+            if(context.getRandom().nextFloat() >= 0.8f) {
+                modifiedLoot.add(new ItemStack(ModItems.WEAK_BOOSTER.get()));
+            }
+            if(context.getRandom().nextFloat() >= 0.8f) {
+                modifiedLoot.add(new ItemStack(ModItems.STRONG_BOOSTER.get()));
+            }
+            if(context.getRandom().nextFloat() >= 0.9f) {
+                modifiedLoot.add(new ItemStack(ModItems.REINFORCED_BOOSTER.get()));
+            }
         }
 
         return modifiedLoot;
     }
 
+    public ItemStack addEnchantedBook(int level)
+    {
+        ItemStack stack = new ItemStack(Items.ENCHANTED_BOOK);
+        var enchantment = ModTags.Items.AllowedEnchantments.get(Main.rnd.nextInt(ModTags.Items.AllowedEnchantments.size()));
+        EnchantedBookItem.addEnchantment(stack, new EnchantmentInstance(enchantment, Math.min(enchantment.getMaxLevel(),level)));
+        return stack;
+    }
     @Override
     public Codec<? extends IGlobalLootModifier> codec() {
         return CODEC.get();

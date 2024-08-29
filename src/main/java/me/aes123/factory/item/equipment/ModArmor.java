@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import me.aes123.factory.data.EquipmentModifier;
 import me.aes123.factory.init.ModAttributes;
+import me.aes123.factory.init.ModEnchantments;
 import me.aes123.factory.item.equipment.base.IEquipmentItem;
 import me.aes123.factory.item.equipment.base.ModEquipmentItem;
 import net.minecraft.Util;
@@ -108,6 +109,10 @@ public class ModArmor extends ArmorItem implements IEquipmentItem {
             }
             if(getModifierValue(MOVEMENT_SPEED, stack) > 0) {
                 builder.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(uuid, "Speed modifier", (getModifierValue(MOVEMENT_SPEED, stack) - 1) / 1000.0f, AttributeModifier.Operation.ADDITION));
+            }
+            if(getAllEnchantments(stack).containsKey(ModEnchantments.HEALTH_BOOST.get()))
+            {
+                builder.put(Attributes.MAX_HEALTH, new AttributeModifier(uuid, "Health modifier", getAllEnchantments(stack).get(ModEnchantments.HEALTH_BOOST.get()), AttributeModifier.Operation.ADDITION));
             }
             return builder.build();
         }

@@ -4,6 +4,7 @@ import me.aes123.factory.block.ModEnchantmentTableBlock;
 import me.aes123.factory.blockentity.base.SlotType;
 import me.aes123.factory.init.ModBlockEntityType;
 import me.aes123.factory.init.ModBlocks;
+import me.aes123.factory.init.ModItems;
 import me.aes123.factory.item.BoosterItem;
 import me.aes123.factory.item.equipment.base.IEquipmentItem;
 import me.aes123.factory.screen.ModEnchantmentMenu;
@@ -97,27 +98,43 @@ public class ModEnchantmentTableBlockEntity extends BlockEntity implements Namea
         {
             p_155507_.tick = 0;
         List<ItemEntity> entities = level.getEntities(EntityTypeTest.forClass(ItemEntity.class), p_155507_.getRenderBoundingBox(), Entity::isAlive);
-        if(entities.size() == 2 && ModBarrelBlockEntity.sameItem(entities.get(0).getItem(),entities.get(1).getItem()))
+        if(entities.size() != 3) return;
+        ItemStack ruby = null;
+        ItemStack book1 = null;
+        ItemStack book2 = null;
+        for(ItemEntity ent : entities)
         {
-            ItemStack stack = entities.get(0).getItem();
-            if(stack.is(Items.ENCHANTED_BOOK))
+            if(ent.getItem().is(ModItems.RUBY.get()))
             {
-                ListTag enchantments = EnchantedBookItem.getEnchantments(stack);
+                ruby = ent.getItem();
+            }
+            if(ent.getItem().is(Items.ENCHANTED_BOOK))
+            {
+                if(book1 == null)
+                    book1 = ent.getItem();
+                else
+                    book2 = ent.getItem();
+            }
+        }
+        if(ruby != null && book1 != null && book2 != null && ModBarrelBlockEntity.sameItem(book1,book2))
+        {
+                ListTag enchantments = EnchantedBookItem.getEnchantments(book1);
                 var enchantment = enchantments.getCompound(0);
                 Enchantment ench = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(enchantment.getString("id")));
                 int lvl = enchantment.getInt("lvl");
                 if(lvl < ench.getMaxLevel())
                 {
                     ItemStack result = new ItemStack(Items.ENCHANTED_BOOK);
-                    CompoundTag tag = stack.getTag().copy();
+                    CompoundTag tag = book1.getTag().copy();
                     tag.getList("StoredEnchantments", 10).getCompound(0).putShort("lvl", (short)(lvl+1));
                     result.setTag(tag);
-                    entities.get(0).kill();
-                    entities.get(1).kill();
+                    for(ItemEntity ent : entities)
+                    {
+                        ent.kill();
+                    }
                     ItemEntity itementity = new ItemEntity(level, pos.getX(), pos.getY() + 0.85f, pos.getZ(),result);
                     level.addFreshEntity(itementity);
                 }
-            }
         }
         }
     }

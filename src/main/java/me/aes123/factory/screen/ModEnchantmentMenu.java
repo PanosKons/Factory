@@ -169,7 +169,12 @@ public class ModEnchantmentMenu extends AbstractContainerMenu {
 
                         for(int k = 0; k < 3; ++k) {
                             this.instability[0] = instability;
-                            this.costs[k] = levelCost * (k + 1);
+                            int before = levelCost * (k + 1);
+                            if(before > 80) before = 80 + (before - 80)/2;
+                            if(before > 100) before = 100 + (before - 100)/2;
+                            if(before > 140) before = 140 + (before - 140)/2;
+                            if(before > 180) before = 180 + (before - 180)/2;
+                            this.costs[k] = before;
                             this.enchantClue[k] = id;
                             this.levelClue[k] = EncLevel;
                         }

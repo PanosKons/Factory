@@ -8,7 +8,6 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
@@ -122,7 +121,12 @@ public class ModTags {
                 Enchantments.CHANNELING,
                 ModEnchantments.SOULBOUND.get(),
                 ModEnchantments.FROST_ASPECT.get(),
-                Enchantments.FIRE_PROTECTION
+                ModEnchantments.LEACH.get(),
+                Enchantments.FIRE_PROTECTION,
+                ModEnchantments.HEALTH_BOOST.get(),
+                ModEnchantments.TELEPORT.get(),
+                ModEnchantments.CHARGE.get()
+
         );
         public static TagKey<Item> BOOSTER_ITEMS = tag("booster_items");
         public static TagKey<Item> FORBIDDEN_ITEMS = tag("forbidden_items");
@@ -133,4 +137,5 @@ public class ModTags {
     public static List<String> COMMON_CHESTS = new ArrayList<>();
     public static List<String> RARE_CHESTS = new ArrayList<>();
     public static List<String> EPIC_CHESTS = new ArrayList<>();
+    public static List<String> LEGENDARY_CHESTS = new ArrayList<>();
 }

@@ -81,5 +81,9 @@
 
   "enchantment.factory.soulbound": "Soulbound",
   "enchantment.factory.frost_aspect": "Frost Aspect",
+  "enchantment.factory.leach": "Leach",
+  "enchantment.factory.health_boost": "Health Boost",
+  "enchantment.factory.teleport": "Telekinisis",
+  "enchantment.factory.charge": "Charge",
   "effect.factory.freeze": "Freeze"
 }

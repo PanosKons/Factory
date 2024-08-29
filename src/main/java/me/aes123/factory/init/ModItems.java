@@ -51,7 +51,7 @@ public class ModItems {
     public static final RegistryObject<BoosterItem> WEAK_BOOSTER = ITEMS.register("weak_booster", () -> new BoosterItem(new Item.Properties().stacksTo(2)));
     public static final RegistryObject<BoosterItem> STRONG_BOOSTER = ITEMS.register("strong_booster", () -> new BoosterItem(new Item.Properties().stacksTo(4)));
     public static final RegistryObject<BoosterItem> REINFORCED_BOOSTER = ITEMS.register("reinforced_booster", () -> new BoosterItem(new Item.Properties().stacksTo(8)));
-    public static final RegistryObject<Item> RUBY_SHARD = ITEMS.register("ruby_shard", () -> new Item(new Item.Properties()));
+    //public static final RegistryObject<Item> RUBY_SHARD = ITEMS.register("ruby_shard", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> RUBY = ITEMS.register("ruby", () -> new Item(new Item.Properties()));
 
 

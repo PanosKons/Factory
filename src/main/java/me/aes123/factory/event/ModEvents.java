@@ -15,25 +15,21 @@ import me.aes123.factory.dungeon.Dungeon;
 import me.aes123.factory.dungeon.PlayerDungeon;
 import me.aes123.factory.dungeon.PlayerDungeonProvider;
 import me.aes123.factory.init.ModAttributes;
-import me.aes123.factory.init.ModBlocks;
+import me.aes123.factory.init.ModEnchantments;
 import me.aes123.factory.item.ModBundleItem;
 import me.aes123.factory.item.equipment.ModHammer;
 import me.aes123.factory.item.equipment.base.IEquipmentItem;
 import me.aes123.factory.util.ILevelRenderer;
 import me.aes123.factory.util.ModTags;
-import net.minecraft.Util;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.GsonHelper;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ExperienceOrb;
@@ -45,7 +41,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.event.RenderHighlightEvent;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
@@ -54,16 +49,12 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
-import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.io.BufferedReader;
@@ -123,6 +114,12 @@ public class ModEvents {
                 }
             }
             {
+                JsonObject data = GsonHelper.parse(new BufferedReader(new InputStreamReader(Minecraft.getInstance().getResourceManager().getResource(new ResourceLocation("factory:custom/loot_table_tags/chest_legendary.json")).get().open())));
+                for (var entry : GsonHelper.getAsJsonArray(data, "values")) {
+                    ModTags.LEGENDARY_CHESTS.add(entry.getAsString());
+                }
+            }
+            {
                 EQUIPMENT_MATERIAL_MODIFIERS = new ArrayList<>();
 
                 JsonObject data = GsonHelper.parse(new BufferedReader(new InputStreamReader(Minecraft.getInstance().getResourceManager().getResource(new ResourceLocation("factory:custom/materials/material_modifiers.json")).get().open())));
@@ -161,6 +158,31 @@ public class ModEvents {
             trades.get(5).clear();
         }
     }
+
+    public static int t = 0;
+    @SubscribeEvent
+    public static void tick(TickEvent.ServerTickEvent e)
+    {
+        t++;
+        if(t >= 20 * 5)
+        {
+            var list = e.getServer().getPlayerList().getPlayers();
+            for(Player player : list){
+            for (int i = 0; i < 9; i++)
+            {
+                ItemStack stack = player.getInventory().getItem(i);
+                var enchantments = stack.getAllEnchantments();
+                if(enchantments.containsKey(ModEnchantments.CHARGE.get()))
+                {
+                    int lvl = enchantments.get(ModEnchantments.CHARGE.get());
+                    stack.getTag().putFloat("charge", Math.min(stack.getTag().getFloat("charge") + lvl, 6 * lvl));
+                }
+            }
+            }
+            t = 0;
+        }
+    }
+
     @SubscribeEvent
     public static void blockHighLight(RenderHighlightEvent.Block event) {
         if(event.getCamera().getEntity() instanceof Player player && player.getInventory().getSelected().getItem() instanceof ModHammer hammer)

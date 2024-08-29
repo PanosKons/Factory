@@ -3,7 +3,6 @@ package me.aes123.factory.enchantment;
 import me.aes123.factory.init.ModMobEffects;
 import me.aes123.factory.item.equipment.ModSword;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -11,12 +10,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
-public class FrostEnchantment extends Enchantment {
-    public FrostEnchantment(Rarity rarity, EnchantmentCategory enchantmentCategory, EquipmentSlot[] slot) {
+public class LeachEnchantment extends Enchantment {
+    public LeachEnchantment(Rarity rarity, EnchantmentCategory enchantmentCategory, EquipmentSlot[] slot) {
         super(rarity, enchantmentCategory, slot);
     }
     public int getMaxLevel() {
-        return 10;
+        return 5;
     }
 
     @Override
@@ -24,7 +23,7 @@ public class FrostEnchantment extends Enchantment {
         super.doPostAttack(livingEntity, entity, level);
         if(entity instanceof LivingEntity target)
         {
-            target.addEffect(new MobEffectInstance(ModMobEffects.FREEZE.get(), 3 * 20, level - 1));
+            livingEntity.heal(0.2f * level);
         }
     }
 

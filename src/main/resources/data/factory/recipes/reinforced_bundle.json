@@ -1,0 +1,22 @@
+{
+    "type": "factory:assembling",
+    "pattern": [
+        "SSS",
+        "SfS",
+        "SSS"
+    ],
+    "key": {
+        "f": {
+            "item": "factory:profound_bundle"
+        },
+        "S": {
+            "item": "factory:diamond"
+        }
+    },
+    "speed": 5,
+    "required_recipe": "Reinforced Blocks",
+    "result": {
+        "item": "factory:reinforced_bundle",
+        "count": 1
+    }
+}

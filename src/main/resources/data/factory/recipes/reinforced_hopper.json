@@ -7,19 +7,19 @@
     ],
     "key": {
         "f": {
-            "item": "factory:improved_hopper"
+            "item": "factory:profound_hopper"
         },
         "L": {
-            "item": "minecraft:redstone"
+            "item": "minecraft:amethyst_shard"
         },
         "K": {
-            "item": "minecraft:diamond"
+            "item": "minecraft:ender_pearl"
         }
     },
     "speed": 5,
-    "required_recipe": "Profound Blocks",
+    "required_recipe": "Reinforced Blocks",
     "result": {
-        "item": "factory:profound_hopper",
+        "item": "factory:reinforced_hopper",
         "count": 1
     }
 }

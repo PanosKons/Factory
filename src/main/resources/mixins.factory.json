@@ -15,7 +15,10 @@
     "AnvilMenuMixin",
     "RangedAttributeMixin",
     "CombatRulesMixin",
-    "LivingEntityMixin"
+    "LivingEntityMixin",
+    "EnderDragonMixin",
+    "EnderManMixin",
+    "ShulkerBulletMixin"
   ],
   "client": [
     "LevelRendererMixin"
