@@ -36,6 +36,7 @@ import org.slf4j.Logger;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.util.Random;
 
 @Mod(Main.MODID)
 public class Main
@@ -45,6 +46,7 @@ public class Main
     public static final DecimalFormat df = new DecimalFormat();
     public static final Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setPrettyPrinting().registerTypeAdapter(Double.class, new DoubleJsonSerializer()).create();
     public static final DecimalFormat FORMAT = new DecimalFormat("#.##");
+    public static final Random rnd = new Random(System.currentTimeMillis());
     public Main()
     {
         df.setMaximumFractionDigits(2);
@@ -64,6 +66,7 @@ public class Main
         ModEntityTypes.VANILLA_ENTITIES.register(bus);
         ModAttributes.ATTRIBUTES.register(bus);
         ModEnchantments.ENCHANTMENTS.register(bus);
+        ModMobEffects.MOB_EFFECTS.register(bus);
 
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, FactoryCommonConfig.SPEC, "factory-common.toml");

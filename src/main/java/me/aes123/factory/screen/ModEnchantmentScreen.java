@@ -202,14 +202,17 @@ public class ModEnchantmentScreen extends AbstractContainerScreen<ModEnchantment
                         }
 
                         list.add(mutablecomponent.withStyle(i >= i1 ? ChatFormatting.GRAY : ChatFormatting.RED));
-                        MutableComponent mutablecomponent1;
-                        if (i1 == 1) {
-                            mutablecomponent1 = Component.translatable("container.enchant.level.one");
-                        } else {
-                            mutablecomponent1 = Component.translatable("container.enchant.level.many", i1);
-                        }
 
+                        MutableComponent mutablecomponent1 = Component.literal("Probability of success: " + (int)(100 * this.menu.getCurve((this.menu).instability[0])) + "%");
                         list.add(mutablecomponent1.withStyle(ChatFormatting.GRAY));
+                        if(j == 0)
+                        {
+                            list.add((MutableComponent)Component.literal("Equipment might be destroyed").withStyle(ChatFormatting.RED));
+                        }
+                        if(j == 1)
+                        {
+                            list.add((MutableComponent)Component.literal("Equipment might lose all enchantments").withStyle(ChatFormatting.RED));
+                        }
                     }
                 }
 

@@ -107,8 +107,9 @@ public class GeneratorBlock extends BaseEntityBlock {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state,
                                                                   BlockEntityType<T> type) {
-        return level.isClientSide ? createTickerHelper(type, ModBlockEntityType.GENERATOR_BLOCK_ENTITY.get(),
-                GeneratorBlockEntity::clientTick) : createTickerHelper(type, ModBlockEntityType.GENERATOR_BLOCK_ENTITY.get(),
-                GeneratorBlockEntity::serverTick);
+        //return level.isClientSide ? createTickerHelper(type, ModBlockEntityType.GENERATOR_BLOCK_ENTITY.get(),
+        //        GeneratorBlockEntity::clientTick) : createTickerHelper(type, ModBlockEntityType.GENERATOR_BLOCK_ENTITY.get(),
+        //        GeneratorBlockEntity::serverTick);
+        return null;/////
     }
 }

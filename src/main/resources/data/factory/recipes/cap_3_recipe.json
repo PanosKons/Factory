@@ -17,7 +17,7 @@
   "required_recipe": "none",
   "result": {
     "item": "factory:undiscovered_recipe",
-    "nbt": {"max_progress": 1, "progress": 0, "recipe": "Capacity III Molds"},
+    "nbt": {"max_progress": 5, "progress": 0, "recipe": "Capacity III Molds"},
     "count": 1
   }
 }

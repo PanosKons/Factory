@@ -23,7 +23,7 @@ public class GeneratorBlockEntity extends PoweredMachineBlockEntity {
     private int progress = 0;
     private int maxProgress = 0;
     public GeneratorBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlockEntityType.GENERATOR_BLOCK_ENTITY.get(), pos , state,"container.factory.generator",(id, inventory, entity, data) -> new GeneratorMenu(id, inventory, entity, data),
+        super(null /*ModBlockEntityType.GENERATOR_BLOCK_ENTITY.get()*/, pos , state,"container.factory.generator",(id, inventory, entity, data) -> new GeneratorMenu(id, inventory, entity, data),
                 List.of(SlotType.INPUT, SlotType.SPECIAL), 60000);
 
         this.data = new ContainerData() {

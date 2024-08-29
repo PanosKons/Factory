@@ -4,9 +4,12 @@ import com.google.common.base.Suppliers;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import me.aes123.factory.Main;
 import me.aes123.factory.util.ModTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
@@ -38,24 +41,37 @@ public class AddItemModifier extends LootModifier {
             {
                 modifiedLoot.add(stack);
             }
+            else
+            {
+                if(ModTags.COMMON_CHESTS.contains(context.getQueriedLootTableId().toString())) {
+                    modifiedLoot.add(new ItemStack(Items.IRON_INGOT));
+                }
+                if(ModTags.RARE_CHESTS.contains(context.getQueriedLootTableId().toString())) {
+                    modifiedLoot.add(new ItemStack(Items.EMERALD));
+                }
+                if(ModTags.EPIC_CHESTS.contains(context.getQueriedLootTableId().toString())) {
+                    if(context.getRandom().nextFloat() > 0.3f) modifiedLoot.add(new ItemStack(Items.DIAMOND));
+                    else modifiedLoot.add(new ItemStack(Items.NETHERITE_SCRAP));
+                }
+            }
         }
 
 
         if(ModTags.COMMON_CHESTS.contains(context.getQueriedLootTableId().toString()))
         {
-            if(context.getRandom().nextFloat() >= 0.25f) {
+            if(context.getRandom().nextFloat() >= 0.85f) {
                 modifiedLoot.add(new ItemStack(item));
             }
         }
         if(ModTags.RARE_CHESTS.contains(context.getQueriedLootTableId().toString()))
         {
-            if(context.getRandom().nextFloat() >= 0.1f) {
+            if(context.getRandom().nextFloat() >= 0.65f) {
                 modifiedLoot.add(new ItemStack(item));
             }
         }
         if(ModTags.EPIC_CHESTS.contains(context.getQueriedLootTableId().toString()))
         {
-            if(context.getRandom().nextFloat() >= 0.2f) {
+            if(context.getRandom().nextFloat() >= 0.3f) {
                 modifiedLoot.add(new ItemStack(item));
             }
         }

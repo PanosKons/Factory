@@ -2,11 +2,9 @@
   "values": [
     "minecraft:chests/ancient_city",
     "minecraft:chests/ancient_city_ice_box",
-    "minecraft:chests/bastion_bridge",
-    "minecraft:chests/bastion_hoglin_stable",
-    "minecraft:chests/bastion_other",
     "minecraft:chests/bastion_treasure",
     "minecraft:chests/buried_treasure",
-    "minecraft:chests/end_city_treasure"
+    "minecraft:chests/end_city_treasure",
+    "minecraft:chests/woodland_mansion"
   ]
 }

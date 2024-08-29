@@ -7,6 +7,8 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
@@ -24,6 +26,86 @@ public class ModTags {
     }
     public static class Items
     {
+        public static final List<ItemStack> UndiscoveredRecipeItems = List.of(
+                new ItemStack(net.minecraft.world.item.Items.DIAMOND, 2),
+                new ItemStack(net.minecraft.world.item.Items.NETHERITE_SCRAP, 1),
+                new ItemStack(net.minecraft.world.item.Items.SUGAR, 12),
+                new ItemStack(net.minecraft.world.item.Items.SADDLE, 1),
+                new ItemStack(net.minecraft.world.item.Items.BONE, 16),
+                new ItemStack(net.minecraft.world.item.Items.BONE, 15),
+                new ItemStack(net.minecraft.world.item.Items.BONE, 18),
+                new ItemStack(net.minecraft.world.item.Items.WHITE_WOOL, 4),
+                new ItemStack(net.minecraft.world.item.Items.STICK, 6),
+                new ItemStack(net.minecraft.world.item.Items.EMERALD, 2),
+                new ItemStack(net.minecraft.world.item.Items.HEART_OF_THE_SEA, 1),
+                new ItemStack(net.minecraft.world.item.Items.DRAGON_HEAD, 1),
+                new ItemStack(net.minecraft.world.item.Items.BAMBOO, 12),
+                new ItemStack(net.minecraft.world.item.Items.DIAMOND_HORSE_ARMOR, 1),
+                new ItemStack(net.minecraft.world.item.Items.DIAMOND_HORSE_ARMOR, 1),
+                new ItemStack(net.minecraft.world.item.Items.DIAMOND_HORSE_ARMOR, 1),
+                new ItemStack(net.minecraft.world.item.Items.GOLDEN_HORSE_ARMOR, 1),
+                new ItemStack(net.minecraft.world.item.Items.GOLDEN_HORSE_ARMOR, 1),
+                new ItemStack(net.minecraft.world.item.Items.GOLDEN_HORSE_ARMOR, 1),
+                new ItemStack(net.minecraft.world.item.Items.IRON_HORSE_ARMOR, 1),
+                new ItemStack(net.minecraft.world.item.Items.IRON_HORSE_ARMOR, 1),
+                new ItemStack(net.minecraft.world.item.Items.IRON_HORSE_ARMOR, 1),
+                new ItemStack(net.minecraft.world.item.Items.NAME_TAG, 1),
+                new ItemStack(net.minecraft.world.item.Items.STRING, 16),
+                new ItemStack(net.minecraft.world.item.Items.STRING, 18),
+                new ItemStack(net.minecraft.world.item.Items.STRING, 12),
+                new ItemStack(net.minecraft.world.item.Items.IRON_INGOT, 7),
+                new ItemStack(net.minecraft.world.item.Items.STRING, 16),
+                new ItemStack(net.minecraft.world.item.Items.BONE, 16),
+                new ItemStack(net.minecraft.world.item.Items.PUMPKIN, 10),
+                new ItemStack(net.minecraft.world.item.Items.MELON, 10),
+                new ItemStack(net.minecraft.world.item.Items.DAMAGED_ANVIL, 1),
+                new ItemStack(net.minecraft.world.item.Items.DAMAGED_ANVIL, 1),
+                new ItemStack(net.minecraft.world.item.Items.HAY_BLOCK, 8),
+                new ItemStack(net.minecraft.world.item.Items.HAY_BLOCK, 13),
+                new ItemStack(net.minecraft.world.item.Items.CACTUS, 14),
+                new ItemStack(net.minecraft.world.item.Items.CACTUS, 12),
+                new ItemStack(net.minecraft.world.item.Items.FEATHER, 2),
+                new ItemStack(net.minecraft.world.item.Items.FEATHER, 4),
+                new ItemStack(net.minecraft.world.item.Items.SENTRY_ARMOR_TRIM_SMITHING_TEMPLATE, 1),
+                new ItemStack(net.minecraft.world.item.Items.SHAPER_ARMOR_TRIM_SMITHING_TEMPLATE, 1),
+                new ItemStack(net.minecraft.world.item.Items.SILENCE_ARMOR_TRIM_SMITHING_TEMPLATE, 1),
+                new ItemStack(net.minecraft.world.item.Items.SNOUT_ARMOR_TRIM_SMITHING_TEMPLATE, 1),
+                new ItemStack(net.minecraft.world.item.Items.COAST_ARMOR_TRIM_SMITHING_TEMPLATE, 1),
+                new ItemStack(net.minecraft.world.item.Items.SPIRE_ARMOR_TRIM_SMITHING_TEMPLATE, 1),
+                new ItemStack(net.minecraft.world.item.Items.DUNE_ARMOR_TRIM_SMITHING_TEMPLATE, 1),
+                new ItemStack(net.minecraft.world.item.Items.RAISER_ARMOR_TRIM_SMITHING_TEMPLATE, 1),
+                new ItemStack(net.minecraft.world.item.Items.RIB_ARMOR_TRIM_SMITHING_TEMPLATE, 1),
+                new ItemStack(net.minecraft.world.item.Items.TIDE_ARMOR_TRIM_SMITHING_TEMPLATE, 1),
+                new ItemStack(net.minecraft.world.item.Items.VEX_ARMOR_TRIM_SMITHING_TEMPLATE, 1),
+                new ItemStack(net.minecraft.world.item.Items.EYE_ARMOR_TRIM_SMITHING_TEMPLATE, 1),
+                new ItemStack(net.minecraft.world.item.Items.HOST_ARMOR_TRIM_SMITHING_TEMPLATE, 1),
+                new ItemStack(net.minecraft.world.item.Items.WILD_ARMOR_TRIM_SMITHING_TEMPLATE, 1),
+                new ItemStack(net.minecraft.world.item.Items.WAYFINDER_ARMOR_TRIM_SMITHING_TEMPLATE, 1),
+                new ItemStack(net.minecraft.world.item.Items.WARD_ARMOR_TRIM_SMITHING_TEMPLATE, 1),
+                new ItemStack(net.minecraft.world.item.Items.CHAIN, 4),
+                new ItemStack(net.minecraft.world.item.Items.BELL, 2),
+                new ItemStack(net.minecraft.world.item.Items.BELL, 1),
+                new ItemStack(net.minecraft.world.item.Items.BLAZE_ROD, 3),
+                new ItemStack(net.minecraft.world.item.Items.POISONOUS_POTATO, 2),
+                new ItemStack(net.minecraft.world.item.Items.ENDER_EYE, 2),
+                new ItemStack(net.minecraft.world.item.Items.ENDER_PEARL, 2),
+                new ItemStack(net.minecraft.world.item.Items.ENDER_PEARL, 10),
+                new ItemStack(net.minecraft.world.item.Items.FEATHER, 2),
+                new ItemStack(net.minecraft.world.item.Items.KELP, 22),
+                new ItemStack(net.minecraft.world.item.Items.KELP, 18),
+                new ItemStack(net.minecraft.world.item.Items.BLUE_CANDLE, 6),
+                new ItemStack(net.minecraft.world.item.Items.HONEYCOMB, 3),
+                new ItemStack(net.minecraft.world.item.Items.HONEY_BOTTLE, 3),
+                new ItemStack(net.minecraft.world.item.Items.SCULK, 9),
+                new ItemStack(net.minecraft.world.item.Items.SCULK_SENSOR, 4),
+                new ItemStack(net.minecraft.world.item.Items.REDSTONE, 22),
+                new ItemStack(net.minecraft.world.item.Items.REDSTONE, 19),
+                new ItemStack(net.minecraft.world.item.Items.AMETHYST_SHARD, 6),
+                new ItemStack(net.minecraft.world.item.Items.AMETHYST_SHARD, 8),
+                new ItemStack(net.minecraft.world.item.Items.SOUL_LANTERN, 8),
+                new ItemStack(net.minecraft.world.item.Items.SOUL_LANTERN, 6)
+
+        );
         public static final List<Enchantment> AllowedEnchantments = List.of(
                 Enchantments.FALL_PROTECTION,
                 Enchantments.RESPIRATION,
@@ -38,7 +120,9 @@ public class ModTags {
                 Enchantments.LOYALTY,
                 Enchantments.RIPTIDE,
                 Enchantments.CHANNELING,
-                ModEnchantments.SOULBOUND.get()
+                ModEnchantments.SOULBOUND.get(),
+                ModEnchantments.FROST_ASPECT.get(),
+                Enchantments.FIRE_PROTECTION
         );
         public static TagKey<Item> BOOSTER_ITEMS = tag("booster_items");
         public static TagKey<Item> FORBIDDEN_ITEMS = tag("forbidden_items");

@@ -104,7 +104,8 @@ public class CrusherBlock extends BaseEntityBlock {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state,
                                                                   BlockEntityType<T> type) {
-        return createTickerHelper(type, ModBlockEntityType.CRUSHER_BLOCK_ENTITY.get(),
-                CrusherBlockEntity::tick);
+        //return createTickerHelper(type, ModBlockEntityType.CRUSHER_BLOCK_ENTITY.get(),
+        //        CrusherBlockEntity::tick);
+        return null;/////////
     }
 }

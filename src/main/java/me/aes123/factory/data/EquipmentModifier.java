@@ -15,7 +15,7 @@ public class EquipmentModifier {
 
     public enum EquipmentModifierType
     {
-        MAX_DURABILITY(ALL,10), MENDING(ALL,1, DisplayFormat.ONLY_TYPE),
+        MAX_DURABILITY(ALL,20), MENDING(ALL,1, DisplayFormat.ONLY_TYPE),
         MINING_SPEED(TOOLS,50), FIRE_RATE(PROJECTILE,25), ATTACK_COOLDOWN(MELEE,15), MOVEMENT_SPEED(ARMORS, 50),
         SILK_TOUCH(TOOLS,1, DisplayFormat.ONLY_TYPE),
         REGENERATION(ARMORS, 4),
@@ -63,7 +63,7 @@ public class EquipmentModifier {
 
         return switch (this.modifierType)
         {
-            case MAX_DURABILITY -> this.level * 0.05f * baseValue;
+            case MAX_DURABILITY -> this.level * 0.1f * baseValue;
             case MINING_SPEED -> this.level;
             case MAGNETIC -> this.level * 2.0f;
             case REGENERATION -> this.level / 10.0f;

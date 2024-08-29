@@ -1,8 +1,0 @@
-{
-  "variants": {
-    "facing=north": {"model": "factory:block/crusher"},
-    "facing=east": {"model": "factory:block/crusher", "y":  90},
-    "facing=south": {"model": "factory:block/crusher", "y": 180},
-    "facing=west": {"model": "factory:block/crusher", "y": 270}
-  }
-}

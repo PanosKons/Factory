@@ -22,7 +22,7 @@ public class CrusherBlockEntity extends PoweredMachineBlockEntity {
     private int progress = 0;
     private int maxProgress = 0;
     public CrusherBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlockEntityType.CRUSHER_BLOCK_ENTITY.get(), pos , state, "container.factory.crusher",(id, inventory, entity, data) -> new CrusherMenu(id, inventory, entity, data), List.of(SlotType.INPUT, SlotType.SPECIAL), 100000);
+        super(null /*ModBlockEntityType.CRUSHER_BLOCK_ENTITY.get()*/, pos , state, "container.factory.crusher",(id, inventory, entity, data) -> new CrusherMenu(id, inventory, entity, data), List.of(SlotType.INPUT, SlotType.SPECIAL), 100000);
         this.data = new ContainerData() {
             @Override
             public int get(int index) {

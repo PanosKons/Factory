@@ -13,14 +13,14 @@
             "item": "minecraft:slime_ball"
         },
         "L": {
-            "item": "factory:steel_ingot"
+            "item": "minecraft:netherite_scrap"
         }
     },
     "speed": 5,
-    "required_recipe": "none",
+    "required_recipe": "Reinforced Blocks",
     "result": {
         "item": "minecraft:minecart",
-        "nbt": {"MaxSpeedModifier" : 2},
+        "nbt": {"MaxSpeedModifier": 8},
         "count": 1
     }
 }

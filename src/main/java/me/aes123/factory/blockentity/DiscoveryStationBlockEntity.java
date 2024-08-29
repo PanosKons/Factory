@@ -8,11 +8,13 @@ import me.aes123.factory.item.recipe.UndiscoveredRecipeItem;
 import me.aes123.factory.screen.DiscoveryStationMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
 
@@ -71,8 +73,15 @@ public class DiscoveryStationBlockEntity extends MachineBlockEntity {
                 progress = inventory.getItem(0).getTag().getInt("progress");
                 maxProgress = inventory.getItem(0).getTag().getInt("max_progress");
 
-                if (inventory.getItem(2).getItem() == ModItems.EXPERTISE.get()) {
-                    itemHandler.extractItem(2, 1, false);
+                boolean flag1 = inventory.getItem(2).getItem() == ModItems.EXPERTISE.get();
+                if (flag1 || (inventory.getItem(2).getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation(inventory.getItem(0).getTag().getString("item"))) && inventory.getItem(2).getCount() >= inventory.getItem(0).getTag().getInt("count"))) {
+                    if(flag1) {
+                        itemHandler.extractItem(2, 1, false);
+                    }
+                    else
+                    {
+                        itemHandler.extractItem(2, inventory.getItem(0).getTag().getInt("count"), false);
+                    }
                     progress++;
                     if (progress >= maxProgress) {
                         ItemStack stack = new ItemStack(ModItems.DISCOVERED_RECIPE.get());
@@ -83,6 +92,9 @@ public class DiscoveryStationBlockEntity extends MachineBlockEntity {
 
                         itemHandler.extractItem(0, 1, false);
                     } else {
+                        inventory.getItem(0).getTag().putInt("count", 0);
+                        ((UndiscoveredRecipeItem)inventory.getItem(0).getItem()).addItem(inventory.getItem(0));
+
                         ItemStack stack = inventory.getItem(0).copy();
                         stack.getTag().putInt("progress", progress);
                         UndiscoveredRecipeItem.updateBar(stack);

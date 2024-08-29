@@ -10,8 +10,10 @@
     "minecraft:chests/nether_bridge",
     "minecraft:chests/pillager_outpost",
     "minecraft:chests/simple_dungeon",
-    "minecraft:chests/woodland_mansion",
     "minecraft:chests/shipwreck_treasure",
-    "minecraft:chests/abandoned_mineshaft"
+    "minecraft:chests/abandoned_mineshaft",
+    "minecraft:chests/bastion_bridge",
+    "minecraft:chests/bastion_hoglin_stable",
+    "minecraft:chests/bastion_other"
   ]
 }

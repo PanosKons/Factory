@@ -9,10 +9,13 @@
     "GameRendererMixin",
     "ThornsEnchantmentMixin",
     "PlayerMixin",
+    "ServerPlayerMixin",
+    "InventoryMixin",
     "FoodDataMixin",
     "AnvilMenuMixin",
     "RangedAttributeMixin",
-    "CombatRulesMixin"
+    "CombatRulesMixin",
+    "LivingEntityMixin"
   ],
   "client": [
     "LevelRendererMixin"

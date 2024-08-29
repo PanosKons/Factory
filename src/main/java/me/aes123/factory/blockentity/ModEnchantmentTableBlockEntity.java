@@ -9,21 +9,30 @@ import me.aes123.factory.item.equipment.base.IEquipmentItem;
 import me.aes123.factory.screen.ModEnchantmentMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Nameable;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EnchantmentTableBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.EnchantmentTableBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.phys.AABB;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -79,8 +88,38 @@ public class ModEnchantmentTableBlockEntity extends BlockEntity implements Namea
         }
     }
 
+    int tick = 0;
     public static void serverTick(Level level, BlockPos pos, BlockState p_155506_, ModEnchantmentTableBlockEntity p_155507_)
     {
+        p_155507_.tick ++;
+        if(p_155507_.tick < 100) return;
+        else
+        {
+            p_155507_.tick = 0;
+        List<ItemEntity> entities = level.getEntities(EntityTypeTest.forClass(ItemEntity.class), p_155507_.getRenderBoundingBox(), Entity::isAlive);
+        if(entities.size() == 2 && ModBarrelBlockEntity.sameItem(entities.get(0).getItem(),entities.get(1).getItem()))
+        {
+            ItemStack stack = entities.get(0).getItem();
+            if(stack.is(Items.ENCHANTED_BOOK))
+            {
+                ListTag enchantments = EnchantedBookItem.getEnchantments(stack);
+                var enchantment = enchantments.getCompound(0);
+                Enchantment ench = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(enchantment.getString("id")));
+                int lvl = enchantment.getInt("lvl");
+                if(lvl < ench.getMaxLevel())
+                {
+                    ItemStack result = new ItemStack(Items.ENCHANTED_BOOK);
+                    CompoundTag tag = stack.getTag().copy();
+                    tag.getList("StoredEnchantments", 10).getCompound(0).putShort("lvl", (short)(lvl+1));
+                    result.setTag(tag);
+                    entities.get(0).kill();
+                    entities.get(1).kill();
+                    ItemEntity itementity = new ItemEntity(level, pos.getX(), pos.getY() + 0.85f, pos.getZ(),result);
+                    level.addFreshEntity(itementity);
+                }
+            }
+        }
+        }
     }
     public static void bookAnimationTick(Level level, BlockPos pos, BlockState p_155506_, ModEnchantmentTableBlockEntity p_155507_) {
 

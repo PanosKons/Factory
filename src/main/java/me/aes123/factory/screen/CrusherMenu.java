@@ -115,7 +115,8 @@ public class CrusherMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        return stillValid(ContainerLevelAccess.create(level,blockEntity.getBlockPos()),player, ModBlocks.CRUSHER.get());
+        //return stillValid(ContainerLevelAccess.create(level,blockEntity.getBlockPos()),player, ModBlocks.CRUSHER.get());
+        return false;
     }
     private void addPlayerInventory(Inventory playerInventory) {
         for (int i = 0; i < 3; ++i) {

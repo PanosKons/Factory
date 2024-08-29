@@ -51,7 +51,7 @@ public class ElectricFurnaceBlockEntity extends PoweredMachineBlockEntity {
     private BlockPos pos = this.getBlockPos().below();
     private final RecipeManager.CachedCheck<Container, ? extends AbstractCookingRecipe> quickCheck;
     public ElectricFurnaceBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlockEntityType.ELECTRIC_FURNACE_BLOCK_ENTITY.get(), pos , state, "container.factory.electric_furnace",(id, inventory, entity, data) -> new ElectricFurnaceMenu(id, inventory, entity, data), List.of(SlotType.INPUT, SlotType.SPECIAL, SlotType.OUTPUT), 100000);
+        super(null /*ModBlockEntityType.ELECTRIC_FURNACE_BLOCK_ENTITY.get()*/, pos , state, "container.factory.electric_furnace",(id, inventory, entity, data) -> new ElectricFurnaceMenu(id, inventory, entity, data), List.of(SlotType.INPUT, SlotType.SPECIAL, SlotType.OUTPUT), 100000);
         this.quickCheck = RecipeManager.createCheck(SMELTING);
         this.data = new ContainerData() {
             @Override

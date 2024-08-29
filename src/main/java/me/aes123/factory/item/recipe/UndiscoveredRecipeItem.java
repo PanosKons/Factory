@@ -1,5 +1,7 @@
 package me.aes123.factory.item.recipe;
 
+import me.aes123.factory.Main;
+import me.aes123.factory.util.ModTags;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.ListTag;
@@ -10,6 +12,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -30,9 +33,21 @@ public class UndiscoveredRecipeItem extends Item {
     }
 
     @Override
-    public void inventoryTick(ItemStack p_41404_, Level p_41405_, Entity p_41406_, int p_41407_, boolean p_41408_) {
-        updateBar(p_41404_);
-        super.inventoryTick(p_41404_, p_41405_, p_41406_, p_41407_, p_41408_);
+    public void inventoryTick(ItemStack stack, Level p_41405_, Entity p_41406_, int p_41407_, boolean p_41408_) {
+        updateBar(stack);
+        super.inventoryTick(stack, p_41405_, p_41406_, p_41407_, p_41408_);
+        addItem(stack);
+    }
+    public void addItem(ItemStack stack)
+    {
+        if(stack.hasTag()){
+            if(stack.getTag().getInt("count") == 0)
+            {
+                var item = ModTags.Items.UndiscoveredRecipeItems.get(Main.rnd.nextInt(ModTags.Items.UndiscoveredRecipeItems.size()));
+                stack.getTag().putString("item", ForgeRegistries.ITEMS.getKey(item.getItem()).toString());
+                stack.getTag().putInt("count", item.getCount());
+            }
+        }
     }
 
 
@@ -49,6 +64,7 @@ public class UndiscoveredRecipeItem extends Item {
             if(Screen.hasShiftDown())
             {
                 components.add(Component.literal("Progress: " + progress + "/" + max_progress).withStyle(ChatFormatting.GREEN));
+                components.add(Component.literal("Requires " + itemStack.getTag().getInt("count") + " " + itemStack.getTag().getString("item") + " or 1 expertise").withStyle(ChatFormatting.GRAY));
                 components.add(Component.literal("Recipe: " + recipe).withStyle(ChatFormatting.RED));
             }
             else

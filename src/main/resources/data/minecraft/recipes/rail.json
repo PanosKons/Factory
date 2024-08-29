@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "L L",
+        "LiL",
+        "L L"
+    ],
+    "key": {
+        "i": {
+            "item": "minecraft:stick"
+        },
+        "L": {
+            "item": "minecraft:iron_ingot"
+        }
+    },
+    "result": {
+        "item": "minecraft:rail",
+        "count": 48
+    }
+}

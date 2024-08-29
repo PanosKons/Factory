@@ -25,8 +25,8 @@ public class ModItems {
             () -> new Item(new Item.Properties().food((new FoodProperties.Builder().alwaysEat()
                     .nutrition(3).saturationMod(0.2f).effect(() -> new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 3,2), 1)
                     .build()))));
-    public static final RegistryObject<CardItem> BLANK_CARD = ITEMS.register("blank_card",
-            () -> new CardItem(new Item.Properties()));
+    //public static final RegistryObject<CardItem> BLANK_CARD = ITEMS.register("blank_card",
+    //        () -> new CardItem(new Item.Properties()));
 
     public static final RegistryObject<Item> STEEL_INGOT = ITEMS.register("steel_ingot", () -> new Item(new Item.Properties()));
     public static final RegistryObject<UndiscoveredRecipeItem> UNDISCOVERED_RECIPE = ITEMS.register("undiscovered_recipe", () -> new UndiscoveredRecipeItem(new Item.Properties().stacksTo(1)));
@@ -48,18 +48,18 @@ public class ModItems {
     public static final RegistryObject<ModBundleItem> IMPROVED_BUNDLE = ITEMS.register("improved_bundle", () -> new ModBundleItem(new Item.Properties(), 128));
     public static final RegistryObject<ModBundleItem> PROFOUND_BUNDLE = ITEMS.register("profound_bundle", () -> new ModBundleItem(new Item.Properties(), 256));
     public static final RegistryObject<ModBundleItem> REINFORCED_BUNDLE = ITEMS.register("reinforced_bundle", () -> new ModBundleItem(new Item.Properties(), 512));
-    public static final RegistryObject<BoosterItem> WEAK_BOOSTER = ITEMS.register("weak_booster", () -> new BoosterItem(new Item.Properties().stacksTo(1)));
-    public static final RegistryObject<BoosterItem> STRONG_BOOSTER = ITEMS.register("strong_booster", () -> new BoosterItem(new Item.Properties().stacksTo(1)));
-    public static final RegistryObject<BoosterItem> REINFORCED_BOOSTER = ITEMS.register("reinforced_booster", () -> new BoosterItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<BoosterItem> WEAK_BOOSTER = ITEMS.register("weak_booster", () -> new BoosterItem(new Item.Properties().stacksTo(2)));
+    public static final RegistryObject<BoosterItem> STRONG_BOOSTER = ITEMS.register("strong_booster", () -> new BoosterItem(new Item.Properties().stacksTo(4)));
+    public static final RegistryObject<BoosterItem> REINFORCED_BOOSTER = ITEMS.register("reinforced_booster", () -> new BoosterItem(new Item.Properties().stacksTo(8)));
     public static final RegistryObject<Item> RUBY_SHARD = ITEMS.register("ruby_shard", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> RUBY = ITEMS.register("ruby", () -> new Item(new Item.Properties()));
 
 
     public static final RegistryObject<BlockItem> EQUIPMENT_STATION_ITEM = ITEMS.register("equipment_station", () -> new BlockItem(ModBlocks.EQUIPMENT_STATION.get(),new Item.Properties()));
     public static final RegistryObject<BlockItem> ASSEMBLER_ITEM = ITEMS.register("assembler", () -> new BlockItem(ModBlocks.ASSEMBLER.get(), new Item.Properties()));
-    public static final RegistryObject<BlockItem> GENERATOR_ITEM = ITEMS.register("generator", () -> new BlockItem(ModBlocks.GENERATOR.get(), new Item.Properties()));
-    public static final RegistryObject<BlockItem> ELECTRIC_FURNACE_ITEM = ITEMS.register("electric_furnace", () -> new BlockItem(ModBlocks.ELECTRIC_FURNACE.get(), new Item.Properties()));
-    public static final RegistryObject<BlockItem> CRUSHER_ITEM = ITEMS.register("crusher", () -> new BlockItem(ModBlocks.CRUSHER.get(), new Item.Properties()));
+    //public static final RegistryObject<BlockItem> GENERATOR_ITEM = ITEMS.register("generator", () -> new BlockItem(ModBlocks.GENERATOR.get(), new Item.Properties()));
+    //public static final RegistryObject<BlockItem> ELECTRIC_FURNACE_ITEM = ITEMS.register("electric_furnace", () -> new BlockItem(ModBlocks.ELECTRIC_FURNACE.get(), new Item.Properties()));
+    //public static final RegistryObject<BlockItem> CRUSHER_ITEM = ITEMS.register("crusher", () -> new BlockItem(ModBlocks.CRUSHER.get(), new Item.Properties()));
     public static final RegistryObject<BlockItem> DISCOVERY_STATION_ITEM = ITEMS.register("discovery_station", () -> new BlockItem(ModBlocks.DISCOVERY_STATION.get(), new Item.Properties()));
     public static final RegistryObject<BlockItem> IMPROVED_BARREL_ITEM = ITEMS.register("improved_barrel", () -> new BlockItem(ModBlocks.IMPROVED_BARREL.get(), new Item.Properties()));
     public static final RegistryObject<BlockItem> PROFOUND_BARREL_ITEM = ITEMS.register("profound_barrel", () -> new BlockItem(ModBlocks.PROFOUND_BARREL.get(), new Item.Properties()));
@@ -69,7 +69,7 @@ public class ModItems {
     public static final RegistryObject<BlockItem> PROFOUND_HOPPER_ITEM = ITEMS.register("profound_hopper", () -> new BlockItem(ModBlocks.PROFOUND_HOPPER.get(), new Item.Properties()));
     public static final RegistryObject<BlockItem> REINFORCED_HOPPER_ITEM = ITEMS.register("reinforced_hopper", () -> new BlockItem(ModBlocks.REINFORCED_HOPPER.get(), new Item.Properties()));
 
-    public static final RegistryObject<BlockItem> GATE_BLOCK_ITEM = ITEMS.register("gate_block", () -> new BlockItem(ModBlocks.GATE_BLOCK.get(), new Item.Properties()));
+    //public static final RegistryObject<BlockItem> GATE_BLOCK_ITEM = ITEMS.register("gate_block", () -> new BlockItem(ModBlocks.GATE_BLOCK.get(), new Item.Properties()));
 
     public static final RegistryObject<ModHammer> IRON_HAMMER = ITEMS.register("iron_hammer",
             () -> new ModHammer(new Item.Properties(), 2));

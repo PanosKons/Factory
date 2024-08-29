@@ -20,11 +20,20 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
+import static me.aes123.factory.data.EquipmentModifier.EquipmentModifierType.MAX_DURABILITY;
+
 public class ModMinecartItem extends MinecartItem {
     final AbstractMinecart.Type modType;
     public ModMinecartItem(AbstractMinecart.Type p_42938_, Properties p_42939_) {
         super(p_42938_, p_42939_);
         modType = p_42938_;
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag p_41424_) {
+        super.appendHoverText(stack, level, components, p_41424_);
+        if(stack.hasTag())
+            components.add(Component.literal("Max Speed Modifier: " + stack.getTag().getInt("MaxSpeedModifier")).withStyle(ChatFormatting.GREEN));
     }
 
     @Override

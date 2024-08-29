@@ -1,18 +1,17 @@
 package me.aes123.factory.screen;
 
+import me.aes123.factory.Main;
 import me.aes123.factory.block.ModEnchantmentTableBlock;
-import me.aes123.factory.blockentity.ModEnchantmentTableBlockEntity;
 import me.aes123.factory.init.ModBlocks;
+import me.aes123.factory.init.ModItems;
 import me.aes123.factory.init.ModMenuTypes;
 import me.aes123.factory.item.equipment.base.IEquipmentItem;
 import me.aes123.factory.util.ModTags;
 import net.minecraft.Util;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -26,20 +25,17 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.EnchantedBookItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.EnchantmentTableBlock;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import static java.lang.Math.atan;
+import static java.lang.Math.sqrt;
 
 public class ModEnchantmentMenu extends AbstractContainerMenu {
     private final Container enchantSlots = new SimpleContainer(4) {
@@ -51,6 +47,7 @@ public class ModEnchantmentMenu extends AbstractContainerMenu {
     private final ContainerLevelAccess access;
     private final RandomSource random = RandomSource.create();
     private final DataSlot enchantmentSeed = DataSlot.standalone();
+    public final int[] instability = new int[1];
     public final int[] costs = new int[3];
     public final int[] enchantClue = new int[]{-1, -1, -1};
     public final int[] levelClue = new int[]{-1, -1, -1};
@@ -101,6 +98,7 @@ public class ModEnchantmentMenu extends AbstractContainerMenu {
         this.addDataSlot(DataSlot.shared(this.costs, 1));
         this.addDataSlot(DataSlot.shared(this.costs, 2));
         this.addDataSlot(this.enchantmentSeed).set(p_39458_.player.getEnchantmentSeed());
+        this.addDataSlot(DataSlot.shared(this.instability, 0));
         this.addDataSlot(DataSlot.shared(this.enchantClue, 0));
         this.addDataSlot(DataSlot.shared(this.enchantClue, 1));
         this.addDataSlot(DataSlot.shared(this.enchantClue, 2));
@@ -113,42 +111,77 @@ public class ModEnchantmentMenu extends AbstractContainerMenu {
         if (container == this.enchantSlots) {
             ItemStack itemToEnchant = container.getItem(0);
             ItemStack enchantedBook = container.getItem(2);
+            boolean res = true;
             if (enchantedBook.is(Items.ENCHANTED_BOOK) && !itemToEnchant.isEmpty() && (itemToEnchant.getItem() instanceof IEquipmentItem || itemToEnchant.is(Items.TRIDENT)) && isCompatible(enchantedBook, itemToEnchant)) {
-                this.access.execute((level, blockPos) -> {
-                    float enchantPower = 0;
+                ListTag enchantments = EnchantedBookItem.getEnchantments(enchantedBook);
+                CompoundTag enchantment = enchantments.getCompound(0);
+                int EncLevel = enchantment.getInt("lvl");
+                String enchid = enchantment.getString("id");
+                Enchantment ench = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(enchid));
+                boolean flag1 = itemToEnchant.getAllEnchantments().containsKey(ench);
+                if(flag1)
+                {
+                    int lvl = itemToEnchant.getAllEnchantments().get(ench);
+                    if(lvl < EncLevel || (lvl == EncLevel && EncLevel != ench.getMaxLevel()))
+                    {
+                        flag1 = false;
 
-                    for(BlockPos blockpos : ModEnchantmentTableBlock.BOOKSHELF_OFFSETS) {
-                        if (ModEnchantmentTableBlock.isValidBookShelf(level, blockPos, blockpos)) {
-                            enchantPower += level.getBlockState(blockPos.offset(blockpos)).getEnchantPowerBonus(level, blockPos.offset(blockpos));
-                        }
                     }
+                }
+                if(!flag1)
+                {
+                    res = false;
+                    this.access.execute((level, blockPos) -> {
+                        float enchantPower = 0;
 
-                    ListTag enchantments = EnchantedBookItem.getEnchantments(enchantedBook);
-                    CompoundTag enchantment = enchantments.getCompound(0);
-                    int EncLevel = enchantment.getInt("lvl");
-                    String enchid = enchantment.getString("id");
+                        for(BlockPos blockpos : ModEnchantmentTableBlock.BOOKSHELF_OFFSETS) {
+                            if (ModEnchantmentTableBlock.isValidBookShelf(level, blockPos, blockpos)) {
+                                enchantPower += level.getBlockState(blockPos.offset(blockpos)).getEnchantPowerBonus(level, blockPos.offset(blockpos));
+                            }
+                        }
 
-                    Enchantment ench = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(enchid));
-                    int id = -1;
-                    for (int i = 0; i < ModTags.Items.AllowedEnchantments.size(); i++){
-                        if(ench == ModTags.Items.AllowedEnchantments.get(i))
+                        int id = -1;
+                        for (int i = 0; i < ModTags.Items.AllowedEnchantments.size(); i++){
+                            if(ench == ModTags.Items.AllowedEnchantments.get(i))
+                            {
+                                id = i;
+                                break;
+                            }
+                        }
+
+
+                        int instability = EncLevel;
+                        for(var val : itemToEnchant.getAllEnchantments().values())
                         {
-                            id = i;
-                            break;
+                            instability += val;
                         }
-                    }
+                        instability *= 20;
 
+                        ItemStack booster = container.getItem(3);
+                        if(booster.is(ModItems.WEAK_BOOSTER.get())) instability -= 20 * booster.getCount();
+                        if(booster.is(ModItems.STRONG_BOOSTER.get())) instability -= 40 * booster.getCount();
+                        if(booster.is(ModItems.REINFORCED_BOOSTER.get())) instability -= 60 * booster.getCount();
 
-                    for(int k = 0; k < 3; ++k) {
-                        this.costs[k] = 10 * (k + 1); ///////////////////
-                        this.enchantClue[k] = id;
-                        this.levelClue[k] = EncLevel;
-                    }
+                        if(instability < 0) instability = 0;
 
-                    this.broadcastChanges();
-                });
-            } else {
+                        int levelCost = instability - (int)enchantPower;
+                        if(levelCost < 1) levelCost = 1;
+
+                        for(int k = 0; k < 3; ++k) {
+                            this.instability[0] = instability;
+                            this.costs[k] = levelCost * (k + 1);
+                            this.enchantClue[k] = id;
+                            this.levelClue[k] = EncLevel;
+                        }
+
+                        this.broadcastChanges();
+                    });
+                }
+
+            }
+            if(res) {
                 for(int i = 0; i < 3; ++i) {
+                    this.instability[0] = 0;
                     this.costs[i] = 0;
                     this.enchantClue[i] = -1;
                     this.levelClue[i] = -1;
@@ -189,49 +222,118 @@ public class ModEnchantmentMenu extends AbstractContainerMenu {
             ItemStack itemToEnchant = this.enchantSlots.getItem(0);
             ItemStack lapis = this.enchantSlots.getItem(1);
             ItemStack enchBook = this.enchantSlots.getItem(2);
+            ItemStack booster = this.enchantSlots.getItem(3);
             int i = button + 1;
             if ((lapis.isEmpty() || lapis.getCount() < i) && !player.getAbilities().instabuild) {
                 return false;
-            } else if (this.costs[button] <= 0 || itemToEnchant.isEmpty() || (player.experienceLevel < i || player.experienceLevel < this.costs[button]) && !player.getAbilities().instabuild) {
+            } else if (this.costs[button] <= 0 || itemToEnchant.isEmpty() && !player.getAbilities().instabuild) {
                 return false;
             } else {
+                AtomicBoolean ret = new AtomicBoolean(true);
                 this.access.execute((level, blockPos) -> {
+                    float enchantPower = 0;
+
+                    for(BlockPos blockpos : ModEnchantmentTableBlock.BOOKSHELF_OFFSETS) {
+                        if (ModEnchantmentTableBlock.isValidBookShelf(level, blockPos, blockpos)) {
+                            enchantPower += level.getBlockState(blockPos.offset(blockpos)).getEnchantPowerBonus(level, blockPos.offset(blockpos));
+                        }
+                    }
+
                     ItemStack itemForEnchant = itemToEnchant;
                     ListTag enchantments = EnchantedBookItem.getEnchantments(enchBook);
                     CompoundTag enchantment = enchantments.getCompound(0);
                     int EncLevel = enchantment.getInt("lvl");
                     String enchid = enchantment.getString("id");
 
+                    int instability = EncLevel;
+                    for(var val : itemToEnchant.getAllEnchantments().values())
+                    {
+                        instability += val;
+                    }
+                    instability *= 20;
+
+
+                    if(booster.is(ModItems.WEAK_BOOSTER.get())) instability -= 20 * booster.getCount();
+                    if(booster.is(ModItems.STRONG_BOOSTER.get())) instability -= 40 * booster.getCount();
+                    if(booster.is(ModItems.REINFORCED_BOOSTER.get())) instability -= 60 * booster.getCount();
+
+                    if(instability < 0) instability = 0;
+
+                    int levelCost = instability - (int)enchantPower;
+                    if(levelCost < 1) levelCost = 1;
+
+                    if(player.experienceLevel < levelCost)
+                    {
+                        ret.set(false);
+                        return;
+                    }
+
+
                     Enchantment ench = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(enchid));
-                    EnchantmentInstance enchantmentInstance = new EnchantmentInstance(ench,EncLevel);
-                        player.giveExperiencePoints(-(this.costs[button] + 6) * this.costs[button]);
+                    EnchantmentInstance enchantmentInstance = new EnchantmentInstance(ench, EncLevel);
+                    player.giveExperiencePoints(-(levelCost + 6) * levelCost);
 
-                        int bonus = 0;
-                        if(itemForEnchant.getAllEnchantments().containsKey(enchantmentInstance.enchantment) && itemForEnchant.getAllEnchantments().get(enchantmentInstance.enchantment) == enchantmentInstance.level) bonus++;
-                        itemForEnchant.enchant(enchantmentInstance.enchantment, enchantmentInstance.level + bonus);
+                    int bonus = 0;
+                    if(itemForEnchant.getAllEnchantments().containsKey(enchantmentInstance.enchantment) && itemForEnchant.getAllEnchantments().get(enchantmentInstance.enchantment) == enchantmentInstance.level) bonus++;
 
-                        if (!player.getAbilities().instabuild) {
-                            lapis.shrink(i);
-                            enchBook.shrink(1);
-                            if (lapis.isEmpty()) {
-                                this.enchantSlots.setItem(1, ItemStack.EMPTY);
-                            }
-                            if (enchBook.isEmpty()) {
-                                this.enchantSlots.setItem(2, ItemStack.EMPTY);
+                    float roll = Main.rnd.nextFloat();
+                    if(roll < getCurve(instability))
+                    {
+                        //success
+                        if(itemForEnchant.getAllEnchantments().containsKey(enchantmentInstance.enchantment))
+                        {
+                            var list = itemForEnchant.getEnchantmentTags();
+                            for(int a = 0; a < list.size(); a++)
+                            {
+                                if(list.getCompound(a).getString("id").equals(ForgeRegistries.ENCHANTMENTS.getKey(enchantmentInstance.enchantment).toString()))
+                                {
+                                    list.remove(a);
+                                    break;
+                                }
                             }
                         }
-
+                        itemForEnchant.enchant(enchantmentInstance.enchantment, enchantmentInstance.level + bonus);
                         player.awardStat(Stats.ENCHANT_ITEM);
                         if (player instanceof ServerPlayer) {
                             CriteriaTriggers.ENCHANTED_ITEM.trigger((ServerPlayer)player, itemForEnchant, i);
                         }
-
-                        this.enchantSlots.setChanged();
-                        this.slotsChanged(this.enchantSlots);
                         level.playSound((Player)null, blockPos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 1.0F, level.random.nextFloat() * 0.1F + 0.9F);
+                    }
+                    else
+                    {
+                        //fail
+                        if(button == 1)
+                        {
+                            if(itemForEnchant.is(Items.ENCHANTED_BOOK))
+                                this.enchantSlots.setItem(0, new ItemStack(Items.BOOK));
+                            else itemForEnchant.removeTagKey("Enchantments");
+                        }
+                        if(button == 0)
+                        {
+                            this.enchantSlots.setItem(0,ItemStack.EMPTY);
+                        }
+                        level.playSound((Player)null, blockPos, SoundEvents.ARMOR_EQUIP_IRON, SoundSource.BLOCKS, 1.0F, level.random.nextFloat() * 0.1F + 0.9F);
+                    }
+                    //all times
+                    if (!player.getAbilities().instabuild) {
+                        lapis.shrink(i);
+                        enchBook.shrink(1);
+                        this.enchantSlots.setItem(3,ItemStack.EMPTY);
+
+                        if (lapis.isEmpty()) {
+                            this.enchantSlots.setItem(1, ItemStack.EMPTY);
+                        }
+                        if (enchBook.isEmpty()) {
+                            this.enchantSlots.setItem(2, ItemStack.EMPTY);
+                        }
+                    }
+
+
+                    this.enchantSlots.setChanged();
+                    this.slotsChanged(this.enchantSlots);
 
                 });
-                return true;
+                return ret.get();
             }
         } else {
             Util.logAndPauseIfInIde(player.getName() + " pressed invalid button id: " + button);
@@ -244,7 +346,10 @@ public class ModEnchantmentMenu extends AbstractContainerMenu {
         return itemstack.isEmpty() ? 0 : itemstack.getCount();
     }
 
-
+    public float getCurve(int instability)
+    {
+        return (float)(1 - (2 / Math.PI) * (float)atan(instability * sqrt(instability) / 400));
+    }
     public void removed(Player p_39488_) {
         super.removed(p_39488_);
         this.access.execute((p_39469_, p_39470_) -> {

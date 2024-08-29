@@ -228,7 +228,7 @@ public class ModBarrelBlockEntity extends RandomizableContainerBlockEntity {
 
     public static boolean sameItem(ItemStack f, ItemStack s)
     {
-        boolean cond1 = f.hasTag() == true && s.hasTag() == true && f.getTag() == s.getTag();
+        boolean cond1 = f.hasTag() == true && s.hasTag() == true && f.getTag().equals(s.getTag());
         boolean cond2 = f.hasTag() == false && s.hasTag() == false;
 
         return f.getItem() == s.getItem() && (cond1 || cond2);

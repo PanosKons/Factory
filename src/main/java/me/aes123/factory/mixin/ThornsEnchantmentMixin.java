@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
 @Mixin(ThornsEnchantment.class)
-public class ThornsEnchantmentMixin {
+public abstract class ThornsEnchantmentMixin {
     @ModifyConstant(method = "doPostHurt", constant = @Constant(intValue = 2))
     public int method(int constant)
     {

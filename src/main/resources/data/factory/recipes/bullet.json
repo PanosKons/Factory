@@ -1,9 +1,9 @@
 {
     "type": "factory:assembling",
     "pattern": [
-        "   ",
-        " AC",
-        "   "
+        " C ",
+        "CAC",
+        " C "
     ],
     "key": {
         "A": {
@@ -17,6 +17,6 @@
     "required_recipe": "none",
     "result": {
         "item": "factory:bullet",
-        "count": 1
+        "count": 4
     }
 }

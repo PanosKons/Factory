@@ -37,7 +37,7 @@
 
   "item.minecraft.totem_of_undying": "Totem",
 
-  "generator.factory.small":"Normal",
+  "generator.factory.small":"Small Biomes",
 
 
   "block.factory.assembler": "Assembler",
@@ -79,5 +79,7 @@
   "dungeon.factory.health_boost": "+1 Heart",
   "dungeon.factory.slowness": "-1 Speed",
 
-  "enchantment.factory.soulbound": "Soulbound"
+  "enchantment.factory.soulbound": "Soulbound",
+  "enchantment.factory.frost_aspect": "Frost Aspect",
+  "effect.factory.freeze": "Freeze"
 }

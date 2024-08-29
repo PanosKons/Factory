@@ -104,7 +104,8 @@ public class ElectricFurnaceBlock extends BaseEntityBlock {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state,
                                                                   BlockEntityType<T> type) {
-        return createTickerHelper(type, ModBlockEntityType.ELECTRIC_FURNACE_BLOCK_ENTITY.get(),
-                ElectricFurnaceBlockEntity::tick);
+        //return createTickerHelper(type, ModBlockEntityType.ELECTRIC_FURNACE_BLOCK_ENTITY.get(),
+        //        ElectricFurnaceBlockEntity::tick);
+        return null;////
     }
 }

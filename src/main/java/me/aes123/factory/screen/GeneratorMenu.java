@@ -115,7 +115,8 @@ public class GeneratorMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        return stillValid(ContainerLevelAccess.create(level,blockEntity.getBlockPos()),player, ModBlocks.GENERATOR.get());
+        //return stillValid(ContainerLevelAccess.create(level,blockEntity.getBlockPos()),player, ModBlocks.GENERATOR.get());
+        return false;
     }
     private void addPlayerInventory(Inventory playerInventory) {
         for (int i = 0; i < 3; ++i) {

@@ -17,7 +17,7 @@ public class GateBlockEntity extends BlockEntity {
     public String doorName = "";
     public List<String> playerNames = new ArrayList<String>();
     public GateBlockEntity(BlockPos blockPos, BlockState state) {
-        super(ModBlockEntityType.GATE_BLOCK_ENTITY.get(), blockPos, state);
+        super(null/*ModBlockEntityType.GATE_BLOCK_ENTITY.get()*/, blockPos, state);
     }
     @Override
     protected void saveAdditional(CompoundTag nbt) {

@@ -17,15 +17,15 @@ public class ModBlocks {
     public static final DeferredRegister<Block> VANILLA_BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, "minecraft");
 
 
-    public static final RegistryObject<Block> GATE_BLOCK = BLOCKS.register("gate_block", () -> new GateBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK)));
+    //public static final RegistryObject<Block> GATE_BLOCK = BLOCKS.register("gate_block", () -> new GateBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK)));
     public static final RegistryObject<AssemblerBlock> ASSEMBLER = BLOCKS.register("assembler", () -> new AssemblerBlock(BlockBehaviour.Properties
             .copy(Blocks.IRON_BLOCK)
             .requiresCorrectToolForDrops()
             .mapColor(MapColor.COLOR_GRAY)));
-    public static final RegistryObject<GeneratorBlock> GENERATOR = BLOCKS.register("generator", () -> new GeneratorBlock(BlockBehaviour.Properties
+    /*public static final RegistryObject<GeneratorBlock> GENERATOR = BLOCKS.register("generator", () -> new GeneratorBlock(BlockBehaviour.Properties
             .copy(Blocks.IRON_BLOCK)
             .requiresCorrectToolForDrops()
-            .mapColor(MapColor.COLOR_GRAY)));
+            .mapColor(MapColor.COLOR_GRAY)));*/
     public static final RegistryObject<DiscoveryStationBlock> DISCOVERY_STATION = BLOCKS.register("discovery_station", () -> new DiscoveryStationBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).requiresCorrectToolForDrops().mapColor(MapColor.COLOR_GRAY)));
 
     public static final RegistryObject<EquipmentStationBlock> EQUIPMENT_STATION = BLOCKS.register("equipment_station", () -> new EquipmentStationBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
@@ -34,8 +34,8 @@ public class ModBlocks {
     public static final  RegistryObject<ModBarrelBlock> PROFOUND_BARREL = BLOCKS.register("profound_barrel", () -> new ModBarrelBlock(BlockBehaviour.Properties.of().mapColor(MapColor.RAW_IRON).instrument(NoteBlockInstrument.BASS).requiresCorrectToolForDrops().strength(5.0F).sound(SoundType.METAL), ModRarity.PROFOUND));
     public static final  RegistryObject<ModBarrelBlock> REINFORCED_BARREL = BLOCKS.register("reinforced_barrel", () -> new ModBarrelBlock(BlockBehaviour.Properties.of().mapColor(MapColor.RAW_IRON).instrument(NoteBlockInstrument.BASS).requiresCorrectToolForDrops().strength(5.0F).sound(SoundType.METAL), ModRarity.REINFORCED));
 
-    public static final RegistryObject<ElectricFurnaceBlock> ELECTRIC_FURNACE = BLOCKS.register("electric_furnace", () -> new ElectricFurnaceBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
-    public static final RegistryObject<CrusherBlock> CRUSHER = BLOCKS.register("crusher", () -> new CrusherBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
+    //public static final RegistryObject<ElectricFurnaceBlock> ELECTRIC_FURNACE = BLOCKS.register("electric_furnace", () -> new ElectricFurnaceBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
+    //public static final RegistryObject<CrusherBlock> CRUSHER = BLOCKS.register("crusher", () -> new CrusherBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
     public static final RegistryObject<DropExperienceBlock> RUBY_ORE = BLOCKS.register("ruby_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of().mapColor(MapColor.SAND).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(10.0F, 1200.0F), UniformInt.of(50, 100)));
     public static final RegistryObject<ModHopperBlock> IMPROVED_HOPPER = BLOCKS.register("improved_hopper", () -> new ModHopperBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).requiresCorrectToolForDrops().strength(3.0F, 4.8F).sound(SoundType.METAL).noOcclusion(), ModBlockEntityType.IMPROVED_HOPPER_BLOCK_ENTITY, 5));
     public static final RegistryObject<ModHopperBlock> PROFOUND_HOPPER = BLOCKS.register("profound_hopper", () -> new ModHopperBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).requiresCorrectToolForDrops().strength(3.0F, 4.8F).sound(SoundType.METAL).noOcclusion(),ModBlockEntityType.PROFOUND_HOPPER_BLOCK_ENTITY,3));

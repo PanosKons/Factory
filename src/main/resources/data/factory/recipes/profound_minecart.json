@@ -1,12 +1,16 @@
 {
     "type": "factory:assembling",
     "pattern": [
-        "LfL",
+        " f ",
+        "LsL",
         "LLL"
     ],
     "key": {
         "f": {
             "item": "minecraft:minecart"
+        },
+        "s": {
+            "item": "minecraft:slime_ball"
         },
         "L": {
             "item": "minecraft:diamond"
@@ -16,7 +20,7 @@
     "required_recipe": "Profound Blocks",
     "result": {
         "item": "minecraft:minecart",
-        "nbt": {"MaxSpeedModifier": 1.8},
+        "nbt": {"MaxSpeedModifier": 4},
         "count": 1
     }
 }

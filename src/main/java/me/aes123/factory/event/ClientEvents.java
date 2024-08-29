@@ -21,14 +21,14 @@ public class ClientEvents {
     {
         @SubscribeEvent
         public static void onKeyInput(InputEvent.Key event) {
-            if(KeyBinding.SHOP_KEY.consumeClick())
+            /*if(KeyBinding.SHOP_KEY.consumeClick())
             {
                 var minecraft = Minecraft.getInstance();
                 if(minecraft.screen == null)
                 {
                     minecraft.setScreen(new ShopScreen());
                 }
-            }
+            }*/
         }
     }
 

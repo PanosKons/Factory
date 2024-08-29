@@ -101,11 +101,11 @@ public interface IEquipmentItem {
         if (durability > 0)
         {
             setDurability(durability - damage, stack);
-            stack.setDamageValue(1000 - (1000 * durability) / (int)getModifierValue(MAX_DURABILITY, stack));
+            stack.setDamageValue(1000 - (1000 * (durability - damage)) / (int)getModifierValue(MAX_DURABILITY, stack));
         }
-        else
+        if(durability - damage <= 0)
         {
-            stack.hurtAndBreak(1000, entity, (e) -> {
+            stack.hurtAndBreak(1, entity, (e) -> {
                 e.broadcastBreakEvent(slot);
             });
         }
@@ -116,13 +116,7 @@ public interface IEquipmentItem {
         if (durability > 0)
         {
             setDurability(durability - damage, stack);
-            stack.setDamageValue(1000 - (1000 * durability) / (int)getModifierValue(MAX_DURABILITY, stack));
-        }
-        else
-        {
-            stack.hurtAndBreak(1000, entity, (e) -> {
-                e.broadcastBreakEvent(slot);
-            });
+            stack.setDamageValue(1000 - (1000 * (durability- damage)) / (int)getModifierValue(MAX_DURABILITY, stack));
         }
     }
     default void addDefaultStats(ItemStack stack) {
