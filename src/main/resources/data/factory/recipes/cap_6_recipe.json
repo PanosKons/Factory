@@ -1,0 +1,23 @@
+{
+  "type": "factory:assembling",
+  "pattern": [
+    "LLL",
+    "LfL",
+    "LLL"
+  ],
+  "key": {
+    "f": {
+      "tag": "minecraft:tools"
+    },
+    "L": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "speed": 20,
+  "required_recipe": "Capacity V Molds",
+  "result": {
+    "item": "factory:undiscovered_recipe",
+    "nbt": {"max_progress": 20, "progress": 0, "recipe": "Capacity VI Molds"},
+    "count": 1
+  }
+}

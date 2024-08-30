@@ -166,12 +166,6 @@
       "modifiers": [
         {"id": "regeneration", "level": 4}
       ]
-    },
-    {
-      "item": "factory:ruby",
-      "modifiers": [
-        {"id": "mending", "level": 1}
-      ]
     }
   ]
 }

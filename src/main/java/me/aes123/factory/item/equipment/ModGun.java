@@ -75,7 +75,7 @@ public class ModGun extends ModHandItem {
 
         takeDurabilityDamage(stack, player, InteractionHand.MAIN_HAND ,1);
         float teleportDelay = 1.0f;
-        if(teleportFlag) teleportDelay = (21 - stack.getAllEnchantments().get(ModEnchantments.TELEPORT.get())) * 5;
+        if(teleportFlag) teleportDelay = (11 - stack.getAllEnchantments().get(ModEnchantments.TELEPORT.get())) * 10;
         player.getCooldowns().addCooldown(this, (int)(fireRate * 20 * teleportDelay));
         playSound(level, player.getOnPos().above());
         if(result != null && !teleportFlag)

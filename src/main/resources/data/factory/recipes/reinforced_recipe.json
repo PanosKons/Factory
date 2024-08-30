@@ -17,7 +17,7 @@
     "required_recipe": "none",
     "result": {
         "item": "factory:undiscovered_recipe",
-        "nbt": {"max_progress": 25, "progress": 0, "recipe": "Reinforced Blocks"},
+        "nbt": {"max_progress": 30, "progress": 0, "recipe": "Reinforced Blocks"},
         "count": 1
     }
 }

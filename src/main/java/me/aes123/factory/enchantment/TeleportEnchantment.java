@@ -12,7 +12,7 @@ public class TeleportEnchantment extends Enchantment {
         super(rarity, enchantmentCategory, slot);
     }
     public int getMaxLevel() {
-        return 20;
+        return 10;
     }
 
     @Override

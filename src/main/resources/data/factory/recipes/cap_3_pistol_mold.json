@@ -16,7 +16,7 @@
             "item": "minecraft:stick"
         },
         "L": {
-            "item": "minecraft:gold_ingot"
+            "item": "minecraft:copper_ingot"
         }
     },
     "speed": 20,

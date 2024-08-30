@@ -120,6 +120,12 @@ public class ModEvents {
                 }
             }
             {
+                JsonObject data = GsonHelper.parse(new BufferedReader(new InputStreamReader(Minecraft.getInstance().getResourceManager().getResource(new ResourceLocation("factory:custom/loot_table_tags/archaeology.json")).get().open())));
+                for (var entry : GsonHelper.getAsJsonArray(data, "values")) {
+                    ModTags.ARCHAEOLOGY.add(entry.getAsString());
+                }
+            }
+            {
                 EQUIPMENT_MATERIAL_MODIFIERS = new ArrayList<>();
 
                 JsonObject data = GsonHelper.parse(new BufferedReader(new InputStreamReader(Minecraft.getInstance().getResourceManager().getResource(new ResourceLocation("factory:custom/materials/material_modifiers.json")).get().open())));

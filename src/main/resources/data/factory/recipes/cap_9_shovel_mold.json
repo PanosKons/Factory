@@ -1,0 +1,23 @@
+{
+    "type": "factory:assembling",
+    "pattern": [
+        "LLL",
+        "LfL",
+        "LLL"
+    ],
+    "key": {
+        "f": {
+            "item": "factory:shovel_mold"
+        },
+        "L": {
+            "item": "minecraft:obsidian"
+        }
+    },
+    "speed": 20,
+    "required_recipe": "Capacity IX Molds",
+    "result": {
+        "item": "factory:shovel_mold",
+        "nbt": {"capacity": 9},
+        "count": 1
+    }
+}

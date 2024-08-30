@@ -10,7 +10,7 @@
             "item": "factory:pickaxe_mold"
         },
         "L": {
-            "item": "minecraft:emerald"
+            "item": "factory:steel_ingot"
         }
     },
     "speed": 20,

@@ -1,0 +1,23 @@
+{
+  "type": "factory:assembling",
+  "pattern": [
+    "LLL",
+    "LfL",
+    "LLL"
+  ],
+  "key": {
+    "f": {
+      "tag": "minecraft:tools"
+    },
+    "L": {
+      "item": "minecraft:emerald"
+    }
+  },
+  "speed": 20,
+  "required_recipe": "Capacity VI Molds",
+  "result": {
+    "item": "factory:undiscovered_recipe",
+    "nbt": {"max_progress": 25, "progress": 0, "recipe": "Capacity VII Molds"},
+    "count": 1
+  }
+}

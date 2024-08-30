@@ -1,0 +1,23 @@
+{
+  "type": "factory:assembling",
+  "pattern": [
+    "LLL",
+    "LfL",
+    "LLL"
+  ],
+  "key": {
+    "f": {
+      "tag": "minecraft:tools"
+    },
+    "L": {
+      "item": "minecraft:ender_pearl"
+    }
+  },
+  "speed": 20,
+  "required_recipe": "Capacity VII Molds",
+  "result": {
+    "item": "factory:undiscovered_recipe",
+    "nbt": {"max_progress": 30, "progress": 0, "recipe": "Capacity VIII Molds"},
+    "count": 1
+  }
+}

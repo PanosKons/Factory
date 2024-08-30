@@ -1,0 +1,23 @@
+{
+    "type": "factory:assembling",
+    "pattern": [
+        "LLL",
+        "LfL",
+        "LLL"
+    ],
+    "key": {
+        "f": {
+            "item": "factory:pistol_mold"
+        },
+        "L": {
+            "item": "minecraft:iron_ingot"
+        }
+    },
+    "speed": 20,
+    "required_recipe": "Capacity IV Molds",
+    "result": {
+        "item": "factory:pistol_mold",
+        "nbt": {"capacity": 4},
+        "count": 1
+    }
+}

@@ -28,6 +28,7 @@ public class AddItemModifier extends LootModifier {
             .fieldOf("item").forGetter(m -> m.item)).apply(inst, AddItemModifier::new)));
     private final Item item;
 
+
     protected AddItemModifier(LootItemCondition[] conditionsIn, Item item) {
         super(conditionsIn);
         this.item = item;
@@ -128,7 +129,7 @@ public class AddItemModifier extends LootModifier {
             }
             if(context.getRandom().nextFloat() >= 0.2f) {
                 int level = 1;
-                while (context.getRandom().nextFloat() >= 0.45f) {
+                while (context.getRandom().nextFloat() >= 0.4f) {
                     level++;
                 }
                 modifiedLoot.add(addEnchantedBook(level));
@@ -143,6 +144,25 @@ public class AddItemModifier extends LootModifier {
                 modifiedLoot.add(new ItemStack(ModItems.REINFORCED_BOOSTER.get()));
             }
         }
+        if(ModTags.ARCHAEOLOGY.contains(context.getQueriedLootTableId().toString()))
+        {
+            float rnd = context.getRandom().nextFloat();
+            if(rnd >= 0.9f) {
+                int level = 1;
+                while (context.getRandom().nextFloat() >= 0.4f) {
+                    level++;
+                }
+                modifiedLoot.clear();
+                modifiedLoot.add(addEnchantedBook(level));
+            }
+            else if(rnd >= 0.85f)
+            {
+                modifiedLoot.clear();
+                modifiedLoot.add(new ItemStack(ModItems.EXPERTISE.get()));
+            }
+        }
+
+
 
         return modifiedLoot;
     }

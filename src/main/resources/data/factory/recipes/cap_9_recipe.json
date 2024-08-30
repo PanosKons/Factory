@@ -1,0 +1,23 @@
+{
+  "type": "factory:assembling",
+  "pattern": [
+    "LLL",
+    "LfL",
+    "LLL"
+  ],
+  "key": {
+    "f": {
+      "tag": "minecraft:tools"
+    },
+    "L": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "speed": 20,
+  "required_recipe": "Capacity VIII Molds",
+  "result": {
+    "item": "factory:undiscovered_recipe",
+    "nbt": {"max_progress": 35, "progress": 0, "recipe": "Capacity IX Molds"},
+    "count": 1
+  }
+}

@@ -1,0 +1,23 @@
+{
+    "type": "factory:assembling",
+    "pattern": [
+        "LLL",
+        "LfL",
+        "LLL"
+    ],
+    "key": {
+        "f": {
+            "item": "factory:shovel_mold"
+        },
+        "L": {
+            "item": "minecraft:emerald"
+        }
+    },
+    "speed": 20,
+    "required_recipe": "Capacity VII Molds",
+    "result": {
+        "item": "factory:shovel_mold",
+        "nbt": {"capacity": 7},
+        "count": 1
+    }
+}

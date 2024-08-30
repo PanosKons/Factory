@@ -10,7 +10,7 @@
             "item": "factory:profound_bundle"
         },
         "S": {
-            "item": "factory:diamond"
+            "item": "minecraft:diamond"
         }
     },
     "speed": 5,

@@ -112,75 +112,73 @@ public class ModEnchantmentMenu extends AbstractContainerMenu {
             ItemStack itemToEnchant = container.getItem(0);
             ItemStack enchantedBook = container.getItem(2);
             boolean res = true;
-            if (enchantedBook.is(Items.ENCHANTED_BOOK) && !itemToEnchant.isEmpty() && (itemToEnchant.getItem() instanceof IEquipmentItem || itemToEnchant.is(Items.TRIDENT)) && isCompatible(enchantedBook, itemToEnchant)) {
-                ListTag enchantments = EnchantedBookItem.getEnchantments(enchantedBook);
-                CompoundTag enchantment = enchantments.getCompound(0);
-                int EncLevel = enchantment.getInt("lvl");
-                String enchid = enchantment.getString("id");
-                Enchantment ench = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(enchid));
-                boolean flag1 = itemToEnchant.getAllEnchantments().containsKey(ench);
-                if(flag1)
-                {
-                    int lvl = itemToEnchant.getAllEnchantments().get(ench);
-                    if(lvl < EncLevel || (lvl == EncLevel && EncLevel != ench.getMaxLevel()))
-                    {
-                        flag1 = false;
+            if (enchantedBook.is(Items.ENCHANTED_BOOK) && !itemToEnchant.isEmpty() && (itemToEnchant.getItem() instanceof IEquipmentItem || itemToEnchant.is(Items.TRIDENT)) && isCompatible(enchantedBook, itemToEnchant) && itemToEnchant.hasTag()) {
+                if (itemToEnchant.getTag().getInt("unenchantable") <= 0) {
+                    ListTag enchantments = EnchantedBookItem.getEnchantments(enchantedBook);
+                    CompoundTag enchantment = enchantments.getCompound(0);
+                    int EncLevel = enchantment.getInt("lvl");
+                    String enchid = enchantment.getString("id");
+                    Enchantment ench = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(enchid));
+                    boolean flag1 = itemToEnchant.getAllEnchantments().containsKey(ench);
+                    if (flag1) {
+                        int lvl = itemToEnchant.getAllEnchantments().get(ench);
+                        if (lvl < EncLevel || (lvl == EncLevel && EncLevel != ench.getMaxLevel())) {
+                            flag1 = false;
 
+                        }
                     }
-                }
-                if(!flag1)
-                {
-                    res = false;
-                    this.access.execute((level, blockPos) -> {
-                        float enchantPower = 0;
+                    if (!flag1) {
+                        res = false;
+                        this.access.execute((level, blockPos) -> {
+                            float enchantPower = 0;
 
-                        for(BlockPos blockpos : ModEnchantmentTableBlock.BOOKSHELF_OFFSETS) {
-                            if (ModEnchantmentTableBlock.isValidBookShelf(level, blockPos, blockpos)) {
-                                enchantPower += level.getBlockState(blockPos.offset(blockpos)).getEnchantPowerBonus(level, blockPos.offset(blockpos));
+                            for (BlockPos blockpos : ModEnchantmentTableBlock.BOOKSHELF_OFFSETS) {
+                                if (ModEnchantmentTableBlock.isValidBookShelf(level, blockPos, blockpos)) {
+                                    enchantPower += level.getBlockState(blockPos.offset(blockpos)).getEnchantPowerBonus(level, blockPos.offset(blockpos));
+                                }
                             }
-                        }
 
-                        int id = -1;
-                        for (int i = 0; i < ModTags.Items.AllowedEnchantments.size(); i++){
-                            if(ench == ModTags.Items.AllowedEnchantments.get(i))
-                            {
-                                id = i;
-                                break;
+                            int id = -1;
+                            for (int i = 0; i < ModTags.Items.AllowedEnchantments.size(); i++) {
+                                if (ench == ModTags.Items.AllowedEnchantments.get(i)) {
+                                    id = i;
+                                    break;
+                                }
                             }
-                        }
 
 
-                        int instability = EncLevel;
-                        for(var val : itemToEnchant.getAllEnchantments().values())
-                        {
-                            instability += val;
-                        }
-                        instability *= 20;
+                            int instability = EncLevel;
+                            for (var val : itemToEnchant.getAllEnchantments().values()) {
+                                instability += val;
+                            }
+                            instability *= 20;
 
-                        ItemStack booster = container.getItem(3);
-                        if(booster.is(ModItems.WEAK_BOOSTER.get())) instability -= 20 * booster.getCount();
-                        if(booster.is(ModItems.STRONG_BOOSTER.get())) instability -= 40 * booster.getCount();
-                        if(booster.is(ModItems.REINFORCED_BOOSTER.get())) instability -= 60 * booster.getCount();
+                            ItemStack booster = container.getItem(3);
+                            if (booster.is(ModItems.WEAK_BOOSTER.get())) instability -= 10 * booster.getCount();
+                            if (booster.is(ModItems.STRONG_BOOSTER.get())) instability -= 15 * booster.getCount();
+                            if (booster.is(ModItems.REINFORCED_BOOSTER.get())) instability -= 20 * booster.getCount();
 
-                        if(instability < 0) instability = 0;
+                            if (instability < 0) instability = 0;
 
-                        int levelCost = instability - (int)enchantPower;
-                        if(levelCost < 1) levelCost = 1;
+                            int levelCost = instability - (int) enchantPower;
+                            if (levelCost < 1) levelCost = 1;
 
-                        for(int k = 0; k < 3; ++k) {
-                            this.instability[0] = instability;
-                            int before = levelCost * (k + 1);
-                            if(before > 80) before = 80 + (before - 80)/2;
-                            if(before > 100) before = 100 + (before - 100)/2;
-                            if(before > 140) before = 140 + (before - 140)/2;
-                            if(before > 180) before = 180 + (before - 180)/2;
-                            this.costs[k] = before;
-                            this.enchantClue[k] = id;
-                            this.levelClue[k] = EncLevel;
-                        }
+                            for (int k = 0; k < 3; ++k) {
+                                this.instability[0] = instability;
+                                int before = levelCost * (k + 1);
+                                if (before > 60) before = 60 + (before - 60) / 2;
+                                if (before > 80) before = 80 + (before - 80) / 2;
+                                if (before > 100) before = 100 + (before - 100) / 2;
+                                if (before > 140) before = 140 + (before - 140) / 2;
+                                if (before > 180) before = 180 + (before - 180) / 2;
+                                this.costs[k] = before;
+                                this.enchantClue[k] = id;
+                                this.levelClue[k] = EncLevel;
+                            }
 
-                        this.broadcastChanges();
-                    });
+                            this.broadcastChanges();
+                        });
+                    }
                 }
 
             }
@@ -282,7 +280,8 @@ public class ModEnchantmentMenu extends AbstractContainerMenu {
                     if(itemForEnchant.getAllEnchantments().containsKey(enchantmentInstance.enchantment) && itemForEnchant.getAllEnchantments().get(enchantmentInstance.enchantment) == enchantmentInstance.level) bonus++;
 
                     float roll = Main.rnd.nextFloat();
-                    if(roll < getCurve(instability))
+                    var aa = getCurve(instability);
+                    if(roll < aa)
                     {
                         //success
                         if(itemForEnchant.getAllEnchantments().containsKey(enchantmentInstance.enchantment))
@@ -307,16 +306,18 @@ public class ModEnchantmentMenu extends AbstractContainerMenu {
                     else
                     {
                         //fail
-                        if(button == 1)
+                        if(button <= 1 && Main.rnd.nextFloat() > aa)
                         {
-                            if(itemForEnchant.is(Items.ENCHANTED_BOOK))
-                                this.enchantSlots.setItem(0, new ItemStack(Items.BOOK));
-                            else itemForEnchant.removeTagKey("Enchantments");
+                            itemToEnchant.getTag().putInt("unenchantable", 1);
+
+                            if(button <= 0 && Main.rnd.nextFloat() > aa)
+                            {
+                                if(itemForEnchant.is(Items.ENCHANTED_BOOK))
+                                    this.enchantSlots.setItem(0, new ItemStack(Items.BOOK));
+                                else itemForEnchant.removeTagKey("Enchantments");
+                            }
                         }
-                        if(button == 0)
-                        {
-                            this.enchantSlots.setItem(0,ItemStack.EMPTY);
-                        }
+
                         level.playSound((Player)null, blockPos, SoundEvents.ARMOR_EQUIP_IRON, SoundSource.BLOCKS, 1.0F, level.random.nextFloat() * 0.1F + 0.9F);
                     }
                     //all times

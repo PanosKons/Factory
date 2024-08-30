@@ -94,6 +94,11 @@ public interface IEquipmentItem {
                 case ONLY_TYPE -> components.add(Component.literal(displayName).withStyle(ChatFormatting.GREEN));
             }
         }
+        if(stack.hasTag())
+        {
+            if(stack.getTag().getInt("unenchantable") > 0)
+                components.add(Component.literal("UnEnchantable").withStyle(ChatFormatting.DARK_PURPLE));
+        }
     }
     default void takeDurabilityDamage(ItemStack stack, LivingEntity entity, InteractionHand slot, int damage)
     {

@@ -10,11 +10,11 @@
             "item": "factory:pickaxe_mold"
         },
         "L": {
-            "item": "minecraft:netherite_ingot"
+            "item": "minecraft:obsidian"
         }
     },
     "speed": 20,
-    "required_recipe": "Capacity IV Molds",
+    "required_recipe": "Capacity IX Molds",
     "result": {
         "item": "factory:pickaxe_mold",
         "nbt": {"capacity": 9},

@@ -1,0 +1,23 @@
+{
+    "type": "factory:assembling",
+    "pattern": [
+        "LLL",
+        "LfL",
+        "LLL"
+    ],
+    "key": {
+        "f": {
+            "item": "factory:shovel_mold"
+        },
+        "L": {
+            "item": "minecraft:ender_pearl"
+        }
+    },
+    "speed": 20,
+    "required_recipe": "Capacity VIII Molds",
+    "result": {
+        "item": "factory:shovel_mold",
+        "nbt": {"capacity": 8},
+        "count": 1
+    }
+}

@@ -207,11 +207,11 @@ public class ModEnchantmentScreen extends AbstractContainerScreen<ModEnchantment
                         list.add(mutablecomponent1.withStyle(ChatFormatting.GRAY));
                         if(j == 0)
                         {
-                            list.add((MutableComponent)Component.literal("Equipment might be destroyed").withStyle(ChatFormatting.RED));
+                            list.add((MutableComponent)Component.literal("Equipment might lose all enchantments").withStyle(ChatFormatting.RED));
                         }
                         if(j == 1)
                         {
-                            list.add((MutableComponent)Component.literal("Equipment might lose all enchantments").withStyle(ChatFormatting.RED));
+                            list.add((MutableComponent)Component.literal("Equipment might become unenchantable").withStyle(ChatFormatting.RED));
                         }
                     }
                 }

@@ -1,0 +1,23 @@
+{
+    "type": "factory:assembling",
+    "pattern": [
+        "LLL",
+        "LfL",
+        "LLL"
+    ],
+    "key": {
+        "f": {
+            "item": "factory:axe_mold"
+        },
+        "L": {
+            "item": "factory:steel_ingot"
+        }
+    },
+    "speed": 20,
+    "required_recipe": "Capacity V Molds",
+    "result": {
+        "item": "factory:axe_mold",
+        "nbt": {"capacity": 5},
+        "count": 1
+    }
+}
