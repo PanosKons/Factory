@@ -53,7 +53,7 @@ public class ModEquipmentItem extends Item implements Vanishable, IEquipmentItem
             if(equipmentSlot == EquipmentSlot.MAINHAND && getModifierValue(REACH, stack) > 0)
             {
                 builder.put(ForgeMod.BLOCK_REACH.get(), new AttributeModifier(BASE_BLOCK_REACH_UUID, "Reach modifier", getModifierValue(REACH, stack) - 4.5f, AttributeModifier.Operation.ADDITION));
-                builder.put(ForgeMod.ENTITY_REACH.get(), new AttributeModifier(BASE_ENTITY_REACH_UUID, "Reach modifier",getModifierValue(REACH, stack) - 3.0f - 1.5f, AttributeModifier.Operation.ADDITION));
+                builder.put(ForgeMod.ENTITY_REACH.get(), new AttributeModifier(BASE_ENTITY_REACH_UUID, "Reach modifier",(getModifierValue(REACH, stack) - 3.0f - 1.5f)/2.6f, AttributeModifier.Operation.ADDITION));
             }
             return builder.build();
         }

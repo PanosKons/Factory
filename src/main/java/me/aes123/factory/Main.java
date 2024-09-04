@@ -4,10 +4,8 @@ import com.google.gson.*;
 import com.mojang.logging.LogUtils;
 import me.aes123.factory.client.ModEnchantTableRenderer;
 import me.aes123.factory.config.FactoryCommonConfig;
-import me.aes123.factory.dungeon.Dungeon;
 import me.aes123.factory.init.*;
 import me.aes123.factory.item.ModBundleItem;
-import me.aes123.factory.networking.ModMessages;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.blockentity.EnchantTableRenderer;
@@ -69,15 +67,14 @@ public class Main
         ModMobEffects.MOB_EFFECTS.register(bus);
 
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, FactoryCommonConfig.SPEC, "factory-common.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, FactoryCommonConfig.SPEC, "factory-common.toml");
 
-        MinecraftForge.EVENT_BUS.addListener(Dungeon::init);
         bus.addListener(this::commonSetup);
     }
 
     private void commonSetup(FMLCommonSetupEvent event)
     {
-        ModMessages.register();
+
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent

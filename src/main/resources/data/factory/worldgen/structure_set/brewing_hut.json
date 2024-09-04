@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "factory:brewing_hut",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 1295352020,
+    "spacing": 60,
+    "separation": 16
+  }
+}

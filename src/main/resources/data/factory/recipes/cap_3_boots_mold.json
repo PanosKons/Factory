@@ -1,0 +1,23 @@
+{
+    "type": "factory:assembling",
+    "pattern": [
+        "LLL",
+        "LfL",
+        "LLL"
+    ],
+    "key": {
+        "f": {
+            "item": "factory:boots_mold"
+        },
+        "L": {
+            "item": "minecraft:copper_ingot"
+        }
+    },
+    "speed": 20,
+    "required_recipe": "none",
+    "result": {
+        "item": "factory:boots_mold",
+        "nbt": {"capacity": 3},
+        "count": 1
+    }
+}

@@ -6,7 +6,10 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class DiscoveryStationScreen extends AbstractContainerScreen<DiscoveryStationMenu> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Main.MODID, "textures/gui/discovery_station_gui.png");
     public DiscoveryStationScreen(DiscoveryStationMenu menu, Inventory inventory, Component component) {

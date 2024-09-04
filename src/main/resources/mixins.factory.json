@@ -6,7 +6,6 @@
     "BlockItemMixin",
     "HopperBlockEntityMixin",
     "BlockEntityMixin",
-    "GameRendererMixin",
     "ThornsEnchantmentMixin",
     "PlayerMixin",
     "ServerPlayerMixin",

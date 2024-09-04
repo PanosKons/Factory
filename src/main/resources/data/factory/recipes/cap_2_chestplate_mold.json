@@ -1,0 +1,23 @@
+{
+    "type": "factory:assembling",
+    "pattern": [
+        "LLL",
+        "LfL",
+        "LLL"
+    ],
+    "key": {
+        "f": {
+            "item": "minecraft:leather_chestplate"
+        },
+        "L": {
+            "item": "minecraft:gold_nugget"
+        }
+    },
+    "speed": 20,
+    "required_recipe": "none",
+    "result": {
+        "item": "factory:chestplate_mold",
+        "nbt": {"capacity": 2},
+        "count": 1
+    }
+}

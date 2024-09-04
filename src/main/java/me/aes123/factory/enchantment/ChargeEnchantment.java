@@ -12,7 +12,7 @@ public class ChargeEnchantment extends Enchantment {
         super(rarity, enchantmentCategory, slot);
     }
     public int getMaxLevel() {
-        return 10;
+        return 5;
     }
 
     @Override

@@ -1,0 +1,23 @@
+{
+    "type": "factory:assembling",
+    "pattern": [
+        "LLL",
+        "LfL",
+        "LLL"
+    ],
+    "key": {
+        "f": {
+            "item": "factory:boots_mold"
+        },
+        "L": {
+            "item": "minecraft:emerald"
+        }
+    },
+    "speed": 20,
+    "required_recipe": "none",
+    "result": {
+        "item": "factory:boots_mold",
+        "nbt": {"capacity": 7},
+        "count": 1
+    }
+}

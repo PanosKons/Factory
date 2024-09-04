@@ -1,0 +1,23 @@
+{
+    "type": "factory:assembling",
+    "pattern": [
+        "LLL",
+        "LfL",
+        "LLL"
+    ],
+    "key": {
+        "f": {
+            "item": "factory:chestplate_mold"
+        },
+        "L": {
+            "item": "minecraft:ender_pearl"
+        }
+    },
+    "speed": 20,
+    "required_recipe": "none",
+    "result": {
+        "item": "factory:chestplate_mold",
+        "nbt": {"capacity": 8},
+        "count": 1
+    }
+}

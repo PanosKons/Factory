@@ -19,12 +19,6 @@ public class ModMenuTypes {
             registerMenuType(DiscoveryStationMenu::new, "discovery_station_menu");
     public static final RegistryObject<MenuType<EquipmentStationMenu>> EQUIPMENT_STATION_MENU =
             registerMenuType(EquipmentStationMenu::new, "equipment_station_menu");
-    public static final RegistryObject<MenuType<CrusherMenu>> CRUSHER_MENU =
-            registerMenuType(CrusherMenu::new, "crusher_menu");
-    public static final RegistryObject<MenuType<GeneratorMenu>> GENERATOR_MENU =
-            registerMenuType(GeneratorMenu::new, "generator_menu");
-    public static final RegistryObject<MenuType<ElectricFurnaceMenu>> ELECTRIC_FURNACE_MENU =
-            registerMenuType(ElectricFurnaceMenu::new, "electric_furnace_menu");
     public static final RegistryObject<MenuType<ModEnchantmentMenu>> ENCHANTMENT_MENU =
             registerMenuType(ModEnchantmentMenu::new, "enchanting_table_menu");
 

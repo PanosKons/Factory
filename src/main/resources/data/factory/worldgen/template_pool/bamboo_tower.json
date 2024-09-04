@@ -1,0 +1,57 @@
+{
+  "elements": [
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "factory:bamboo_tower/bamboo_up1",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid"
+      },
+      "weight": 5
+    },    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "factory:bamboo_tower/bamboo_up2",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid"
+      },
+      "weight": 5
+    },    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "factory:bamboo_tower/bamboo_split1",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid"
+      },
+      "weight": 4
+    },    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "factory:bamboo_tower/bamboo_split2",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid"
+      },
+      "weight": 4
+    },    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "factory:bamboo_tower/bamboo_top",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid"
+      },
+      "weight": 2
+    }
+
+  ],
+  "fallback": "factory:bamboo_tower/end_pool"
+}

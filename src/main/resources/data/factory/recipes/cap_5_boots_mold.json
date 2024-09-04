@@ -1,0 +1,23 @@
+{
+    "type": "factory:assembling",
+    "pattern": [
+        "LLL",
+        "LfL",
+        "LLL"
+    ],
+    "key": {
+        "f": {
+            "item": "factory:boots_mold"
+        },
+        "L": {
+            "item": "factory:steel_ingot"
+        }
+    },
+    "speed": 20,
+    "required_recipe": "none",
+    "result": {
+        "item": "factory:boots_mold",
+        "nbt": {"capacity": 5},
+        "count": 1
+    }
+}

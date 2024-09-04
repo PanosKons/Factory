@@ -46,7 +46,7 @@ public class AssemblerRecipe implements Recipe<SimpleContainer> {
 
     @Override
     public boolean matches(SimpleContainer container, Level level) {
-        if(requiredRecipe != null && !(requiredRecipe.getItem().equals(container.getItem(10).getItem()) && requiredRecipe.getTag().equals(container.getItem(10).getTag()))) return false;
+        if(!requiredRecipe.isEmpty() && !(requiredRecipe.getItem().equals(container.getItem(10).getItem()) && requiredRecipe.getTag().equals(container.getItem(10).getTag()))) return false;
         int CONTAINER_WIDTH = 3;
         int CONTAINER_HEIGHT = 3;
         for(int i = 0; i <= CONTAINER_WIDTH - this.width; ++i) {
@@ -151,7 +151,7 @@ public class AssemblerRecipe implements Recipe<SimpleContainer> {
             String required_recipe = GsonHelper.getAsString(serializedRecipe, "required_recipe");
             nbt.putString("recipe", required_recipe);
             requiredRecipe.setTag(nbt);
-            if(required_recipe.isEmpty() || required_recipe.equals("none")) requiredRecipe = null;
+            if(required_recipe.isEmpty() || required_recipe.equals("none")) requiredRecipe = ItemStack.EMPTY;
 
             NonNullList<Ingredient> nonnulllist = dissolvePattern(astring, map, i, j);
             ItemStack itemstack = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(serializedRecipe, "result"));

@@ -5,8 +5,6 @@ import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import me.aes123.factory.Main;
-import me.aes123.factory.screen.renderer.EnergyInfoArea;
-import me.aes123.factory.screen.renderer.XPInfoArea;
 import me.aes123.factory.util.ModTags;
 import me.aes123.factory.util.MouseUtil;
 import net.minecraft.ChatFormatting;

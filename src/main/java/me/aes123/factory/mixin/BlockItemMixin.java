@@ -60,12 +60,14 @@ public abstract class BlockItemMixin {
                     get.get().shrink(1);
 
                     listtag.clear();
+                    int r = 0;
                     for(int k = 0; k < inv.size(); k++)
                     {
                         if(inv.get(k).isEmpty()) continue;
                         CompoundTag compoundtag2 = new CompoundTag();
                         inv.get(k).save(compoundtag2);
-                        listtag.add(k, compoundtag2);
+                        listtag.add(r, compoundtag2);
+                        r++;
                     }
 
                     compoundtag.put("Items", listtag);

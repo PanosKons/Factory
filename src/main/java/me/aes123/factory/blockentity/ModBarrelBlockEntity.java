@@ -160,9 +160,9 @@ public class ModBarrelBlockEntity extends RandomizableContainerBlockEntity {
         for(int i =0; i < player.getInventory().getContainerSize(); i++)
         {
             ItemStack stack = player.getInventory().getItem(i);
+            /*
             if(stack.getItem() instanceof BundleItem || stack.getItem() instanceof ModBundleItem)
             {
-
                 CompoundTag compoundtag = stack.getOrCreateTag();
                 if (!compoundtag.contains("Items")) continue;
                 ListTag listtag = compoundtag.getList("Items", 10);
@@ -193,6 +193,7 @@ public class ModBarrelBlockEntity extends RandomizableContainerBlockEntity {
                 }
 
             }
+             */
             addPlayerItem(stack);
         }
         setChanged(level,pos,state);

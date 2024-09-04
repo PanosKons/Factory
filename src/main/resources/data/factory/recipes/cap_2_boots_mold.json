@@ -1,0 +1,23 @@
+{
+    "type": "factory:assembling",
+    "pattern": [
+        "LLL",
+        "LfL",
+        "LLL"
+    ],
+    "key": {
+        "f": {
+            "item": "minecraft:leather_boots"
+        },
+        "L": {
+            "item": "minecraft:gold_nugget"
+        }
+    },
+    "speed": 20,
+    "required_recipe": "none",
+    "result": {
+        "item": "factory:boots_mold",
+        "nbt": {"capacity": 2},
+        "count": 1
+    }
+}

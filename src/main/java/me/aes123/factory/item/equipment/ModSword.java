@@ -19,10 +19,13 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.ForgeMod;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.UUID;
+
+import static me.aes123.factory.data.EquipmentModifier.EquipmentModifierType.REACH;
 
 public class ModSword extends ModHandItem{
     public ModSword(Properties properties) {
@@ -36,6 +39,11 @@ public class ModSword extends ModHandItem{
             ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
             builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", getModifierValue(EquipmentModifier.EquipmentModifierType.ATTACK_DAMAGE, stack), AttributeModifier.Operation.ADDITION));
             builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", (1.0f / getModifierValue(EquipmentModifier.EquipmentModifierType.ATTACK_COOLDOWN, stack)) - 4, AttributeModifier.Operation.ADDITION));
+            if(getModifierValue(REACH, stack) > 0)
+            {
+                builder.put(ForgeMod.BLOCK_REACH.get(), new AttributeModifier(BASE_BLOCK_REACH_UUID, "Reach modifier", getModifierValue(REACH, stack) - 4.5f, AttributeModifier.Operation.ADDITION));
+                builder.put(ForgeMod.ENTITY_REACH.get(), new AttributeModifier(BASE_ENTITY_REACH_UUID, "Reach modifier",(getModifierValue(REACH, stack) - 4.5f)/2.6f, AttributeModifier.Operation.ADDITION));
+            }
             if(getModifierValue(EquipmentModifier.EquipmentModifierType.KNOCKBACK, stack) > 0.0) builder.put(Attributes.ATTACK_KNOCKBACK, new AttributeModifier(UUID.fromString("FA293E1C-4180-5865-B01B-BCCE9685ACA1"), "Weapon modifier", getModifierValue(EquipmentModifier.EquipmentModifierType.KNOCKBACK, stack), AttributeModifier.Operation.ADDITION));
             return builder.build();
         }
