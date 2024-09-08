@@ -1,13 +1,13 @@
 {
   "structures": [
     {
-      "structure": "factory:bamboo_tower",
+      "structure": "factory:modified_bastion",
       "weight": 1
     }
   ],
   "placement": {
     "type": "minecraft:random_spread",
-    "salt": 1695557080,
+    "salt": 1195652180,
     "spacing": 45,
     "separation": 16
   }

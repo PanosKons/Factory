@@ -1,14 +1,14 @@
 {
   "structures": [
     {
-      "structure": "factory:bamboo_tower",
+      "structure": "factory:end_ball",
       "weight": 1
     }
   ],
   "placement": {
     "type": "minecraft:random_spread",
-    "salt": 1695557080,
-    "spacing": 45,
+    "salt": 1295552080,
+    "spacing": 60,
     "separation": 16
   }
 }

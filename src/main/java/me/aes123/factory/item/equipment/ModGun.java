@@ -28,7 +28,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class ModGun extends ModHandItem {
-    public static final double REACH = 100;
+    public static final double REACH = 150;
 
     public ModGun(Properties properties) {
         super(properties);

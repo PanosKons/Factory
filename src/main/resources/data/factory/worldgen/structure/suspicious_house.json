@@ -1,6 +1,6 @@
 {
   "type": "minecraft:jigsaw",
-  "start_pool": "factory:beacon",
+  "start_pool": "factory:suspicious_house",
   "size": 7,
   "max_distance_from_center": 80,
   "biomes": "#minecraft:is_forest",
